@@ -8,15 +8,13 @@ class BittBooks extends Component {
   constructor(props) {
     super(props)
 
-    this.createBittBook = this.createBittBook.bind(this)
-
-    this.editBittBook = this.editBittBook.bind(this)
-
-    this.toggleEdit = this.toggleEdit.bind(this)
-
     this.state = {
       bittBooks: {}
     }
+
+    this.createBittBook = this.createBittBook.bind(this)
+
+    this.editBittBook = this.editBittBook.bind(this)
   }
 
   createBittBook() {
@@ -58,16 +56,6 @@ class BittBooks extends Component {
     })
   }
 
-  toggleEdit(bittBook) {
-    const bittBooks = {...this.state.bittBooks}
-
-    bittBooks[bittBook] = bittBook
-
-    this.setState({
-      bittBook: bittBooks.bittBook
-    })
-  }
-
   render() {
     const styles = {
       main: {
@@ -76,6 +64,7 @@ class BittBooks extends Component {
     }
 
     const {bittBooks} = this.state
+
     const bittBookAmount = Object.keys(bittBooks).length
 
     let bittBooksState
@@ -90,8 +79,8 @@ class BittBooks extends Component {
             key={key}
             id={key}
             details={bittBooks[key]}
+            submitBittBook={this.editBittBook}
             editBittBook={this.editBittBook}
-            toggleEdit={this.toggleEdit}
           />
         )
     }

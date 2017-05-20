@@ -7,27 +7,41 @@ import Moment from '../helpers/react-moment'
 import {Card, CardHeader} from 'material-ui/Card'
 
 class BittBook extends Component {
+  componentDidMount() {
+    this.titleSubmit.focus()
+  }
+
+  submitBittBook(event) {
+    event.preventDefault()
+
+    const timestamp = Date.now()
+
+    const bittBook = this.props.details
+    bittBook.title = this.titleSubmit.value || 'Bitt Book Title'
+    bittBook.updatedAt = timestamp
+    bittBook.isEditing = false
+
+    this.props.submitBittBook(bittBook)
+  }
+
   editBittBook(event) {
     event.preventDefault()
 
     const timestamp = Date.now()
 
     const bittBook = this.props.details
-
     bittBook.title = this.title.value || 'Bitt Book Title'
     bittBook.updatedAt = timestamp
-    bittBook.isEditing = false
-    this.props.editBittBook(bittBook)
 
-    this.bittBookForm.reset()
+    this.props.submitBittBook(bittBook)
   }
 
-  toggleEdit(event) {
-    const bittBook = this.props.details
+  handleKeyPress(event) {
+    if (event.key === 'Enter') {
+      this.editBittBook(event)
 
-    bittBook.isEditing = true
-
-    this.props.toggleEdit(bittBook)
+      this.title.blur()
+    }
   }
 
   render() {
@@ -52,9 +66,34 @@ class BittBook extends Component {
         width: '128px',
         height: '100px',
         overflow: 'auto',
-        margin: '16px 0 16px 0',
-        color: '#146D8F',
+        margin: '16px 0 16px 0'
+      },
+
+      titleInputSubmitting: {
+        overflow: 'hidden',
+        whiteSpace: 'nowrap',
+        width: '90%',
+        margin: '0 0 0 8px',
+        outline: 'none',
+        border: 'none',
+        fontSize: '16px',
+        fontWeight: 'bold',
+        color: '#96A2AD',
         textAlign: 'center'
+      },
+
+      titleInput: {
+        overflow: 'hidden',
+        whiteSpace: 'nowrap',
+        width: '90%',
+        margin: '0 0 0 8px',
+        outline: 'none',
+        border: 'none',
+        fontSize: '16px',
+        fontWeight: 'bold',
+        color: '#146D8F',
+        textAlign: 'center',
+        textOverflow: 'ellipsis'
       },
 
       subtitle: {
@@ -72,36 +111,58 @@ class BittBook extends Component {
 
       cardActions: {
         border: 'none',
-        margin: '0',
         padding: '0 0 0 8px'
       }
     }
 
     const {details} = this.props
+
     const bittAmount = Object.keys(details.bitts).length
 
     let bittAmountMessage
     if (bittAmount === 0 || bittAmount > 1) {
-      bittAmountMessage = <div style={styles.bittAmountMessage}>{bittAmount} Bitts</div>
+      bittAmountMessage =
+      <div
+        style={styles.bittAmountMessage}
+      >
+        {bittAmount} Bitts
+      </div>
     } else {
-      bittAmountMessage = <div style={styles.bittAmountMessage}>{bittAmount} Bitt</div>
+      bittAmountMessage =
+      <div
+        style={styles.bittAmountMessage}
+      >
+        {bittAmount} Bitt
+      </div>
     }
 
     let bittBookState
     if (details.isEditing === true) {
       bittBookState =
-        <form
-          id="bitt-book-edit"
-          onSubmit={(e) => this.editBittBook(e)}
-          ref={(input) => this.bittBookForm = input}
-        >
-          <input
-            type="text"
-            placeholder="Bitt Book Title"
-            ref={(input) => this.title = input}
-          />
-        <button type="submit">Submit</button>
-        </form>
+      <Card
+        id="bitt-book-card"
+        style={styles.bittBook}
+      >
+        <CardHeader
+          title={
+            <div
+              id="title-container"
+              style={styles.title}
+            >
+              <form
+                onSubmit={(e) => this.submitBittBook(e)}
+              >
+                <input
+                  id="title-input-submitting"
+                  style={styles.titleInputSubmitting}
+                  ref={(input) => this.titleSubmit = input}
+                  onBlur={(e) => this.submitBittBook(e)}
+                />
+              </form>
+            </div>
+          }
+        />
+      </Card>
     }
     else {
       bittBookState =
@@ -114,9 +175,15 @@ class BittBook extends Component {
             <div
               id="title-container"
               style={styles.title}
-              onTouchTap={(e) => this.toggleEdit(e)}
             >
-              {details.title}
+              <input
+                id="title-input"
+                style={styles.titleInput}
+                defaultValue={details.title}
+                ref={(input) => this.title = input}
+                onChange={(e) => this.editBittBook(e)}
+                onKeyPress={(e) => this.handleKeyPress(e)}
+              />
             </div>
           }
           subtitle={
