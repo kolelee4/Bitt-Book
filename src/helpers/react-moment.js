@@ -1,4 +1,4 @@
-// react-moment source with PropTypes warning fix and cleaner code
+// From react-moment source with PropTypes warning fix and cleaner code
 
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'

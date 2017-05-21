@@ -155,6 +155,7 @@ class BittBook extends Component {
                 <input
                   id="title-input-submitting"
                   style={styles.titleInputSubmitting}
+                  autoComplete="off"
                   ref={(input) => this.titleSubmit = input}
                   onBlur={(e) => this.submitBittBook(e)}
                 />
@@ -180,6 +181,7 @@ class BittBook extends Component {
                 id="title-input"
                 style={styles.titleInput}
                 defaultValue={details.title}
+                autoComplete="off"
                 ref={(input) => this.title = input}
                 onChange={(e) => this.editBittBook(e)}
                 onKeyPress={(e) => this.handleKeyPress(e)}
@@ -192,7 +194,7 @@ class BittBook extends Component {
               style={styles.subtitle}
             >
               <Moment
-                format="MM/DD/YYYY"
+                format="MM/DD/YY"
                 style={styles.momentDate}
               >
                 {details.createdAt}

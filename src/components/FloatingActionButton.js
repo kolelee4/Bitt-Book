@@ -1,4 +1,4 @@
-// material-ui source with custom changes
+// From material-ui source with custom changes
 
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'

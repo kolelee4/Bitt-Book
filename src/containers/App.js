@@ -6,7 +6,7 @@ import {
 
 // Material Design Theme
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import MuiTheme from '../style/MuiTheme'
+import MuiTheme from '../style/custom-material-ui/MuiTheme'
 
 // Containers
 import Template from '../containers/Template'
