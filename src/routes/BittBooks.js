@@ -1,5 +1,8 @@
 import React, {Component} from 'react'
 
+// Database
+import base from '../base'
+
 // Components
 import FABContainer from '../components/FABContainer'
 import BittBook from '../components/BittBook'
@@ -17,6 +20,17 @@ class BittBooks extends Component {
     this.editBittBook = this.editBittBook.bind(this)
   }
 
+  componentWillMount() {
+    this.ref = base.syncState('bitt-books', {
+      context: this,
+      state: 'bittBooks'
+    })
+  }
+
+  componentWillUnmount() {
+    base.removeBinding(this.ref)
+  }
+
   createBittBook() {
     const bittBooks = {...this.state.bittBooks}
 
@@ -26,15 +40,14 @@ class BittBooks extends Component {
       title: 'Bitt Book Title',
       createdAt: timestamp,
       updatedAt: timestamp,
-      isEditing: true,
+      isFirstSubmit: true,
       bitts: {}
     }
 
     const bitt = {
       title: 'First Bitt',
       createdAt: timestamp,
-      updatedAt: timestamp,
-      isEditing: false
+      updatedAt: timestamp
     }
 
     bittBooks[`bittBook-${timestamp}`] = bittBook
@@ -49,10 +62,11 @@ class BittBooks extends Component {
   editBittBook(bittBook) {
     const bittBooks = {...this.state.bittBooks}
 
-    bittBooks[bittBook] = bittBook
+    // eslint-disable-next-line
+    bittBooks[bittBook]
 
     this.setState({
-      bittBook: bittBooks.bittBook
+      bittBooks
     })
   }
 
@@ -60,6 +74,10 @@ class BittBooks extends Component {
     const styles = {
       main: {
         margin: '0 0 0 36px'
+      },
+
+      noBittBooksMessage: {
+        fontWeight: '500'
       }
     }
 
@@ -69,7 +87,12 @@ class BittBooks extends Component {
 
     let bittBooksState
     if (bittBookAmount === 0) {
-      bittBooksState = <h4>{this.props.noBittBooks}</h4>
+      bittBooksState =
+      <h4
+        style={styles.noBittBooksMessage}
+      >
+        {this.props.noBittBooks}
+      </h4>
     } else {
       bittBooksState =
       Object
@@ -77,9 +100,7 @@ class BittBooks extends Component {
         .map(key =>
           <BittBook
             key={key}
-            id={key}
             details={bittBooks[key]}
-            submitBittBook={this.editBittBook}
             editBittBook={this.editBittBook}
           />
         )

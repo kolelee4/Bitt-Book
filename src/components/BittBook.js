@@ -7,33 +7,23 @@ import Moment from '../helpers/react-moment'
 import {Card, CardHeader} from 'material-ui/Card'
 
 class BittBook extends Component {
-  componentDidMount() {
-    this.titleSubmit.focus()
-  }
-
-  submitBittBook(event) {
-    event.preventDefault()
-
-    const timestamp = Date.now()
-
-    const bittBook = this.props.details
-    bittBook.title = this.titleSubmit.value || 'Bitt Book Title'
-    bittBook.updatedAt = timestamp
-    bittBook.isEditing = false
-
-    this.props.submitBittBook(bittBook)
-  }
-
   editBittBook(event) {
     event.preventDefault()
 
     const timestamp = Date.now()
 
     const bittBook = this.props.details
-    bittBook.title = this.title.value || 'Bitt Book Title'
+
+    const bittBookTitle = this.title.value
+    bittBookTitle.length === 0 ?
+    bittBook.title = 'Bitt Book Title' :
+    bittBook.title = this.title.value.trim()
+
     bittBook.updatedAt = timestamp
 
-    this.props.submitBittBook(bittBook)
+    bittBook.isFirstSubmit = false
+
+    this.props.editBittBook(bittBook)
   }
 
   handleKeyPress(event) {
@@ -107,11 +97,6 @@ class BittBook extends Component {
 
       momentDate: {
         float: 'left'
-      },
-
-      cardActions: {
-        border: 'none',
-        padding: '0 0 0 8px'
       }
     }
 
@@ -137,7 +122,7 @@ class BittBook extends Component {
     }
 
     let bittBookState
-    if (details.isEditing === true) {
+    if (details.isFirstSubmit === true) {
       bittBookState =
       <Card
         id="bitt-book-card"
@@ -150,14 +135,16 @@ class BittBook extends Component {
               style={styles.title}
             >
               <form
-                onSubmit={(e) => this.submitBittBook(e)}
+                autoComplete="false"
+                onSubmit={(e) => this.editBittBook(e)}
               >
                 <input
                   id="title-input-submitting"
                   style={styles.titleInputSubmitting}
-                  autoComplete="off"
-                  ref={(input) => this.titleSubmit = input}
-                  onBlur={(e) => this.submitBittBook(e)}
+                  autoFocus="true"
+                  autoComplete="false"
+                  ref={(input) => this.title = input}
+                  onBlur={(e) => this.editBittBook(e)}
                 />
               </form>
             </div>
@@ -181,7 +168,7 @@ class BittBook extends Component {
                 id="title-input"
                 style={styles.titleInput}
                 defaultValue={details.title}
-                autoComplete="off"
+                autoComplete="false"
                 ref={(input) => this.title = input}
                 onChange={(e) => this.editBittBook(e)}
                 onKeyPress={(e) => this.handleKeyPress(e)}
