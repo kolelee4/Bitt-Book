@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React from 'react'
 import {
   Switch,
   Route,
@@ -17,31 +17,29 @@ import Account from '../routes/Account'
 // Components
 import NavBar from '../components/NavBar'
 
-class Template extends Component {
-  render() {
-    return (
-      <RouteContainer>
-        <NavBar/>
+const Template = () => {
+  return (
+    <RouteContainer>
+      <NavBar/>
 
-        <Layout>
-          <Switch>
-            <Redirect
-              exact from="/"
-              to="/bitt-books"
-            />
-            <Route
-              path="/bitt-books"
-              component={BittBooks}
-            />
-            <Route
-              path="/account"
-              component={Account}
-            />
-          </Switch>
-        </Layout>
-      </RouteContainer>
-    )
-  }
+      <Layout>
+        <Switch>
+          <Redirect
+            exact from="/"
+            to="/bitt-books"
+          />
+          <Route
+            path="/bitt-books"
+            component={BittBooks}
+          />
+          <Route
+            path="/account"
+            component={Account}
+          />
+        </Switch>
+      </Layout>
+    </RouteContainer>
+  )
 }
 
 export default Template

@@ -1,15 +1,13 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-class RouteContainer extends Component {
-  render() {
-    return (
-      <div
-        id="route-container"
-      >
-        {this.props.children}
-      </div>
-    )
-  }
+const RouteContainer = (props) => {
+  return (
+    <div
+      id="route-container"
+    >
+      {props.children}
+    </div>
+  )
 }
 
 export default RouteContainer

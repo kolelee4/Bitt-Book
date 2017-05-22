@@ -73,7 +73,8 @@ class BittBooks extends Component {
   render() {
     const styles = {
       main: {
-        margin: '0 0 0 36px'
+        overflow: 'hidden',
+        padding: '0 0 0 60px'
       },
 
       noBittBooksMessage: {

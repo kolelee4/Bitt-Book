@@ -1,24 +1,22 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-class Layout extends Component {
-  render() {
-    const styles = {
-      main: {
-        height: '90.5vh',
-        overflow: 'auto',
-        margin: '0 16px 0 16px'
-      }
-    }
-
-    return (
-      <div
-        id="layout"
-        style={styles.main}
-      >
-        {this.props.children}
-      </div>
-    )
+const styles = {
+  main: {
+    height: '90.5vh',
+    overflow: 'auto',
+    margin: '0 16px 0 16px'
   }
+}
+
+const Layout = (props) => {
+  return (
+    <div
+      id="layout"
+      style={styles.main}
+    >
+      {props.children}
+    </div>
+  )
 }
 
 export default Layout

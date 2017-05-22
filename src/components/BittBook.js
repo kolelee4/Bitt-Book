@@ -38,7 +38,7 @@ class BittBook extends Component {
     const styles = {
       main: {
         display: 'inline-block',
-        margin: '16px 16px 0 16px'
+        margin: '20px 0 0 20px'
       },
 
       bittBook: {
