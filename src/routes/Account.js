@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 
 class Account extends Component {
   render() {
@@ -10,6 +11,10 @@ class Account extends Component {
 
 Account.defaultProps = {
   title: 'Account'
+}
+
+Account.propTypes = {
+  title: PropTypes.string.isRequired
 }
 
 export default Account

@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 
 // Database
 import base from '../base'
@@ -8,8 +9,8 @@ import FABContainer from '../components/FABContainer'
 import BittBook from '../components/BittBook'
 
 class BittBooks extends Component {
-  constructor(props) {
-    super(props)
+  constructor() {
+    super()
 
     this.state = {
       bittBooks: {}
@@ -138,6 +139,10 @@ class BittBooks extends Component {
 
 BittBooks.defaultProps = {
   noBittBooks: `You currently have 0 bitt books.`
+}
+
+BittBooks.propTypes = {
+  noBittBooks: PropTypes.string.isRequired
 }
 
 export default BittBooks

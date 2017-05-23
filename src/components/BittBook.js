@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 
 // Helpers
 import Moment from '../helpers/react-moment'
@@ -209,6 +210,12 @@ class BittBook extends Component {
       </div>
     )
   }
+}
+
+BittBook.propTypes = {
+  details: PropTypes.object.isRequired,
+  updateBittBook: PropTypes.func.isRequired,
+  deleteBittBook: PropTypes.func.isRequired
 }
 
 export default BittBook
