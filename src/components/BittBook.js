@@ -7,8 +7,8 @@ import Moment from '../helpers/react-moment'
 import {Card, CardHeader} from 'material-ui/Card'
 
 class BittBook extends Component {
-  editBittBook(event) {
-    event.preventDefault()
+  updateBittBook(e) {
+    e.preventDefault()
 
     const timestamp = Date.now()
 
@@ -23,12 +23,12 @@ class BittBook extends Component {
 
     bittBook.isFirstSubmit = false
 
-    this.props.editBittBook(bittBook)
+    this.props.updateBittBook(bittBook)
   }
 
-  handleKeyPress(event) {
-    if (event.key === 'Enter') {
-      this.editBittBook(event)
+  handleKeyPress(e) {
+    if (e.key === 'Enter') {
+      this.updateBittBook(e)
 
       this.title.blur()
     }
@@ -100,6 +100,8 @@ class BittBook extends Component {
       }
     }
 
+    const {id} = this.props
+
     const {details} = this.props
 
     const bittAmount = Object.keys(details.bitts).length
@@ -135,8 +137,7 @@ class BittBook extends Component {
               style={styles.title}
             >
               <form
-                autoComplete="false"
-                onSubmit={(e) => this.editBittBook(e)}
+                onSubmit={(e) => this.updateBittBook(e)}
               >
                 <input
                   id="title-input-submitting"
@@ -144,7 +145,7 @@ class BittBook extends Component {
                   autoFocus="true"
                   autoComplete="false"
                   ref={(input) => this.title = input}
-                  onBlur={(e) => this.editBittBook(e)}
+                  onBlur={(e) => this.updateBittBook(e)}
                 />
               </form>
             </div>
@@ -170,7 +171,7 @@ class BittBook extends Component {
                 defaultValue={details.title}
                 autoComplete="false"
                 ref={(input) => this.title = input}
-                onChange={(e) => this.editBittBook(e)}
+                onChange={(e) => this.updateBittBook(e)}
                 onKeyPress={(e) => this.handleKeyPress(e)}
               />
             </div>
@@ -191,6 +192,11 @@ class BittBook extends Component {
           }
           style={styles.cardHeader}
         />
+        <button
+          onTouchTap={() => this.props.deleteBittBook(id)}
+        >
+          Delete Bitt Book
+        </button>
       </Card>
     }
 

@@ -17,7 +17,9 @@ class BittBooks extends Component {
 
     this.createBittBook = this.createBittBook.bind(this)
 
-    this.editBittBook = this.editBittBook.bind(this)
+    this.updateBittBook = this.updateBittBook.bind(this)
+
+    this.deleteBittBook = this.deleteBittBook.bind(this)
   }
 
   componentWillMount() {
@@ -59,11 +61,21 @@ class BittBooks extends Component {
     })
   }
 
-  editBittBook(bittBook) {
+  updateBittBook(bittBook) {
     const bittBooks = {...this.state.bittBooks}
 
     // eslint-disable-next-line
     bittBooks[bittBook]
+
+    this.setState({
+      bittBooks
+    })
+  }
+
+  deleteBittBook(id) {
+    const bittBooks = {...this.state.bittBooks}
+
+    bittBooks[id] = null
 
     this.setState({
       bittBooks
@@ -101,8 +113,10 @@ class BittBooks extends Component {
         .map(key =>
           <BittBook
             key={key}
+            id={key}
             details={bittBooks[key]}
-            editBittBook={this.editBittBook}
+            updateBittBook={this.updateBittBook}
+            deleteBittBook={this.deleteBittBook}
           />
         )
     }
