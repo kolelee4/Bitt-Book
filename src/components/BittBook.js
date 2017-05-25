@@ -118,7 +118,7 @@ class BittBook extends Component {
         border: 'none',
         fontSize: '16px',
         fontWeight: 'bold',
-        color: '#96A2AD',
+        color: '#5A6268',
         textAlign: 'center'
       },
 

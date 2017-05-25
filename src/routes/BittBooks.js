@@ -106,7 +106,8 @@ class BittBooks extends Component {
       },
 
       noBittBooksMessage: {
-        fontWeight: '500'
+        fontWeight: '500',
+        color: '#5A6268'
       }
     }
 

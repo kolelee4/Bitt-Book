@@ -58,15 +58,17 @@ class Bitts extends Component {
       bittsCard: {
         zIndex: '9999',
         margin: '84px 96px 16px 96px',
-        backgroundColor: '#E2E6E8'
+        padding: '0 0 32px 0',
+        backgroundColor: '#E4E5E5'
       },
 
       bittsHeader: {
-        //
+        margin: '0 72px 0 72px'
       },
 
       bittsTitle: {
         fontSize: '20px',
+        fontWeight: '700',
         color: '#146D8F'
       }
     }
