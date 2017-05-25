@@ -7,6 +7,7 @@ import ContentAdd from 'material-ui/svg-icons/content/add'
 
 const styles = {
   main: {
+    zIndex: '9999',
     position: 'absolute',
     right: '0',
     bottom: '0',

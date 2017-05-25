@@ -50,7 +50,8 @@ class BittBooks extends Component {
     const bitt = {
       title: 'First Bitt',
       createdAt: timestamp,
-      updatedAt: timestamp
+      updatedAt: timestamp,
+      body: 'Write a bitt...'
     }
 
     bittBooks[`bittBook-${timestamp}`] = bittBook
@@ -62,11 +63,11 @@ class BittBooks extends Component {
     })
   }
 
-  updateBittBook(bittBook) {
+  updateBittBook(updatedBittBook) {
     const bittBooks = {...this.state.bittBooks}
 
     // eslint-disable-next-line
-    bittBooks[bittBook]
+    bittBooks[updatedBittBook]
 
     this.setState({
       bittBooks
@@ -86,7 +87,6 @@ class BittBooks extends Component {
   render() {
     const styles = {
       main: {
-        overflow: 'hidden',
         padding: '0 0 0 60px'
       },
 
@@ -100,6 +100,7 @@ class BittBooks extends Component {
     const bittBookAmount = Object.keys(bittBooks).length
 
     let bittBooksState
+
     if (bittBookAmount === 0) {
       bittBooksState =
       <h4
