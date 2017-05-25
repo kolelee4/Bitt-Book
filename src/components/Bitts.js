@@ -1,14 +1,32 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 
-// Helpers
-// import Moment from '../helpers/react-moment'
-
 // Components
 import {Card, CardHeader} from 'material-ui/Card'
 import Bitt from './Bitt'
 
 class Bitts extends Component {
+  createBitt(e) {
+    e.stopPropagation()
+
+    const timestamp = Date.now()
+
+    const bittBook = this.props.details
+
+    const bitt = {
+      title: 'First Bitt',
+      createdAt: timestamp,
+      updatedAt: timestamp,
+      body: 'Write a bitt...'
+    }
+
+    bittBook.bitts[`bitt-${timestamp}`] = bitt
+
+    const updatedBittBook = bittBook.bitts[bitt]
+
+    this.props.updateBitt(updatedBittBook)
+  }
+
   updateBitt(bitt) {
     const timestamp = Date.now()
 
@@ -23,17 +41,24 @@ class Bitts extends Component {
 
   render() {
     const styles = {
-      bittsCard: {
-        width: '85.1vw',
-        height: '85vh',
+      bittsOutlet: {
+        zIndex: '999',
+        width: '100vw',
+        height: '100vh',
         position: 'absolute',
-        top: '12.2vh',
+        top: '0',
         right: '0',
         bottom: '0',
-        left: '7.3vw',
-        padding: '0 40px 0 40px',
-        backgroundColor: '#E8EAEC',
+        left: '0',
+        overflow: 'auto',
+        backgroundColor: '#F2F2F3',
         cursor: 'pointer'
+      },
+
+      bittsCard: {
+        zIndex: '9999',
+        margin: '84px 96px 16px 96px',
+        backgroundColor: '#E2E6E8'
       },
 
       bittsHeader: {
@@ -41,7 +66,7 @@ class Bitts extends Component {
       },
 
       bittsTitle: {
-        fontSize: '16px',
+        fontSize: '20px',
         color: '#146D8F'
       }
     }
@@ -53,48 +78,56 @@ class Bitts extends Component {
     const bittAmount = Object.keys(this.props.details.bitts).length
 
     return (
-      <Card
+      <div
         id="bitts-card"
-        style={styles.bittsCard}
-        zDepth={0}
+        style={styles.bittsOutlet}
       >
-        <CardHeader
-          title={
-            <div
-              style={styles.bittsTitle}
-            >
-              {this.props.details.title + `'s Bitts`}
-            </div>
-          }
-          subtitle={
-            <div
-              id="subtitle-container"
-            >
+        <Card
+          id="bitts-card"
+          style={styles.bittsCard}
+          zDepth={0}
+        >
+          <CardHeader
+            title={
               <div
+                style={styles.bittsTitle}
               >
-                {
-                  bittAmount === 1 ?
-                  bittAmount + ' Bitt' :
-                  bittAmount + ' Bitts'
-                }
+                {this.props.details.title + `'s Bitts`}
               </div>
-            </div>
+            }
+            subtitle={
+              <div
+                id="subtitle-container"
+              >
+                <div
+                >
+                  {
+                    bittAmount === 1 ?
+                    bittAmount + ' Bitt' :
+                    bittAmount + ' Bitts'
+                  }
+                </div>
+              </div>
+            }
+            style={styles.bittsHeader}
+          />
+
+          {
+            Object
+            .keys(bitts)
+            .map(key =>
+              <Bitt
+                key={key}
+                id={key}
+                details={bitts[key]}
+                updateBitt={(bitt) => this.updateBitt(bitt)}
+              />
+            )
           }
-          style={styles.bittsHeader}
-        />
-        {
-          Object
-          .keys(bitts)
-          .map(key =>
-            <Bitt
-              key={key}
-              id={key}
-              details={bitts[key]}
-              updateBitt={(bitt) => this.updateBitt(bitt)}
-            />
-          )
-        }
-      </Card>
+
+          <button onTouchTap={(e) => this.createBitt(e)}>Add Bitt</button>
+        </Card>
+      </div>
     )
   }
 }

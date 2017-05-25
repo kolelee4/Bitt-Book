@@ -13,7 +13,8 @@ class BittBooks extends Component {
     super()
 
     this.state = {
-      bittBooks: {}
+      bittBooks: {},
+      isShowingBitts: false
     }
 
     this.createBittBook = this.createBittBook.bind(this)
@@ -21,6 +22,8 @@ class BittBooks extends Component {
     this.updateBittBook = this.updateBittBook.bind(this)
 
     this.deleteBittBook = this.deleteBittBook.bind(this)
+
+    this.showBitts = this.showBitts.bind(this)
   }
 
   componentWillMount() {
@@ -84,6 +87,18 @@ class BittBooks extends Component {
     })
   }
 
+  showBitts() {
+    if (this.state.isShowingBitts) {
+      this.setState({
+        isShowingBitts: false
+      })
+    } else {
+      this.setState({
+        isShowingBitts: true
+      })
+    }
+  }
+
   render() {
     const styles = {
       main: {
@@ -119,6 +134,7 @@ class BittBooks extends Component {
             details={bittBooks[key]}
             updateBittBook={this.updateBittBook}
             deleteBittBook={this.deleteBittBook}
+            showBitts={this.showBitts}
           />
         )
     }

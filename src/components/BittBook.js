@@ -6,6 +6,7 @@ import Moment from '../helpers/react-moment'
 
 // Components
 import {Card, CardHeader} from 'material-ui/Card'
+import IconButton from 'material-ui/IconButton'
 import Bitts from './Bitts'
 import ActionDelete from 'material-ui/svg-icons/action/delete'
 
@@ -61,6 +62,8 @@ class BittBook extends Component {
     }
 
     document.querySelector('#layout').scrollTop = 0
+
+    this.props.showBitts()
   }
 
   showOptions() {
@@ -135,7 +138,8 @@ class BittBook extends Component {
 
       bittBookSubtitle: {
         display: 'inline-block',
-        width: '132px'
+        width: '100%',
+        height: '100%'
       },
 
       bittAmountMessage: {
@@ -147,13 +151,21 @@ class BittBook extends Component {
       },
 
       bittBookDelete: {
-        float: 'left',
         width: '100%',
+        height: '100%',
+        float: 'left',
+        margin: '-4px 0 0 0',
         cursor: 'pointer'
       },
 
+      deleteIconButton: {
+        float: 'left',
+        margin: '-12px 0 0 -16px'
+      },
+
       bittBookDeleteIcon: {
-        margin: '-8px 0 0 0'
+        margin: '0',
+        padding: '0'
       }
     }
 
@@ -221,10 +233,14 @@ class BittBook extends Component {
               style={styles.bittBookDelete}
               onMouseLeave={() => this.showOptions()}
             >
-              <ActionDelete
-                style={styles.bittBookDeleteIcon}
+              <IconButton
                 onTouchTap={() => this.props.deleteBittBook(id)}
-              />
+                style={styles.deleteIconButton}
+              >
+                <ActionDelete
+                  style={styles.bittBookDeleteIcon}
+                />
+              </IconButton>
             </div>
           }
           style={styles.bittBookHeader}
@@ -304,7 +320,8 @@ class BittBook extends Component {
 BittBook.propTypes = {
   details: PropTypes.object.isRequired,
   updateBittBook: PropTypes.func.isRequired,
-  deleteBittBook: PropTypes.func.isRequired
+  deleteBittBook: PropTypes.func.isRequired,
+  showBitts: PropTypes.func.isRequired
 }
 
 export default BittBook
