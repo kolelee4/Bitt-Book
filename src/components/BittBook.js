@@ -40,9 +40,9 @@ class BittBook extends Component {
     this.props.updateBittBook(updatedBittBook)
   }
 
-  handleKeyPressUpdateBittBook(e) {
+  handleKeyPressUpdateBittBook(e, details) {
     if (e.key === 'Enter') {
-      this.updateBittBook(e)
+      this.updateBittBook(e, details)
 
       this.title.blur()
     }
@@ -220,7 +220,7 @@ class BittBook extends Component {
                 ref={(input) => this.title = input}
                 onTouchTap={e => e.stopPropagation()}
                 onChange={(e) => this.updateBittBook(e, details)}
-                onKeyPress={(e) => this.handleKeyPressUpdateBittBook(e)}
+                onKeyPress={(e) => this.handleKeyPressUpdateBittBook(e, details)}
               />
             </div>
           }
@@ -270,7 +270,7 @@ class BittBook extends Component {
                 ref={(input) => this.title = input}
                 onTouchTap={e => e.stopPropagation()}
                 onChange={(e) => this.updateBittBook(e, details)}
-                onKeyPress={(e) => this.handleKeyPressUpdateBittBook(e)}
+                onKeyPress={(e) => this.handleKeyPressUpdateBittBook(e, details)}
               />
             </div>
           }
