@@ -6,24 +6,27 @@ import Moment from '../helpers/react-moment'
 
 // Component
 import {Card, CardHeader, CardText} from 'material-ui/Card'
+import Divider from 'material-ui/Divider'
+import IconButton from 'material-ui/IconButton'
+import ActionDelete from 'material-ui/svg-icons/action/delete'
 
 class Bitt extends Component {
   constructor() {
     super()
 
     this.state = {
-      bittCardZDepth: 1
+      bittCardZDepth: 1,
+      isShowingOptions: false
     }
   }
 
-  updateBitt() {
+  updateBitt(details) {
     const timestamp = Date.now()
 
-    const bitt = this.props.details
-
-    bitt.body = this.body.value
+    const bitt = details
 
     const bittBody = this.body.value
+
     bittBody.length === 0 ?
     bitt.body = 'Write a bitt...' :
     bitt.body = this.body.value
@@ -33,23 +36,44 @@ class Bitt extends Component {
     this.props.updateBitt(bitt)
   }
 
+  deleteBitt(e, id) {
+    e.stopPropagation()
+
+    this.props.deleteBitt(id)
+  }
+
+  showOptions(e) {
+    e.stopPropagation()
+
+    this.setState({
+      isShowingOptions: true
+    })
+  }
+
+  hideOptions(e) {
+    e.stopPropagation()
+
+    this.setState({
+      isShowingOptions: false
+    })
+  }
+
   changeBittZDepth(e) {
     e.stopPropagation()
 
-    if (this.state.bittCardZDepth === 1) {
-      this.setState({
-        bittCardZDepth: 3
-      })
-    } else {
-      this.setState({
-        bittCardZDepth: 1
-      })
-    }
+    this.state.bittCardZDepth === 1 ?
+    this.setState({
+      bittCardZDepth: 3
+    }) :
+    this.setState({
+      bittCardZDepth: 1
+    })
   }
 
   render() {
     const styles = {
       main: {
+        overflow: 'hidden',
         margin: '0 64px 16px 64px',
         transitionDuration: '0.25s'
       },
@@ -59,33 +83,62 @@ class Bitt extends Component {
       },
 
       bittBodyPreview: {
-        width: '74vw',
+        width: '72vw',
         overflow: 'hidden',
         whiteSpace: 'nowrap',
         textOverflow: 'ellipsis',
         margin: '12px 0 0 0'
       },
 
+      bittDivider: {
+        color: '#e0e0e0'
+      },
+
       bittTextarea: {
         resize: 'none',
-        width: '71.2vw',
+        width: '88%',
         outline: 'none',
         border: 'none',
-        borderTop: '1px solid #ECEDEE',
         margin: '-16px 0 0 0',
         padding: '16px 16px 0 16px',
-        fontSize: '13px'
+        fontSize: '13px',
+        fontWeight: '500'
+      },
+
+      bittDelete: {
+        float: 'right'
       }
     }
 
-    const {details} = this.props
+    const {details, id} = this.props
+
+    let isShowingOptions
+
+    if (this.state.isShowingOptions) {
+      isShowingOptions =
+      <IconButton
+        id="bitt-delete-button"
+        style={styles.bittDelete}
+        onTouchTap={(e) => this.deleteBitt(e, id)}
+      >
+        <ActionDelete
+        />
+      </IconButton>
+    } else {
+      isShowingOptions =
+      <div></div>
+    }
 
     return (
       <Card
         style={styles.main}
         zDepth={this.state.bittCardZDepth}
+        onMouseEnter={(e) => this.showOptions(e)}
+        onMouseLeave={(e) => this.hideOptions(e)}
         onTouchTap={(e) => this.changeBittZDepth(e)}
       >
+        {isShowingOptions}
+
         <CardHeader
           title={
             <div
@@ -97,11 +150,12 @@ class Bitt extends Component {
           subtitle={
             <div>
               <Moment
-                format="MM/DD/YY"
+                fromNow
                 style={styles.bittMomentDate}
               >
-                {details.createdAt}
+                {details.updatedAt}
               </Moment>
+              ...
               <div
                 style={styles.bittBodyPreview}
               >
@@ -111,6 +165,10 @@ class Bitt extends Component {
           }
           actAsExpander={true}
           style={styles.bittHeader}
+        />
+
+        <Divider
+          style={styles.bittDivider}
         />
 
         <CardText
@@ -124,7 +182,8 @@ class Bitt extends Component {
             autoFocus={true}
             autoComplete="false"
             ref={(input) => this.body = input}
-            onChange={() => this.updateBitt()}
+            onChange={() => this.updateBitt(details)}
+            onTouchTap={e => e.stopPropagation()}
           />
         </CardText>
       </Card>
@@ -133,8 +192,10 @@ class Bitt extends Component {
 }
 
 Bitt.propTypes = {
+  updateBitt: PropTypes.func.isRequired,
+  deleteBitt: PropTypes.func.isRequired,
   details: PropTypes.object.isRequired,
-  updateBitt: PropTypes.func.isRequired
+  id: PropTypes.string.isRequired
 }
 
 export default Bitt

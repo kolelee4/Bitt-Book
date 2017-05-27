@@ -220,8 +220,8 @@ export default function getMuiTheme(muiTheme, ...more) {
         [14, 45, 0.25, 10, 18, 0.22],
         [19, 60, 0.30, 15, 20, 0.22]
       ].map((d) => (
-        `0 ${d[0]}px ${d[1]}px rgba(0,0,0,0.12),
-         0 ${d[3]}px ${d[4]}px rgba(0,0,0,0.24)` // ${fade(palette.shadowColor, d[2])}, ${fade(palette.shadowColor, d[5])}
+        `0 ${d[0]}px ${d[1]}px rgba(0,0,0,0.14),
+         0 ${d[3]}px ${d[4]}px rgba(0,0,0,0.26)` // ${fade(palette.shadowColor, d[2])}, ${fade(palette.shadowColor, d[5])}
       ))
     },
 

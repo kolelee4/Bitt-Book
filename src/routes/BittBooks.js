@@ -23,7 +23,7 @@ class BittBooks extends Component {
 
     this.deleteBittBook = this.deleteBittBook.bind(this)
 
-    this.showBitts = this.showBitts.bind(this)
+    this.toggleBitts = this.toggleBitts.bind(this)
   }
 
   componentWillMount() {
@@ -43,7 +43,7 @@ class BittBooks extends Component {
     const timestamp = Date.now()
 
     const bittBook = {
-      title: 'Bitt Book Title',
+      title: 'Untitled',
       createdAt: timestamp,
       updatedAt: timestamp,
       isFirstSubmit: true,
@@ -77,7 +77,9 @@ class BittBooks extends Component {
     })
   }
 
-  deleteBittBook(id) {
+  deleteBittBook(e, id) {
+    e.stopPropagation()
+
     const bittBooks = {...this.state.bittBooks}
 
     bittBooks[id] = null
@@ -87,16 +89,14 @@ class BittBooks extends Component {
     })
   }
 
-  showBitts() {
-    if (this.state.isShowingBitts) {
-      this.setState({
-        isShowingBitts: false
-      })
-    } else {
-      this.setState({
-        isShowingBitts: true
-      })
-    }
+  toggleBitts() {
+    this.state.isShowingBitts === true ?
+    this.setState({
+      isShowingBitts: false
+    }) :
+    this.setState({
+      isShowingBitts: true
+    })
   }
 
   render() {
@@ -106,8 +106,7 @@ class BittBooks extends Component {
       },
 
       noBittBooksMessage: {
-        fontWeight: '500',
-        color: '#5A6268'
+        fontWeight: '500'
       }
     }
 
@@ -132,12 +131,39 @@ class BittBooks extends Component {
           <BittBook
             key={key}
             id={key}
+            ref={instance => this.bittBook = instance}
             details={bittBooks[key]}
             updateBittBook={this.updateBittBook}
             deleteBittBook={this.deleteBittBook}
-            showBitts={this.showBitts}
+            toggleBitts={this.toggleBitts}
           />
         )
+    }
+
+    let floatingActionButtonState
+
+    if (this.state.isShowingBitts) {
+      floatingActionButtonState =
+      <div
+        className="tooltip-bitt"
+        data-tooltip="Add Bitt"
+      >
+        <FABContainer
+          id="fab-container"
+          addItem={(e) => this.bittBook.bitts.createBitt(e)}
+        />
+      </div>
+    } else {
+      floatingActionButtonState =
+      <div
+        className="tooltip"
+        data-tooltip="Add Bitt Book"
+      >
+        <FABContainer
+          id="fab-container"
+          addItem={this.createBittBook}
+        />
+      </div>
     }
 
     return (
@@ -147,16 +173,14 @@ class BittBooks extends Component {
       >
         {bittBooksState}
 
-        <FABContainer
-          createBittBook={this.createBittBook}
-        />
+        {floatingActionButtonState}
       </div>
     )
   }
 }
 
 BittBooks.defaultProps = {
-  noBittBooks: `You currently have 0 bitt books.`
+  noBittBooks: `You currently have 0 Bitt Books.`
 }
 
 BittBooks.propTypes = {

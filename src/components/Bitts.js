@@ -14,7 +14,7 @@ class Bitts extends Component {
     const bittBook = this.props.details
 
     const bitt = {
-      title: 'First Bitt',
+      title: 'Untitled',
       createdAt: timestamp,
       updatedAt: timestamp,
       body: 'Write a bitt...'
@@ -27,14 +27,26 @@ class Bitts extends Component {
     this.props.updateBitt(updatedBittBook)
   }
 
-  updateBitt(bitt) {
+  updateBitt(id, details) {
     const timestamp = Date.now()
 
-    const bittBook = this.props.details
+    const bittBook = details
 
     bittBook.updatedAt = timestamp
 
-    const updatedBittBook = bittBook.bitts[bitt]
+    const updatedBittBook = bittBook.bitts[id]
+
+    this.props.updateBitt(updatedBittBook)
+  }
+
+  deleteBitt(id, details) {
+    const timestamp = Date.now()
+
+    const updatedBittBook = details
+
+    updatedBittBook.updatedAt = timestamp
+
+    updatedBittBook.bitts[id] = null
 
     this.props.updateBitt(updatedBittBook)
   }
@@ -51,19 +63,24 @@ class Bitts extends Component {
         bottom: '0',
         left: '0',
         overflow: 'auto',
-        backgroundColor: '#F2F2F3',
+        backgroundColor: '#f5f5f5',
         cursor: 'pointer'
       },
 
       bittsCard: {
         zIndex: '9999',
+        minHeight: '85vh',
         margin: '84px 96px 16px 96px',
         padding: '0 0 32px 0',
-        backgroundColor: '#E4E5E5'
+        backgroundColor: '#e0e0e0'
       },
 
       bittsHeader: {
         margin: '0 72px 0 72px'
+      },
+
+      noBitts: {
+        fontWeight: '500'
       },
 
       bittsTitle: {
@@ -77,7 +94,30 @@ class Bitts extends Component {
 
     const {bitts} = details
 
-    const bittAmount = Object.keys(this.props.details.bitts).length
+    const bittAmount = Object.keys(details.bitts).length
+    let bittsState
+
+    if (bittAmount === 0) {
+      bittsState =
+      <h4
+        style={styles.noBitts}
+      >
+        {this.props.noBitts}
+      </h4>
+    } else {
+      bittsState =
+      Object
+        .keys(bitts)
+        .map(key =>
+          <Bitt
+            key={key}
+            id={key}
+            details={bitts[key]}
+            updateBitt={(id) => this.updateBitt(id, details)}
+            deleteBitt={(id) => this.deleteBitt(id, details)}
+          />
+        )
+    }
 
     return (
       <div
@@ -94,7 +134,7 @@ class Bitts extends Component {
               <div
                 style={styles.bittsTitle}
               >
-                {this.props.details.title + `'s Bitts`}
+                {this.props.details.title}
               </div>
             }
             subtitle={
@@ -114,27 +154,19 @@ class Bitts extends Component {
             style={styles.bittsHeader}
           />
 
-          {
-            Object
-            .keys(bitts)
-            .map(key =>
-              <Bitt
-                key={key}
-                id={key}
-                details={bitts[key]}
-                updateBitt={(bitt) => this.updateBitt(bitt)}
-              />
-            )
-          }
-
-          <button onTouchTap={(e) => this.createBitt(e)}>Add Bitt</button>
+          {bittsState}
         </Card>
       </div>
     )
   }
 }
 
+Bitts.defaultProps = {
+  noBitts: `You currently have 0 Bitts.`
+}
+
 Bitts.propTypes = {
+  noBitts: PropTypes.string.isRequired,
   details: PropTypes.object.isRequired,
   updateBitt: PropTypes.func.isRequired
 }

@@ -7,7 +7,7 @@ import ContentAdd from 'material-ui/svg-icons/content/add'
 
 const styles = {
   main: {
-    zIndex: '9999',
+    zIndex: '999',
     position: 'absolute',
     right: '0',
     bottom: '0',
@@ -23,7 +23,7 @@ const FABContainer = (props) => {
       style={styles.main}
     >
       <FloatingActionButton
-        onTouchTap={props.createBittBook}
+        onTouchTap={props.addItem}
       >
         <ContentAdd/>
       </FloatingActionButton>
@@ -32,7 +32,7 @@ const FABContainer = (props) => {
 }
 
 FABContainer.propTypes = {
-  createBittBook: PropTypes.func.isRequired
+  addItem: PropTypes.func.isRequired
 }
 
 export default FABContainer
