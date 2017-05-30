@@ -180,7 +180,7 @@ class BittBooks extends Component {
 }
 
 BittBooks.defaultProps = {
-  noBittBooks: `You currently have 0 Bitt Books.`
+  noBittBooks: `You currently have 0 Bitt Books...`
 }
 
 BittBooks.propTypes = {

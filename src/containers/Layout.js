@@ -2,7 +2,7 @@ import React from 'react'
 
 const styles = {
   main: {
-    height: '90.5vh',
+    height: '90vh',
     overflow: 'auto'
   }
 }

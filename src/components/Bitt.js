@@ -15,25 +15,54 @@ class Bitt extends Component {
     super()
 
     this.state = {
+      expanded: false,
       bittCardZDepth: 1,
       isShowingOptions: false
     }
   }
 
-  updateBitt(details) {
+  updateBitt(e, details) {
+    e.preventDefault()
+
     const timestamp = Date.now()
 
     const bitt = details
 
-    const bittBody = this.body.value
+    if (this.state.expanded === false) {
+      const bittTitle = this.title.value
 
-    bittBody.length === 0 ?
-    bitt.body = 'Write a bitt...' :
-    bitt.body = this.body.value
+      bittTitle.length === 0 ?
+      bitt.title = 'Untitled Bitt' :
+      bitt.title = this.title.value.trim()
 
-    bitt.updatedAt = timestamp
+      bitt.updatedAt = timestamp
 
-    this.props.updateBitt(bitt)
+      this.props.updateBitt(bitt)
+    } else {
+      const bittTitle = this.title.value
+
+      bittTitle.length === 0 ?
+      bitt.title = 'Untitled Bitt' :
+      bitt.title = this.title.value.trim()
+
+      const bittBody = this.body.value
+
+      bittBody.length === 0 ?
+      bitt.body = 'Write a bitt...' :
+      bitt.body = this.body.value
+
+      bitt.updatedAt = timestamp
+
+      this.props.updateBitt(bitt)
+    }
+  }
+
+  handleKeyPressUpdateBitt(e, details) {
+    if (e.key === 'Enter') {
+      this.updateBitt(e, details)
+
+      this.title.blur()
+    }
   }
 
   deleteBitt(e, id) {
@@ -58,6 +87,20 @@ class Bitt extends Component {
     })
   }
 
+  toggleExpand(e) {
+    e.stopPropagation()
+
+    this.state.expanded === false ?
+    this.setState({
+      expanded: true
+    }) :
+    this.setState({
+      expanded: false
+    })
+
+    this.changeBittZDepth(e)
+  }
+
   changeBittZDepth(e) {
     e.stopPropagation()
 
@@ -80,6 +123,20 @@ class Bitt extends Component {
 
       bittTitle: {
         color: '#146D8F'
+      },
+
+      bittTitleInput: {
+        width: '88%',
+        overflow: 'hidden',
+        whiteSpace: 'nowrap',
+        margin: '0',
+        outline: 'none',
+        border: 'none',
+        padding: '0',
+        fontSize: '16px',
+        fontWeight: 'bold',
+        color: '#146D8F',
+        textOverflow: 'ellipsis'
       },
 
       bittBodyPreview: {
@@ -135,19 +192,28 @@ class Bitt extends Component {
         id="bitt-card"
         style={styles.bittCard}
         zDepth={this.state.bittCardZDepth}
+        expanded={this.state.expanded}
         onMouseEnter={(e) => this.showOptions(e)}
         onMouseLeave={(e) => this.hideOptions(e)}
-        onTouchTap={(e) => this.changeBittZDepth(e)}
+        onTouchTap={(e) => this.toggleExpand(e)}
       >
         {isShowingOptions}
 
         <CardHeader
+          style={styles.bittHeader}
+          actAsExpander={true}
           title={
-            <div
-              style={styles.bittTitle}
-            >
-              {details.title}
-            </div>
+            <input
+              id="bitt-title-input"
+              style={styles.bittTitleInput}
+              placeholder="Untitled Bitt"
+              defaultValue={details.title}
+              autoComplete="false"
+              ref={(input) => this.title = input}
+              onTouchTap={e => e.stopPropagation()}
+              onChange={(e) => this.updateBitt(e, details)}
+              onKeyPress={(e) => this.handleKeyPressUpdateBitt(e, details)}
+            />
           }
           subtitle={
             <div>
@@ -165,8 +231,6 @@ class Bitt extends Component {
               </div>
             </div>
           }
-          actAsExpander={true}
-          style={styles.bittHeader}
         />
 
         <CardText
@@ -180,12 +244,13 @@ class Bitt extends Component {
           <textarea
             id="bitt-textarea"
             style={styles.bittTextarea}
+            placeholder="Write a bitt..."
             defaultValue={details.body}
             autoFocus={true}
             autoComplete="false"
             ref={(input) => this.body = input}
-            onChange={() => this.updateBitt(details)}
             onTouchTap={e => e.stopPropagation()}
+            onChange={(e) => this.updateBitt(e, details)}
           />
         </CardText>
       </Card>

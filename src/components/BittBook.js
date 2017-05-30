@@ -29,6 +29,7 @@ class BittBook extends Component {
     const updatedBittBook = details
 
     const bittBookTitle = this.title.value
+
     bittBookTitle.length === 0 ?
     updatedBittBook.title = 'Untitled' :
     updatedBittBook.title = this.title.value.trim()
@@ -119,9 +120,9 @@ class BittBook extends Component {
       },
 
       bittBookTitleInput: {
+        width: '92%',
         overflow: 'hidden',
         whiteSpace: 'nowrap',
-        width: '92%',
         margin: '0 0 0 8px',
         outline: 'none',
         border: 'none',
@@ -267,6 +268,7 @@ class BittBook extends Component {
               <input
                 id="bitt-book-title-input"
                 style={styles.bittBookTitleInput}
+                placeholder="Untitled"
                 defaultValue={details.title}
                 autoComplete="false"
                 ref={(input) => this.title = input}

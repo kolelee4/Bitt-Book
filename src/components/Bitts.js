@@ -14,7 +14,7 @@ class Bitts extends Component {
     const bittBook = this.props.details
 
     const bitt = {
-      title: 'Untitled',
+      title: 'Untitled Bitt',
       createdAt: timestamp,
       updatedAt: timestamp,
       body: 'Write a bitt...'
@@ -69,7 +69,7 @@ class Bitts extends Component {
 
       bittsContainer: {
         zIndex: '1000',
-        minHeight: '85vh',
+        minHeight: '84vh',
         margin: '84px 7.6vw 16px 7.6vw', // 96px
         backgroundColor: '#e0e0e0'
       },
