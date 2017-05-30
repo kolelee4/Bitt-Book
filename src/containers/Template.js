@@ -12,7 +12,6 @@ import Layout from '../containers/Layout'
 // Routes
 import BittBooks from '../routes/BittBooks'
 import Account from '../routes/Account'
-// import NotFound from '../routes/NotFound'
 
 // Components
 import NavBar from '../components/NavBar'

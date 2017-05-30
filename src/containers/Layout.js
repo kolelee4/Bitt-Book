@@ -3,8 +3,7 @@ import React from 'react'
 const styles = {
   main: {
     height: '90.5vh',
-    overflow: 'auto',
-    margin: '0 16px 0 16px'
+    overflow: 'auto'
   }
 }
 

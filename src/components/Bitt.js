@@ -72,9 +72,9 @@ class Bitt extends Component {
 
   render() {
     const styles = {
-      main: {
+      bittCard: {
         overflow: 'hidden',
-        margin: '0 64px 16px 64px',
+        margin: '0 6.9vw 20px 6.9vw', // 88px
         transitionDuration: '0.25s'
       },
 
@@ -83,7 +83,7 @@ class Bitt extends Component {
       },
 
       bittBodyPreview: {
-        width: '72vw',
+        width: '68vw',
         overflow: 'hidden',
         whiteSpace: 'nowrap',
         textOverflow: 'ellipsis',
@@ -96,16 +96,16 @@ class Bitt extends Component {
 
       bittTextarea: {
         resize: 'none',
-        width: '88%',
+        width: '95%',
         outline: 'none',
         border: 'none',
-        margin: '-16px 0 0 0',
-        padding: '16px 16px 0 16px',
+        margin: '0 0 0 0',
+        padding: '20px 20px 0 20px',
         fontSize: '13px',
         fontWeight: '500'
       },
 
-      bittDelete: {
+      bittDeleteButton: {
         float: 'right'
       }
     }
@@ -118,20 +118,22 @@ class Bitt extends Component {
       isShowingOptions =
       <IconButton
         id="bitt-delete-button"
-        style={styles.bittDelete}
+        style={styles.bittDeleteButton}
         onTouchTap={(e) => this.deleteBitt(e, id)}
       >
         <ActionDelete
+          hoverColor='#d32f2f'
         />
       </IconButton>
     } else {
       isShowingOptions =
-      <div></div>
+      null
     }
 
     return (
       <Card
-        style={styles.main}
+        id="bitt-card"
+        style={styles.bittCard}
         zDepth={this.state.bittCardZDepth}
         onMouseEnter={(e) => this.showOptions(e)}
         onMouseLeave={(e) => this.hideOptions(e)}
@@ -167,16 +169,16 @@ class Bitt extends Component {
           style={styles.bittHeader}
         />
 
-        <Divider
-          style={styles.bittDivider}
-        />
-
         <CardText
           expandable={true}
           style={styles.bittCardText}
         >
+          <Divider
+            style={styles.bittDivider}
+          />
+
           <textarea
-            id="bitt-edit-textarea"
+            id="bitt-textarea"
             style={styles.bittTextarea}
             defaultValue={details.body}
             autoFocus={true}

@@ -33,10 +33,6 @@ class BittBooks extends Component {
     })
   }
 
-  componentWillUnmount() {
-    base.removeBinding(this.ref)
-  }
-
   createBittBook() {
     const bittBooks = {...this.state.bittBooks}
 
@@ -99,10 +95,14 @@ class BittBooks extends Component {
     })
   }
 
+  componentWillUnmount() {
+    base.removeBinding(this.ref)
+  }
+
   render() {
     const styles = {
-      main: {
-        padding: '0 0 0 60px'
+      bittBooksRoute: {
+        padding: '0 0 0 7.6vw' // 96px
       },
 
       noBittBooksMessage: {
@@ -169,7 +169,7 @@ class BittBooks extends Component {
     return (
       <div
         id="bitt-books-route"
-        style={styles.main}
+        style={styles.bittBooksRoute}
       >
         {bittBooksState}
 

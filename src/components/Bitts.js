@@ -53,7 +53,7 @@ class Bitts extends Component {
 
   render() {
     const styles = {
-      bittsOutlet: {
+      bittsOutletCover: {
         zIndex: '999',
         width: '100vw',
         height: '100vh',
@@ -67,26 +67,30 @@ class Bitts extends Component {
         cursor: 'pointer'
       },
 
-      bittsCard: {
-        zIndex: '9999',
+      bittsContainer: {
+        zIndex: '1000',
         minHeight: '85vh',
-        margin: '84px 96px 16px 96px',
-        padding: '0 0 32px 0',
+        margin: '84px 7.6vw 16px 7.6vw', // 96px
         backgroundColor: '#e0e0e0'
       },
 
       bittsHeader: {
-        margin: '0 72px 0 72px'
+        margin: '0 7.6vw 0 7.6vw' // 96px
       },
 
       noBitts: {
+        margin: '0 7.6vw 0 7.6vw', // 96px
         fontWeight: '500'
       },
 
-      bittsTitle: {
-        fontSize: '20px',
-        fontWeight: '700',
+      bittBookTitle: {
+        margin: '0',
+        padding: '0',
         color: '#146D8F'
+      },
+
+      bittCount: {
+        margin: '-16px 0 0 0'
       }
     }
 
@@ -95,54 +99,32 @@ class Bitts extends Component {
     const {bitts} = details
 
     const bittAmount = Object.keys(details.bitts).length
-    let bittsState
-
-    if (bittAmount === 0) {
-      bittsState =
-      <h4
-        style={styles.noBitts}
-      >
-        {this.props.noBitts}
-      </h4>
-    } else {
-      bittsState =
-      Object
-        .keys(bitts)
-        .map(key =>
-          <Bitt
-            key={key}
-            id={key}
-            details={bitts[key]}
-            updateBitt={(id) => this.updateBitt(id, details)}
-            deleteBitt={(id) => this.deleteBitt(id, details)}
-          />
-        )
-    }
 
     return (
       <div
-        id="bitts-card"
-        style={styles.bittsOutlet}
+        id="bitts-outlet-cover"
+        style={styles.bittsOutletCover}
       >
         <Card
-          id="bitts-card"
-          style={styles.bittsCard}
+          id="bitts-container"
+          style={styles.bittsContainer}
           zDepth={0}
         >
           <CardHeader
+            style={styles.bittsHeader}
             title={
               <div
-                style={styles.bittsTitle}
+                style={styles.bittBookTitle}
               >
-                {this.props.details.title}
+                <h2>{this.props.details.title}</h2>
               </div>
             }
             subtitle={
               <div
-                id="subtitle-container"
+                id="bitt-count"
+                style={styles.bittCount}
               >
-                <div
-                >
+                <div>
                   {
                     bittAmount === 1 ?
                     bittAmount + ' Bitt' :
@@ -151,10 +133,21 @@ class Bitts extends Component {
                 </div>
               </div>
             }
-            style={styles.bittsHeader}
           />
 
-          {bittsState}
+          {
+            Object
+              .keys(bitts)
+              .map(key =>
+                <Bitt
+                  key={key}
+                  id={key}
+                  details={bitts[key]}
+                  updateBitt={(id) => this.updateBitt(id, details)}
+                  deleteBitt={(id) => this.deleteBitt(id, details)}
+                />
+              )
+          }
         </Card>
       </div>
     )
