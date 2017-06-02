@@ -19,6 +19,18 @@ class BittBook extends Component {
       isShowingOptions: false,
       bittBooksDisplay: 'inline-block'
     }
+
+    this.updateBittBook = this.updateBittBook.bind(this)
+
+    this.handleKeyPressUpdateBittBook = this.handleKeyPressUpdateBittBook.bind(this)
+
+    this.showOptions = this.showOptions.bind(this)
+
+    this.hideOptions = this.hideOptions.bind(this)
+
+    this.toggleBitts = this.toggleBitts.bind(this)
+
+    this.updateBitt = this.updateBitt.bind(this)
   }
 
   updateBittBook(e, details) {
@@ -72,7 +84,7 @@ class BittBook extends Component {
       isShowingOptions: false
     })
 
-    this.props.toggleBitts()
+    this.props.toggleBittsState()
   }
 
   updateBitt(updatedBittBook) {
@@ -109,8 +121,8 @@ class BittBook extends Component {
       bittBookTitleInputSubmitting: {
         overflow: 'hidden',
         whiteSpace: 'nowrap',
-        width: '90%',
-        margin: '0 0 0 9px',
+        width: '88%',
+        margin: '0 0 0 8px',
         outline: 'none',
         border: 'none',
         fontSize: '16px',
@@ -257,8 +269,8 @@ class BittBook extends Component {
       <Card
         id="bitt-book-card"
         style={styles.bittBookCard}
-        onMouseEnter={() => this.showOptions()}
-        onMouseLeave={() => this.hideOptions()}
+        onMouseEnter={this.showOptions}
+        onMouseLeave={this.hideOptions}
       >
         <CardHeader
           style={styles.bittBookHeader}
@@ -292,7 +304,7 @@ class BittBook extends Component {
       <div
         id="bitt-book"
         style={styles.bittBook}
-        onTouchTap={() => this.toggleBitts()}
+        onTouchTap={this.toggleBitts}
       >
         {bittBookState}
       </div>
@@ -305,7 +317,7 @@ BittBook.propTypes = {
   details: PropTypes.object.isRequired,
   updateBittBook: PropTypes.func.isRequired,
   deleteBittBook: PropTypes.func.isRequired,
-  toggleBitts: PropTypes.func.isRequired
+  toggleBittsState: PropTypes.func.isRequired
 }
 
 export default BittBook

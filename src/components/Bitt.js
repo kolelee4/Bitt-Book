@@ -20,6 +20,20 @@ class Bitt extends Component {
       bittCardZDepth: 1,
       isShowingOptions: false
     }
+
+    this.updateBitt = this.updateBitt.bind(this)
+
+    this.handleKeyPressUpdateBitt = this.handleKeyPressUpdateBitt.bind(this)
+
+    this.deleteBitt = this.deleteBitt.bind(this)
+
+    this.showOptions = this.showOptions.bind(this)
+
+    this.hideOptions = this.hideOptions.bind(this)
+
+    this.toggleExpand = this.toggleExpand.bind(this)
+
+    this.changeBittZDepth = this.changeBittZDepth.bind(this)
   }
 
   updateBitt(e, details) {
@@ -72,17 +86,13 @@ class Bitt extends Component {
     this.props.deleteBitt(id)
   }
 
-  showOptions(e) {
-    e.stopPropagation()
-
+  showOptions() {
     this.setState({
       isShowingOptions: true
     })
   }
 
-  hideOptions(e) {
-    e.stopPropagation()
-
+  hideOptions() {
     this.setState({
       isShowingOptions: false
     })
@@ -99,12 +109,10 @@ class Bitt extends Component {
       expanded: false
     })
 
-    this.changeBittZDepth(e)
+    this.changeBittZDepth()
   }
 
-  changeBittZDepth(e) {
-    e.stopPropagation()
-
+  changeBittZDepth() {
     this.state.bittCardZDepth === 1 ?
     this.setState({
       bittCardZDepth: 3
@@ -210,8 +218,8 @@ class Bitt extends Component {
         style={styles.bittCard}
         zDepth={this.state.bittCardZDepth}
         expanded={this.state.expanded}
-        onMouseEnter={(e) => this.showOptions(e)}
-        onMouseLeave={(e) => this.hideOptions(e)}
+        onMouseEnter={this.showOptions}
+        onMouseLeave={this.hideOptions}
         onTouchTap={(e) => this.toggleExpand(e)}
       >
         {bittAmount > 1 ? isShowingOptions : null}

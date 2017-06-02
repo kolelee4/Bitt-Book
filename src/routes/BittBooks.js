@@ -23,7 +23,7 @@ class BittBooks extends Component {
 
     this.deleteBittBook = this.deleteBittBook.bind(this)
 
-    this.toggleBitts = this.toggleBitts.bind(this)
+    this.toggleBittsState = this.toggleBittsState.bind(this)
   }
 
   componentWillMount() {
@@ -85,7 +85,7 @@ class BittBooks extends Component {
     })
   }
 
-  toggleBitts() {
+  toggleBittsState() {
     this.state.isShowingBitts === true ?
     this.setState({
       isShowingBitts: false
@@ -135,7 +135,7 @@ class BittBooks extends Component {
             details={bittBooks[key]}
             updateBittBook={this.updateBittBook}
             deleteBittBook={this.deleteBittBook}
-            toggleBitts={this.toggleBitts}
+            toggleBittsState={this.toggleBittsState}
           />
         )
     }

@@ -8,6 +8,16 @@ import ContentAdd from 'material-ui/svg-icons/content/add'
 import Bitt from './Bitt'
 
 class Bitts extends Component {
+  constructor() {
+    super()
+
+    this.createBitt = this.createBitt.bind(this)
+
+    this.updateBitt = this.updateBitt.bind(this)
+
+    this.deleteBitt = this.deleteBitt.bind(this)
+  }
+
   createBitt(e) {
     e.stopPropagation()
 
