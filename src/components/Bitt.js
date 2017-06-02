@@ -9,6 +9,7 @@ import {Card, CardHeader, CardText} from 'material-ui/Card'
 import Divider from 'material-ui/Divider'
 import IconButton from 'material-ui/IconButton'
 import ActionDelete from 'material-ui/svg-icons/action/delete'
+// import BittEditor from './BittEditor'
 
 class Bitt extends Component {
   constructor() {
@@ -154,6 +155,7 @@ class Bitt extends Component {
       bittTextarea: {
         resize: 'none',
         width: '95%',
+        minHeight: '45vh',
         outline: 'none',
         border: 'none',
         margin: '0 0 0 0',
@@ -167,7 +169,7 @@ class Bitt extends Component {
       }
     }
 
-    const {details, id} = this.props
+    const {id, details, bittAmount} = this.props
 
     let isShowingOptions
 
@@ -179,11 +181,26 @@ class Bitt extends Component {
         onTouchTap={(e) => this.deleteBitt(e, id)}
       >
         <ActionDelete
-          hoverColor='#d32f2f'
+          color='#757575'
+          hoverColor='#424242'
         />
       </IconButton>
     } else {
       isShowingOptions =
+      null
+    }
+
+    let isShowingBittBody
+
+    if (this.state.expanded === false) {
+      isShowingBittBody =
+      <div
+        style={styles.bittBodyPreview}
+      >
+        {details.body}
+      </div>
+    } else {
+      isShowingBittBody =
       null
     }
 
@@ -197,7 +214,7 @@ class Bitt extends Component {
         onMouseLeave={(e) => this.hideOptions(e)}
         onTouchTap={(e) => this.toggleExpand(e)}
       >
-        {isShowingOptions}
+        {bittAmount > 1 ? isShowingOptions : null}
 
         <CardHeader
           style={styles.bittHeader}
@@ -208,7 +225,7 @@ class Bitt extends Component {
               style={styles.bittTitleInput}
               placeholder="Untitled Bitt"
               defaultValue={details.title}
-              autoComplete="false"
+              autoComplete="off"
               ref={(input) => this.title = input}
               onTouchTap={e => e.stopPropagation()}
               onChange={(e) => this.updateBitt(e, details)}
@@ -224,11 +241,7 @@ class Bitt extends Component {
                 {details.updatedAt}
               </Moment>
               ...
-              <div
-                style={styles.bittBodyPreview}
-              >
-                {details.body}
-              </div>
+              {isShowingBittBody}
             </div>
           }
         />
@@ -247,7 +260,6 @@ class Bitt extends Component {
             placeholder="Write a bitt..."
             defaultValue={details.body}
             autoFocus={true}
-            autoComplete="false"
             ref={(input) => this.body = input}
             onTouchTap={e => e.stopPropagation()}
             onChange={(e) => this.updateBitt(e, details)}

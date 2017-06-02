@@ -180,12 +180,13 @@ class BittBook extends Component {
         style={styles.bittBookDeleteContainer}
       >
         <IconButton
-          onTouchTap={(e) => this.props.deleteBittBook(e, id)}
           style={styles.deleteIconButton}
+          onTouchTap={(e) => this.props.deleteBittBook(e, id)}
         >
           <ActionDelete
             style={styles.bittBookDeleteIcon}
-            hoverColor='#d32f2f'
+            color='#757575'
+            hoverColor='#424242'
           />
         </IconButton>
       </div>
@@ -235,7 +236,7 @@ class BittBook extends Component {
                   id="bitt-book-title-input-submitting"
                   style={styles.bittBookTitleInputSubmitting}
                   autoFocus="true"
-                  autoComplete="false"
+                  autoComplete="off"
                   ref={(input) => this.title = input}
                   onBlur={(e) => this.updateBittBook(e, details)}
                 />
@@ -260,6 +261,7 @@ class BittBook extends Component {
         onMouseLeave={() => this.hideOptions()}
       >
         <CardHeader
+          style={styles.bittBookHeader}
           title={
             <div
               id="bitt-book-title-container"
@@ -270,7 +272,7 @@ class BittBook extends Component {
                 style={styles.bittBookTitleInput}
                 placeholder="Untitled"
                 defaultValue={details.title}
-                autoComplete="false"
+                autoComplete="off"
                 ref={(input) => this.title = input}
                 onTouchTap={e => e.stopPropagation()}
                 onChange={(e) => this.updateBittBook(e, details)}
@@ -280,8 +282,8 @@ class BittBook extends Component {
           }
           subtitle={
             subtitleState
+
           }
-          style={styles.bittBookHeader}
         />
       </Card>
     }

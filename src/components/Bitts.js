@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 
 // Components
 import {Card, CardHeader} from 'material-ui/Card'
+import FloatingActionButton from './FloatingActionButton'
+import ContentAdd from 'material-ui/svg-icons/content/add'
 import Bitt from './Bitt'
 
 class Bitts extends Component {
@@ -83,6 +85,16 @@ class Bitts extends Component {
         fontWeight: '500'
       },
 
+      FABContainer: {
+        zIndex: '999',
+        position: 'absolute',
+        top: '0',
+        right: '0',
+        width: '40px',
+        height: '40px',
+        margin: '120px 16.5vw 0 0'
+      },
+
       bittBookTitle: {
         margin: '0',
         padding: '0',
@@ -135,6 +147,20 @@ class Bitts extends Component {
             }
           />
 
+          <div
+            style={styles.FABContainer}
+            className="tooltip-bitt"
+            data-tooltip="Add Bitt"
+          >
+            <FloatingActionButton
+              // backgroundColor='#529bbf'
+              mini={true}
+              onTouchTap={(e) => this.createBitt(e)}
+            >
+              <ContentAdd/>
+            </FloatingActionButton>
+          </div>
+
           {
             Object
               .keys(bitts)
@@ -143,6 +169,7 @@ class Bitts extends Component {
                   key={key}
                   id={key}
                   details={bitts[key]}
+                  bittAmount={Object.keys(details.bitts).length}
                   updateBitt={(id) => this.updateBitt(id, details)}
                   deleteBitt={(id) => this.deleteBitt(id, details)}
                 />
