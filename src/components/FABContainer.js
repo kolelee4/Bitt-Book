@@ -23,7 +23,6 @@ const FABContainer = (props) => {
       style={styles.main}
     >
       <FloatingActionButton
-        backgroundColor={props.fabColor}
         onTouchTap={props.addItem}
       >
         <ContentAdd/>

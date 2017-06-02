@@ -30,7 +30,7 @@ const styles = {
 
 const titleLink = (
   <NavLink
-    to="/bitt-books"
+    to="/"
     style={styles.titleLinkStyle}
   >
     Bitt Book

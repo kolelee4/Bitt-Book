@@ -118,7 +118,7 @@ class Bitt extends Component {
     const styles = {
       bittCard: {
         overflow: 'hidden',
-        margin: '0 6.9vw 20px 6.9vw', // 88px
+        margin: '20px 6.9vw 0 6.9vw',
         transitionDuration: '0.25s'
       },
 
@@ -271,10 +271,11 @@ class Bitt extends Component {
 }
 
 Bitt.propTypes = {
-  updateBitt: PropTypes.func.isRequired,
-  deleteBitt: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
   details: PropTypes.object.isRequired,
-  id: PropTypes.string.isRequired
+  bittAmount: PropTypes.number.isRequired,
+  updateBitt: PropTypes.func.isRequired,
+  deleteBitt: PropTypes.func.isRequired
 }
 
 export default Bitt

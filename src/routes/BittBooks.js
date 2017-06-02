@@ -145,18 +145,6 @@ class BittBooks extends Component {
     if (this.state.isShowingBitts) {
       floatingActionButtonState =
       null
-      /*
-      <div
-        className="tooltip-bitt"
-        data-tooltip="Add Bitt"
-      >
-        <FABContainer
-          id="fab-container"
-          fabColor='#529bbf'
-          addItem={(e) => this.bittBook.bitts.createBitt(e)}
-        />
-      </div>
-      */
     } else {
       floatingActionButtonState =
       <div

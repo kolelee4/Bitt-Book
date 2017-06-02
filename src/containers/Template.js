@@ -1,8 +1,7 @@
 import React from 'react'
 import {
   Switch,
-  Route,
-  Redirect
+  Route
 } from 'react-router-dom'
 
 // Containers
@@ -23,16 +22,12 @@ const Template = () => {
 
       <Layout>
         <Switch>
-          <Redirect
-            exact from="/"
-            to="/bitt-books"
-          />
           <Route
-            path="/bitt-books"
+            exact path="/"
             component={BittBooks}
           />
           <Route
-            path="/account"
+            exact path="/account"
             component={Account}
           />
         </Switch>

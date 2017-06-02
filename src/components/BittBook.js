@@ -49,10 +49,6 @@ class BittBook extends Component {
     }
   }
 
-  updateBitt(updatedBittBook) {
-    this.props.updateBittBook(updatedBittBook)
-  }
-
   showOptions() {
     this.setState({
       isShowingOptions: true
@@ -77,6 +73,10 @@ class BittBook extends Component {
     })
 
     this.props.toggleBitts()
+  }
+
+  updateBitt(updatedBittBook) {
+    this.props.updateBittBook(updatedBittBook)
   }
 
   render() {
@@ -120,7 +120,7 @@ class BittBook extends Component {
       },
 
       bittBookTitleInput: {
-        width: '92%',
+        width: '88%',
         overflow: 'hidden',
         whiteSpace: 'nowrap',
         margin: '0 0 0 8px',
@@ -167,7 +167,7 @@ class BittBook extends Component {
       }
     }
 
-    const {details, id} = this.props
+    const {id, details} = this.props
 
     const bittAmount = Object.keys(details.bitts).length
 
@@ -301,6 +301,7 @@ class BittBook extends Component {
 }
 
 BittBook.propTypes = {
+  id: PropTypes.string.isRequired,
   details: PropTypes.object.isRequired,
   updateBittBook: PropTypes.func.isRequired,
   deleteBittBook: PropTypes.func.isRequired,

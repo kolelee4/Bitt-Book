@@ -72,16 +72,17 @@ class Bitts extends Component {
       bittsContainer: {
         zIndex: '1000',
         minHeight: '84vh',
-        margin: '84px 7.6vw 16px 7.6vw', // 96px
+        margin: '84px 7.6vw 20px 7.6vw',
+        padding: '0 0 20px 0',
         backgroundColor: '#e0e0e0'
       },
 
       bittsHeader: {
-        margin: '0 7.6vw 0 7.6vw' // 96px
+        margin: '0 7.6vw -20px 7.6vw'
       },
 
       noBitts: {
-        margin: '0 7.6vw 0 7.6vw', // 96px
+        margin: '0 7.6vw 0 7.6vw',
         fontWeight: '500'
       },
 
@@ -153,7 +154,6 @@ class Bitts extends Component {
             data-tooltip="Add Bitt"
           >
             <FloatingActionButton
-              // backgroundColor='#529bbf'
               mini={true}
               onTouchTap={(e) => this.createBitt(e)}
             >
