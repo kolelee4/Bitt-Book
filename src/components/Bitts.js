@@ -154,7 +154,7 @@ class Bitts extends Component {
           <Card
             id="bitts-card"
             style={styles.bittsCard}
-            zDepth={3}
+            zDepth={0}
           >
             <CardHeader
               style={styles.bittsHeader}

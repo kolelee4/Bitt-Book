@@ -86,7 +86,7 @@ class BittBook extends Component {
     this.state.width === '164px' ?
     this.setState({
       position: 'absolute',
-      zDepth: 3,
+      zDepth: 0,
       width: '85vw',
       height: '85vh',
       background: '#e0e0e0'
