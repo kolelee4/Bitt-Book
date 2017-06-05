@@ -125,7 +125,12 @@ class Moment extends Component {
     } = this.state
 
     return (
-        <time dateTime={datetime.format()} {...other}>{content}</time>
+      <time
+        dateTime={datetime.format()}
+        {...other}
+      >
+        {content}
+      </time>
     )
   }
 }

@@ -13,7 +13,7 @@ class BittBooks extends Component {
     super()
 
     this.state = {
-      bittBooks: {},
+      bittBooks:      {},
       isShowingBitts: false
     }
 
@@ -29,7 +29,7 @@ class BittBooks extends Component {
   componentWillMount() {
     this.ref = base.syncState('bitt-books', {
       context: this,
-      state: 'bittBooks'
+      state:   'bittBooks'
     })
   }
 
@@ -39,18 +39,18 @@ class BittBooks extends Component {
     const timestamp = Date.now()
 
     const bittBook = {
-      title: 'Untitled',
-      createdAt: timestamp,
-      updatedAt: timestamp,
+      title:         'Untitled',
+      createdAt:     timestamp,
+      updatedAt:     timestamp,
       isFirstSubmit: true,
-      bitts: {}
+      bitts:         {}
     }
 
     const bitt = {
-      title: 'First Bitt',
+      title:     'First Bitt',
       createdAt: timestamp,
       updatedAt: timestamp,
-      body: 'Write a bitt...'
+      body:      'Write a bitt...'
     }
 
     bittBooks[`bittBook-${timestamp}`] = bittBook
@@ -86,12 +86,8 @@ class BittBooks extends Component {
   }
 
   toggleBittsState() {
-    this.state.isShowingBitts === true ?
     this.setState({
-      isShowingBitts: false
-    }) :
-    this.setState({
-      isShowingBitts: true
+      isShowingBitts: !this.state.isShowingBitts
     })
   }
 
@@ -102,7 +98,9 @@ class BittBooks extends Component {
   render() {
     const styles = {
       bittBooksRoute: {
-        padding: '0 0 0 7.6vw' // 96px
+        height: '90.5vh',
+        overflow: 'auto',
+        padding: '0 0 0 7.6vw'
       },
 
       noBittBooksMessage: {

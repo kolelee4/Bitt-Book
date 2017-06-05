@@ -1,6 +1,9 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 
+// Animations
+// import CSSTransitionGroup from 'react-addons-css-transition-group'
+
 // Helpers
 import Moment from '../helpers/react-moment'
 
@@ -15,9 +18,13 @@ class BittBook extends Component {
     super()
 
     this.state = {
-      isShowingBitts: false,
+      isShowingBitts:   false,
       isShowingOptions: false,
-      bittBooksDisplay: 'inline-block'
+      position: '',
+      zDepth: 1,
+      width: '164px',
+      height: '172px',
+      background: 'white'
     }
 
     this.updateBittBook = this.updateBittBook.bind(this)
@@ -63,28 +70,45 @@ class BittBook extends Component {
 
   showOptions() {
     this.setState({
-      isShowingOptions: true
+      isShowingOptions: true,
+      zDepth: 2
     })
   }
 
   hideOptions() {
     this.setState({
-      isShowingOptions: false
+      isShowingOptions: false,
+      zDepth: 1
     })
   }
 
   toggleBitts() {
-    this.state.isShowingBitts === true ?
+    this.state.width === '164px' ?
     this.setState({
-      isShowingBitts: false,
-      isShowingOptions: false
+      position: 'absolute',
+      zDepth: 3,
+      width: '85vw',
+      height: '85vh',
+      background: '#e0e0e0'
     }) :
     this.setState({
-      isShowingBitts: true,
-      isShowingOptions: false
+      position: '',
+      zDepth: 1,
+      width: '164px',
+      height: '172px',
+      background: 'white'
     })
 
-    this.props.toggleBittsState()
+    setTimeout(() => {
+      this.setState({
+        isShowingBitts: !this.state.isShowingBitts,
+        isShowingOptions: false
+      })
+    }, 80)
+
+    setTimeout(() => {
+      this.props.toggleBittsState()
+    }, 80)
   }
 
   updateBitt(updatedBittBook) {
@@ -94,17 +118,19 @@ class BittBook extends Component {
   render() {
     const styles = {
       bittBook: {
-        display: 'inline-block'
+        bittBookCardPosition: this.state.position
       },
 
       bittBookCard: {
-        display: this.state.bittBooksDisplay,
+        cursor: 'pointer',
+        position: this.state.position,
         overflow: 'hidden',
         float: 'left',
-        width: '164px',
-        height: '172px',
+        width: this.state.width,
+        height: this.state.height,
         margin: '20px 20px 0 0',
-        cursor: 'pointer'
+        background: this.state.background,
+        transition: 'all 100ms'
       },
 
       bittBookHeader: {
@@ -112,36 +138,21 @@ class BittBook extends Component {
       },
 
       bittBookTitleContainer: {
-        width: '128px',
-        height: '100px',
-        overflow: 'auto',
-        margin: '20px 0 12px 0'
-      },
-
-      bittBookTitleInputSubmitting: {
+        width: '132px',
         overflow: 'hidden',
-        whiteSpace: 'nowrap',
-        width: '88%',
-        margin: '0 0 0 8px',
-        outline: 'none',
-        border: 'none',
-        fontSize: '16px',
-        fontWeight: 'bold',
-        color: '#424242',
-        textAlign: 'center'
+        margin: '20px 0 4px 0'
       },
 
       bittBookTitleInput: {
-        width: '88%',
+        width: '132px',
         overflow: 'hidden',
         whiteSpace: 'nowrap',
-        margin: '0 0 0 8px',
         outline: 'none',
         border: 'none',
+        background: 'transparent',
         fontSize: '16px',
         fontWeight: 'bold',
         color: '#146D8F',
-        textAlign: 'center',
         textOverflow: 'ellipsis'
       },
 
@@ -149,22 +160,22 @@ class BittBook extends Component {
         display: 'inline-block',
         width: '100%',
         height: '100%',
-        margin: '-4px 0 0 0'
+        margin: '0 0 0 0'
       },
 
       bittBookMomentDate: {
-        float: 'left'
+        //
       },
 
       bittAmountMessage: {
-        float: 'right'
+        //
       },
 
       bittBookDeleteContainer: {
         width: '100%',
         height: '100%',
         float: 'right',
-        margin: '-4px 0 0 0',
+        margin: '56px 0 0 0',
         cursor: 'pointer'
       },
 
@@ -174,8 +185,7 @@ class BittBook extends Component {
       },
 
       bittBookDeleteIcon: {
-        margin: '0',
-        padding: '0'
+        //
       }
     }
 
@@ -187,20 +197,44 @@ class BittBook extends Component {
 
     if (this.state.isShowingOptions) {
       subtitleState =
-      <div
-        id="bitt-book-delete-container"
-        style={styles.bittBookDeleteContainer}
-      >
-        <IconButton
-          style={styles.deleteIconButton}
-          onTouchTap={(e) => this.props.deleteBittBook(e, id)}
+      <div>
+        <div
+          id="bitt-book-subtitle-container"
+          style={styles.bittBookSubtitleContainer}
         >
-          <ActionDelete
-            style={styles.bittBookDeleteIcon}
-            color='#757575'
-            hoverColor='#424242'
-          />
-        </IconButton>
+          <Moment
+            format="MM/DD/YY"
+            style={styles.bittBookMomentDate}
+          >
+            {details.createdAt}
+          </Moment>
+
+          <div
+            style={styles.bittAmountMessage}
+          >
+            {
+              bittAmount === 1 ?
+              bittAmount + ' Bitt' :
+              bittAmount + ' Bitts'
+            }
+          </div>
+        </div>
+
+        <div
+          id="bitt-book-delete-container"
+          style={styles.bittBookDeleteContainer}
+        >
+          <IconButton
+            style={styles.deleteIconButton}
+            onTouchTap={(e) => this.props.deleteBittBook(e, id)}
+          >
+            <ActionDelete
+              style={styles.bittBookDeleteIcon}
+              color='#757575'
+              hoverColor='#424242'
+            />
+          </IconButton>
+        </div>
       </div>
     } else {
       subtitleState =
@@ -245,8 +279,9 @@ class BittBook extends Component {
                 onSubmit={(e) => this.updateBittBook(e, details)}
               >
                 <input
-                  id="bitt-book-title-input-submitting"
-                  style={styles.bittBookTitleInputSubmitting}
+                  id="bitt-book-title-input"
+                  style={styles.bittBookTitleInput}
+                  placeholder="Bitt Book Title..."
                   autoFocus="true"
                   autoComplete="off"
                   ref={(input) => this.title = input}
@@ -265,12 +300,13 @@ class BittBook extends Component {
         updateBitt={(updatedBittBook) => this.updateBitt(updatedBittBook)}
       />
     } else {
-      bittBookState=
+      bittBookState =
       <Card
         id="bitt-book-card"
         style={styles.bittBookCard}
         onMouseEnter={this.showOptions}
         onMouseLeave={this.hideOptions}
+        zDepth={this.state.zDepth}
       >
         <CardHeader
           style={styles.bittBookHeader}
@@ -282,19 +318,19 @@ class BittBook extends Component {
               <input
                 id="bitt-book-title-input"
                 style={styles.bittBookTitleInput}
-                placeholder="Untitled"
+                placeholder='Bitt Book Title...'
                 defaultValue={details.title}
                 autoComplete="off"
                 ref={(input) => this.title = input}
                 onTouchTap={e => e.stopPropagation()}
                 onChange={(e) => this.updateBittBook(e, details)}
                 onKeyPress={(e) => this.handleKeyPressUpdateBittBook(e, details)}
+                onBlur={(e) => this.updateBittBook(e, details)}
               />
             </div>
           }
           subtitle={
             subtitleState
-
           }
         />
       </Card>
@@ -313,10 +349,10 @@ class BittBook extends Component {
 }
 
 BittBook.propTypes = {
-  id: PropTypes.string.isRequired,
-  details: PropTypes.object.isRequired,
-  updateBittBook: PropTypes.func.isRequired,
-  deleteBittBook: PropTypes.func.isRequired,
+  id:               PropTypes.string.isRequired,
+  details:          PropTypes.object.isRequired,
+  updateBittBook:   PropTypes.func.isRequired,
+  deleteBittBook:   PropTypes.func.isRequired,
   toggleBittsState: PropTypes.func.isRequired
 }
 

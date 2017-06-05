@@ -39,7 +39,9 @@ const titleLink = (
 
 const NavBar = () => {
   return (
-    <div id="navbar">
+    <div
+      id="navbar"
+    >
       <AppBar
         title={titleLink}
         titleStyle={styles.titleStyle}
@@ -47,6 +49,7 @@ const NavBar = () => {
         showMenuIconButton={false}
         iconElementRight={
           <IconMenu
+            // zDepth={3}
             anchorOrigin={{horizontal: 'right', vertical: 'top'}}
             targetOrigin={{horizontal: 'right', vertical: 'top'}}
             iconButtonElement={
@@ -66,6 +69,7 @@ const NavBar = () => {
                 />
               }
             />
+
             <MenuItem
               value="2"
               primaryText="Logout"

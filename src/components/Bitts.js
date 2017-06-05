@@ -1,6 +1,9 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 
+// Helpers
+import Moment from '../helpers/react-moment'
+
 // Components
 import {Card, CardHeader} from 'material-ui/Card'
 import FloatingActionButton from './FloatingActionButton'
@@ -26,10 +29,11 @@ class Bitts extends Component {
     const bittBook = this.props.details
 
     const bitt = {
-      title: 'Untitled Bitt',
-      createdAt: timestamp,
-      updatedAt: timestamp,
-      body: 'Write a bitt...'
+      title:         'Untitled Bitt',
+      createdAt:     timestamp,
+      updatedAt:     timestamp,
+      isFirstSubmit: true,
+      body:          'Write a bitt...'
     }
 
     bittBook.bitts[`bitt-${timestamp}`] = bitt
@@ -37,6 +41,12 @@ class Bitts extends Component {
     const updatedBittBook = bittBook.bitts[bitt]
 
     this.props.updateBitt(updatedBittBook)
+
+    const bittsContainer = document.getElementById('bitts-container')
+
+    setTimeout(() => {
+      bittsContainer.scrollTop = bittsContainer.scrollHeight - bittsContainer.clientHeight
+    }, 100)
   }
 
   updateBitt(id, details) {
@@ -67,22 +77,27 @@ class Bitts extends Component {
     const styles = {
       bittsOutletCover: {
         zIndex: '999',
-        width: '100vw',
         height: '100vh',
         position: 'absolute',
         top: '0',
         right: '0',
         bottom: '0',
         left: '0',
-        overflow: 'auto',
+        overflow: 'hidden',
         backgroundColor: '#f5f5f5',
         cursor: 'pointer'
       },
 
       bittsContainer: {
         zIndex: '1000',
-        minHeight: '84vh',
-        margin: '84px 7.6vw 20px 7.6vw',
+        height: '90.5vh',
+        overflow: 'auto',
+        margin: '64px 0 0 0'
+      },
+
+      bittsCard: {
+        minHeight: '84.5vh',
+        margin: '20px 7.6vw 20px 7.6vw',
         padding: '0 0 20px 0',
         backgroundColor: '#e0e0e0'
       },
@@ -99,21 +114,25 @@ class Bitts extends Component {
       FABContainer: {
         zIndex: '999',
         position: 'absolute',
-        top: '0',
         right: '0',
+        bottom: '0',
         width: '40px',
         height: '40px',
-        margin: '120px 16.5vw 0 0'
+        margin: '0 9vw 40px 0'
       },
 
       bittBookTitle: {
-        margin: '0',
+        margin: '0 0 -16px 0',
         padding: '0',
         color: '#146D8F'
       },
 
+      bittBookBittsMomentDate: {
+        //
+      },
+
       bittCount: {
-        margin: '-16px 0 0 0'
+        //
       }
     }
 
@@ -128,76 +147,85 @@ class Bitts extends Component {
         id="bitts-outlet-cover"
         style={styles.bittsOutletCover}
       >
-        <Card
+        <div
           id="bitts-container"
           style={styles.bittsContainer}
-          zDepth={0}
         >
-          <CardHeader
-            style={styles.bittsHeader}
-            title={
-              <div
-                style={styles.bittBookTitle}
-              >
-                <h2>{this.props.details.title}</h2>
-              </div>
-            }
-            subtitle={
-              <div
-                id="bitt-count"
-                style={styles.bittCount}
-              >
-                <div>
-                  {
-                    bittAmount === 1 ?
-                    bittAmount + ' Bitt' :
-                    bittAmount + ' Bitts'
-                  }
-                </div>
-              </div>
-            }
-          />
-
-          <div
-            style={styles.FABContainer}
-            className="tooltip-bitt"
-            data-tooltip="Add Bitt"
+          <Card
+            id="bitts-card"
+            style={styles.bittsCard}
+            zDepth={3}
           >
-            <FloatingActionButton
-              mini={true}
-              onTouchTap={(e) => this.createBitt(e)}
-            >
-              <ContentAdd/>
-            </FloatingActionButton>
-          </div>
+            <CardHeader
+              style={styles.bittsHeader}
+              title={
+                <div
+                  style={styles.bittBookTitle}
+                >
+                  <h2>{details.title}</h2>
+                </div>
+              }
+              subtitle={
+                <div>
+                  <Moment
+                    format="MM/DD/YY"
+                    style={styles.bittBookBittsMomentDate}
+                  >
+                    {details.createdAt}
+                  </Moment>
 
-          {
-            Object
-              .keys(bitts)
-              .map(key =>
-                <Bitt
-                  key={key}
-                  id={key}
-                  details={bitts[key]}
-                  bittAmount={Object.keys(details.bitts).length}
-                  updateBitt={(id) => this.updateBitt(id, details)}
-                  deleteBitt={(id) => this.deleteBitt(id, details)}
-                />
-              )
-          }
-        </Card>
+                  <div
+                    id="bitt-count"
+                    style={styles.bittCount}
+                  >
+                    <div>
+                      {
+                        bittAmount === 1 ?
+                        bittAmount + ' Bitt' :
+                        bittAmount + ' Bitts'
+                      }
+                    </div>
+                  </div>
+                </div>
+              }
+            />
+
+            <div
+              style={styles.FABContainer}
+              className="tooltip-bitt"
+              data-tooltip="Add Bitt"
+            >
+              <FloatingActionButton
+                mini={true}
+                onTouchTap={(e) => this.createBitt(e)}
+              >
+                <ContentAdd/>
+              </FloatingActionButton>
+            </div>
+
+            {
+              Object
+                .keys(bitts)
+                .map(key =>
+                  <Bitt
+                    key={key}
+                    id={key}
+                    details={bitts[key]}
+                    bittAmount={Object.keys(details.bitts).length}
+                    updateBitt={(id) => this.updateBitt(id, details)}
+                    deleteBitt={(id) => this.deleteBitt(id, details)}
+                  />
+                )
+            }
+          </Card>
+        </div>
       </div>
     )
   }
 }
 
-Bitts.defaultProps = {
-  noBitts: `You currently have 0 Bitts.`
-}
-
 Bitts.propTypes = {
-  noBitts: PropTypes.string.isRequired,
-  details: PropTypes.object.isRequired,
+  details:    PropTypes.object.isRequired,
   updateBitt: PropTypes.func.isRequired
 }
 

@@ -18,14 +18,15 @@ import NavBar from '../components/NavBar'
 const Template = () => {
   return (
     <RouteContainer>
-      <NavBar/>
-
       <Layout>
+        <NavBar/>
+
         <Switch>
           <Route
             exact path="/"
             component={BittBooks}
           />
+          
           <Route
             exact path="/account"
             component={Account}
