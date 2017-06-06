@@ -9,6 +9,7 @@ import {Card, CardHeader, CardText} from 'material-ui/Card'
 import Divider from 'material-ui/Divider'
 import IconButton from 'material-ui/IconButton'
 import ActionDelete from 'material-ui/svg-icons/action/delete'
+import RaisedButton from './RaisedButton'
 // import BittEditor from './BittEditor'
 
 class Bitt extends Component {
@@ -19,6 +20,7 @@ class Bitt extends Component {
       isExpanded:       false,
       isShowingOptions: false,
       zDepth:   1,
+      titleBackground: 'transparent'
     }
 
     this.updateBitt = this.updateBitt.bind(this)
@@ -32,6 +34,12 @@ class Bitt extends Component {
     this.hideOptions = this.hideOptions.bind(this)
 
     this.toggleExpand = this.toggleExpand.bind(this)
+
+    this.highlightTitleBackground = this.highlightTitleBackground.bind(this)
+
+    this.unhighlightTitleBackground = this.unhighlightTitleBackground.bind(this)
+
+    this.persistZDepth = this.persistZDepth.bind(this)
   }
 
   updateBitt(e, details) {
@@ -89,9 +97,14 @@ class Bitt extends Component {
   }
 
   showOptions() {
+    this.state.isExpanded === false ?
     this.setState({
       isShowingOptions: true,
       zDepth: 2
+    }) :
+    this.setState({
+      isShowingOptions: true,
+      zDepth: 3
     })
   }
 
@@ -109,19 +122,31 @@ class Bitt extends Component {
       isExpanded: !this.state.isExpanded
     })
 
-    if (this.state.zDepth === 2) {
-      this.setState({
-        zDepth: 3
-      })
-    } else if (this.state.zDepth === 3) {
-      this.setState({
-        zDepth: 2
-      })
-    } else {
-      this.setState({
-        zDepth: 1
-      })
-    }
+    this.state.zDepth === 2 && this.state.isExpanded === false ?
+    this.setState({
+      zDepth: 3
+    }) :
+    this.setState({
+      zDepth: 2
+    })
+  }
+
+  highlightTitleBackground() {
+    this.setState({
+      titleBackground: '#f5f5f5'
+    })
+  }
+
+  unhighlightTitleBackground() {
+    this.setState({
+      titleBackground: 'transparent'
+    })
+  }
+
+  persistZDepth() {
+    this.setState({
+      zDepth: 3
+    })
   }
 
   render() {
@@ -129,7 +154,7 @@ class Bitt extends Component {
       bittCard: {
         overflow: 'hidden',
         margin: '20px 6.9vw 0 6.9vw',
-        transitionDuration: '100ms'
+        transitionDuration: '200ms'
       },
 
       bittTitle: {
@@ -143,11 +168,13 @@ class Bitt extends Component {
         margin: '0',
         outline: 'none',
         border: 'none',
-        padding: '0',
+        padding: '1px',
+        background: this.state.titleBackground,
         fontSize: '16px',
         fontWeight: 'bold',
         color: '#146D8F',
-        textOverflow: 'ellipsis'
+        textOverflow: 'ellipsis',
+        transition: '200ms'
       },
 
       bittBodyPreview: {
@@ -172,6 +199,11 @@ class Bitt extends Component {
         padding: '20px 20px 0 20px',
         fontSize: '13px',
         fontWeight: '500'
+      },
+
+      bittDoneButton: {
+        float: 'right',
+        margin: '20px 4px 20px 0'
       },
 
       bittDeleteButton: {
@@ -205,6 +237,7 @@ class Bitt extends Component {
     if (this.state.isExpanded === false) {
       isShowingBittBody =
       <div
+        id="bitt-body-preview"
         style={styles.bittBodyPreview}
       >
         {details.body}
@@ -265,6 +298,8 @@ class Bitt extends Component {
               defaultValue={details.title}
               autoComplete="off"
               ref={(input) => this.title = input}
+              onMouseEnter={this.highlightTitleBackground}
+              onMouseLeave={this.unhighlightTitleBackground}
               onTouchTap={e => e.stopPropagation()}
               onChange={(e) => this.updateBitt(e, details)}
               onKeyPress={(e) => this.handleKeyPressUpdateBitt(e, details)}
@@ -298,11 +333,17 @@ class Bitt extends Component {
             id="bitt-textarea"
             style={styles.bittTextarea}
             placeholder="Write a bitt..."
-            defaultValue={details.body}
+            defaultValue={details.body === 'Write a bitt...' || details.body === 'Click here to edit...' ? '' : details.body}
             autoFocus="true"
             ref={(input) => this.body = input}
             onTouchTap={e => e.stopPropagation()}
             onChange={(e) => this.updateBitt(e, details)}
+          />
+
+          <RaisedButton
+            style={styles.bittDoneButton}
+            label="Done"
+            primary={true}
           />
         </CardText>
       </Card>

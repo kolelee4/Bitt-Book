@@ -50,7 +50,7 @@ class BittBooks extends Component {
       title:     'First Bitt',
       createdAt: timestamp,
       updatedAt: timestamp,
-      body:      'Write a bitt...'
+      body:      'Click here to edit...'
     }
 
     bittBooks[`bittBook-${timestamp}`] = bittBook
@@ -100,10 +100,11 @@ class BittBooks extends Component {
       bittBooksRoute: {
         height: '90.5vh',
         overflow: 'auto',
-        padding: '0 0 0 7.6vw'
+        padding: '20px 0 0 7.6vw'
       },
 
       noBittBooksMessage: {
+        margin: '0',
         fontWeight: '500'
       }
     }
@@ -150,7 +151,7 @@ class BittBooks extends Component {
         data-tooltip="Add Bitt Book"
       >
         <FABContainer
-          id="fab-container"
+          id="fab-container-bitt-books"
           addItem={this.createBittBook}
         />
       </div>

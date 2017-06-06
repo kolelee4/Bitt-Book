@@ -185,7 +185,7 @@ class FloatingActionButton extends Component {
     this.setState(nextState)
   }
 
-  handleMouseDown = (event) => {
+  handleMouseDown = (event) => { // Custom changes
     // only listen to left clicks
     if (event.button === 0) {
       this.setState({zDepth: this.props.zDepth + 2})
@@ -193,7 +193,7 @@ class FloatingActionButton extends Component {
     if (this.props.onMouseDown) this.props.onMouseDown(event)
   }
 
-  handleMouseUp = (event) => {
+  handleMouseUp = (event) => { // Custom changes
     this.setState({zDepth: this.props.zDepth + 1})
     if (this.props.onMouseUp) {
       this.props.onMouseUp(event)
@@ -209,7 +209,7 @@ class FloatingActionButton extends Component {
     }
   }
 
-  handleMouseEnter = (event) => {
+  handleMouseEnter = (event) => { // Custom changes
     if (!this.refs.container.isKeyboardFocused() && !this.state.touch) {
       this.setState({hovered: true, zDepth: this.props.zDepth + 1})
     }

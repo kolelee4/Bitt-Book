@@ -24,7 +24,8 @@ class BittBook extends Component {
       zDepth: 1,
       width: '164px',
       height: '172px',
-      background: 'white'
+      background: 'white',
+      titleBackground: 'transparent'
     }
 
     this.updateBittBook = this.updateBittBook.bind(this)
@@ -38,6 +39,10 @@ class BittBook extends Component {
     this.toggleBitts = this.toggleBitts.bind(this)
 
     this.updateBitt = this.updateBitt.bind(this)
+
+    this.highlightTitleBackground = this.highlightTitleBackground.bind(this)
+
+    this.unhighlightTitleBackground = this.unhighlightTitleBackground.bind(this)
   }
 
   updateBittBook(e, details) {
@@ -104,15 +109,27 @@ class BittBook extends Component {
         isShowingBitts: !this.state.isShowingBitts,
         isShowingOptions: false
       })
-    }, 80)
+    }, 100)
 
     setTimeout(() => {
       this.props.toggleBittsState()
-    }, 80)
+    }, 100)
   }
 
   updateBitt(updatedBittBook) {
     this.props.updateBittBook(updatedBittBook)
+  }
+
+  highlightTitleBackground() {
+    this.setState({
+      titleBackground: '#f5f5f5'
+    })
+  }
+
+  unhighlightTitleBackground() {
+    this.setState({
+      titleBackground: 'transparent'
+    })
   }
 
   render() {
@@ -128,9 +145,9 @@ class BittBook extends Component {
         float: 'left',
         width: this.state.width,
         height: this.state.height,
-        margin: '20px 20px 0 0',
+        margin: '0 20px 40px 0',
         background: this.state.background,
-        transition: 'all 100ms'
+        transition: '200ms'
       },
 
       bittBookHeader: {
@@ -140,7 +157,7 @@ class BittBook extends Component {
       bittBookTitleContainer: {
         width: '132px',
         overflow: 'hidden',
-        margin: '20px 0 4px 0'
+        margin: '20px 0 0 0'
       },
 
       bittBookTitleInput: {
@@ -149,11 +166,12 @@ class BittBook extends Component {
         whiteSpace: 'nowrap',
         outline: 'none',
         border: 'none',
-        background: 'transparent',
+        background: this.state.titleBackground,
         fontSize: '16px',
         fontWeight: 'bold',
         color: '#146D8F',
-        textOverflow: 'ellipsis'
+        textOverflow: 'ellipsis',
+        transition: '200ms'
       },
 
       bittBookSubtitleContainer: {
@@ -161,14 +179,6 @@ class BittBook extends Component {
         width: '100%',
         height: '100%',
         margin: '0 0 0 0'
-      },
-
-      bittBookMomentDate: {
-        //
-      },
-
-      bittAmountMessage: {
-        //
       },
 
       bittBookDeleteContainer: {
@@ -203,14 +213,14 @@ class BittBook extends Component {
           style={styles.bittBookSubtitleContainer}
         >
           <Moment
+            id="bitt-book-create-at"
             format="MM/DD/YY"
-            style={styles.bittBookMomentDate}
           >
             {details.createdAt}
           </Moment>
 
           <div
-            style={styles.bittAmountMessage}
+            id="bitt-book-count"
           >
             {
               bittAmount === 1 ?
@@ -243,14 +253,14 @@ class BittBook extends Component {
         style={styles.bittBookSubtitleContainer}
       >
         <Moment
+          id="bitt-book-create-at"
           format="MM/DD/YY"
-          style={styles.bittBookMomentDate}
         >
           {details.createdAt}
         </Moment>
 
         <div
-          style={styles.bittAmountMessage}
+          id="bitt-count"
         >
           {
             bittAmount === 1 ?
@@ -322,6 +332,8 @@ class BittBook extends Component {
                 defaultValue={details.title}
                 autoComplete="off"
                 ref={(input) => this.title = input}
+                onMouseEnter={this.highlightTitleBackground}
+                onMouseLeave={this.unhighlightTitleBackground}
                 onTouchTap={e => e.stopPropagation()}
                 onChange={(e) => this.updateBittBook(e, details)}
                 onKeyPress={(e) => this.handleKeyPressUpdateBittBook(e, details)}

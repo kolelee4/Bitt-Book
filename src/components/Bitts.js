@@ -106,9 +106,10 @@ class Bitts extends Component {
         margin: '0 7.6vw -20px 7.6vw'
       },
 
-      noBitts: {
-        margin: '0 7.6vw 0 7.6vw',
-        fontWeight: '500'
+      bittBookTitle: {
+        margin: '0 0 -20px 0',
+        padding: '0',
+        color: '#146D8F'
       },
 
       FABContainer: {
@@ -119,20 +120,6 @@ class Bitts extends Component {
         width: '40px',
         height: '40px',
         margin: '0 9vw 40px 0'
-      },
-
-      bittBookTitle: {
-        margin: '0 0 -16px 0',
-        padding: '0',
-        color: '#146D8F'
-      },
-
-      bittBookBittsMomentDate: {
-        //
-      },
-
-      bittCount: {
-        //
       }
     }
 
@@ -166,17 +153,17 @@ class Bitts extends Component {
                 </div>
               }
               subtitle={
-                <div>
+                <div
+                  id="bitt-book-create-at-bitts"
+                >
                   <Moment
                     format="MM/DD/YY"
-                    style={styles.bittBookBittsMomentDate}
                   >
                     {details.createdAt}
                   </Moment>
 
                   <div
-                    id="bitt-count"
-                    style={styles.bittCount}
+                    id="bitt-count-bitts"
                   >
                     <div>
                       {
@@ -191,6 +178,7 @@ class Bitts extends Component {
             />
 
             <div
+              id="fab-container-bitts"
               style={styles.FABContainer}
               className="tooltip-bitt"
               data-tooltip="Add Bitt"

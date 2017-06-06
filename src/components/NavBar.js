@@ -9,8 +9,12 @@ import MenuItem from 'material-ui/MenuItem'
 import ActionAccountCircle from 'material-ui/svg-icons/action/account-circle'
 
 const styles = {
+  appBar: {
+    //
+  },
+
   titleStyle: {
-    marginLeft: '-4px',
+    marginLeft: '-4px'
   },
 
   titleLinkStyle: {
@@ -40,16 +44,17 @@ const titleLink = (
 const NavBar = () => {
   return (
     <div
-      id="navbar"
+      id="navigation"
     >
       <AppBar
+        id="app-bar"
+        style={styles.appBar}
+        zDepth={2}
         title={titleLink}
         titleStyle={styles.titleStyle}
-        zDepth={2}
         showMenuIconButton={false}
         iconElementRight={
           <IconMenu
-            // zDepth={3}
             anchorOrigin={{horizontal: 'right', vertical: 'top'}}
             targetOrigin={{horizontal: 'right', vertical: 'top'}}
             iconButtonElement={
