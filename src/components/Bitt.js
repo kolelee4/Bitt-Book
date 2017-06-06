@@ -127,7 +127,7 @@ class Bitt extends Component {
       zDepth: 3
     }) :
     this.setState({
-      zDepth: 2
+      zDepth: 1
     })
   }
 
