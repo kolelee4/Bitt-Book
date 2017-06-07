@@ -18,11 +18,8 @@ class BittBooks extends Component {
     }
 
     this.createBittBook = this.createBittBook.bind(this)
-
     this.updateBittBook = this.updateBittBook.bind(this)
-
     this.deleteBittBook = this.deleteBittBook.bind(this)
-
     this.toggleBittsState = this.toggleBittsState.bind(this)
   }
 
@@ -114,7 +111,6 @@ class BittBooks extends Component {
     const bittBookAmount = Object.keys(bittBooks).length
 
     let bittBooksState
-
     if (bittBookAmount === 0) {
       bittBooksState =
       <h4
@@ -140,7 +136,6 @@ class BittBooks extends Component {
     }
 
     let floatingActionButtonState
-
     if (this.state.isShowingBitts) {
       floatingActionButtonState =
       null

@@ -1,9 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 
-// Animations
-// import CSSTransitionGroup from 'react-addons-css-transition-group'
-
 // Helpers
 import Moment from '../helpers/react-moment'
 
@@ -29,19 +26,12 @@ class BittBook extends Component {
     }
 
     this.updateBittBook = this.updateBittBook.bind(this)
-
     this.handleKeyPressUpdateBittBook = this.handleKeyPressUpdateBittBook.bind(this)
-
     this.showOptions = this.showOptions.bind(this)
-
     this.hideOptions = this.hideOptions.bind(this)
-
     this.toggleBitts = this.toggleBitts.bind(this)
-
     this.updateBitt = this.updateBitt.bind(this)
-
     this.highlightTitleBackground = this.highlightTitleBackground.bind(this)
-
     this.unhighlightTitleBackground = this.unhighlightTitleBackground.bind(this)
   }
 
@@ -53,7 +43,6 @@ class BittBook extends Component {
     const updatedBittBook = details
 
     const bittBookTitle = this.title.value
-
     bittBookTitle.length === 0 ?
     updatedBittBook.title = 'Untitled' :
     updatedBittBook.title = this.title.value.trim()
@@ -204,7 +193,6 @@ class BittBook extends Component {
     const bittAmount = Object.keys(details.bitts).length
 
     let subtitleState
-
     if (this.state.isShowingOptions) {
       subtitleState =
       <div>
@@ -272,7 +260,6 @@ class BittBook extends Component {
     }
 
     let bittBookState
-
     if (details.isFirstSubmit) {
       bittBookState =
       <Card

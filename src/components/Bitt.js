@@ -19,27 +19,18 @@ class Bitt extends Component {
     this.state = {
       isExpanded:       false,
       isShowingOptions: false,
-      zDepth:   1,
-      titleBackground: 'transparent'
+      zDepth:           1,
+      titleBackground:  'transparent'
     }
 
     this.updateBitt = this.updateBitt.bind(this)
-
     this.handleKeyPressUpdateBitt = this.handleKeyPressUpdateBitt.bind(this)
-
     this.deleteBitt = this.deleteBitt.bind(this)
-
     this.showOptions = this.showOptions.bind(this)
-
     this.hideOptions = this.hideOptions.bind(this)
-
     this.toggleExpand = this.toggleExpand.bind(this)
-
     this.highlightTitleBackground = this.highlightTitleBackground.bind(this)
-
     this.unhighlightTitleBackground = this.unhighlightTitleBackground.bind(this)
-
-    this.persistZDepth = this.persistZDepth.bind(this)
   }
 
   updateBitt(e, details) {
@@ -51,7 +42,6 @@ class Bitt extends Component {
 
     if (this.state.isExpanded === false) {
       const bittTitle = this.title.value
-
       bittTitle.length === 0 ?
       bitt.title = 'Untitled Bitt' :
       bitt.title = this.title.value.trim()
@@ -63,13 +53,11 @@ class Bitt extends Component {
       this.props.updateBitt(bitt)
     } else {
       const bittTitle = this.title.value
-
       bittTitle.length === 0 ?
       bitt.title = 'Untitled Bitt' :
       bitt.title = this.title.value.trim()
 
       const bittBody = this.body.value
-
       bittBody.length === 0 ?
       bitt.body = 'Write a bitt...' :
       bitt.body = this.body.value
@@ -129,6 +117,15 @@ class Bitt extends Component {
     this.setState({
       zDepth: 1
     })
+
+    setTimeout(() => {
+      const bittCardHeader = document.getElementById('bitt-card-header')
+      const bittCardHeaderRect = bittCardHeader.getBoundingClientRect()
+      const absolutebittCardHeaderTop = bittCardHeaderRect.top + window.pageYOffset
+      const middle = absolutebittCardHeaderTop - (window.innerHeight / 2)
+
+      window.scrollTo(0, middle)
+    }, 10)
   }
 
   highlightTitleBackground() {
@@ -143,12 +140,6 @@ class Bitt extends Component {
     })
   }
 
-  persistZDepth() {
-    this.setState({
-      zDepth: 3
-    })
-  }
-
   render() {
     const styles = {
       bittCard: {
@@ -157,12 +148,22 @@ class Bitt extends Component {
         transitionDuration: '200ms'
       },
 
+      bittOptionsContainer: {
+        float: 'right',
+        background: 'white'
+      },
+
+      bittDeleteButton: {
+        float: 'right',
+        background: 'white'
+      },
+
       bittTitle: {
         color: '#146D8F'
       },
 
       bittTitleInput: {
-        width: '88%',
+        width: '68vw',
         overflow: 'hidden',
         whiteSpace: 'nowrap',
         margin: '0',
@@ -192,7 +193,7 @@ class Bitt extends Component {
       bittTextarea: {
         resize: 'none',
         width: '95%',
-        minHeight: '45vh',
+        minHeight: '40vh',
         outline: 'none',
         border: 'none',
         margin: '0 0 0 0',
@@ -204,17 +205,12 @@ class Bitt extends Component {
       bittDoneButton: {
         float: 'right',
         margin: '20px 4px 20px 0'
-      },
-
-      bittDeleteButton: {
-        float: 'right'
       }
     }
 
     const {id, details, bittAmount} = this.props
 
     let isShowingOptions
-
     if (this.state.isShowingOptions) {
       isShowingOptions =
       <IconButton
@@ -233,7 +229,6 @@ class Bitt extends Component {
     }
 
     let isShowingBittBody
-
     if (this.state.isExpanded === false) {
       isShowingBittBody =
       <div
@@ -248,7 +243,6 @@ class Bitt extends Component {
     }
 
     let bittState
-
     if (details.isFirstSubmit) {
       bittState =
       <Card
@@ -257,6 +251,7 @@ class Bitt extends Component {
         zDepth={this.state.zDepth}
       >
         <CardHeader
+          id="bitt-card-header"
           style={styles.bittHeader}
           title={
             <input
@@ -285,9 +280,15 @@ class Bitt extends Component {
         onMouseLeave={this.hideOptions}
         onTouchTap={(e) => this.toggleExpand(e)}
       >
-        {bittAmount > 1 ? isShowingOptions : null}
+        <div
+          id="bitt-options-container"
+          style={styles.bittOptionsContainer}
+        >
+          {bittAmount > 1 ? isShowingOptions : null}
+        </div>
 
         <CardHeader
+          id="bitt-card-header"
           style={styles.bittHeader}
           actAsExpander={true}
           title={
@@ -341,6 +342,7 @@ class Bitt extends Component {
           />
 
           <RaisedButton
+            id="bitt-done-button"
             style={styles.bittDoneButton}
             label="Done"
             primary={true}

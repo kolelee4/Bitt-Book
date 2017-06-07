@@ -1,16 +1,15 @@
 // From material-ui source with custom changes
 
-import React, {Component, cloneElement} from 'react';
-import PropTypes from 'prop-types';
-import transitions from 'material-ui/styles/transitions';
-import {fade} from 'material-ui/utils/colorManipulator';
-import EnhancedButton from 'material-ui/internal/EnhancedButton';
-import Paper from 'material-ui/Paper';
+import React, {Component, cloneElement} from 'react'
+import PropTypes from 'prop-types'
+import transitions from 'material-ui/styles/transitions'
+import EnhancedButton from 'material-ui/internal/EnhancedButton'
+import Paper from 'material-ui/Paper'
 
 function validateLabel(props, propName, componentName) {
   if (process.env.NODE_ENV !== 'production') {
     if (!props.children && (props.label !== 0 && !props.label) && !props.icon) {
-      return new Error(`Required prop label or children or icon was not specified in ${componentName}.`);
+      return new Error(`Required prop label or children or icon was not specified in ${componentName}.`)
     }
   }
 }
@@ -21,7 +20,7 @@ function getStyles(props, context, state) {
     button,
     raisedButton,
     borderRadius,
-  } = context.muiTheme;
+  } = context.muiTheme
 
   const {
     disabled,
@@ -34,32 +33,32 @@ function getStyles(props, context, state) {
     primary,
     secondary,
     style,
-  } = props;
+  } = props
 
-  const amount = (primary || secondary) ? 0.4 : 0.08;
+  // const amount = (primary || secondary) ? 0.4 : 0.08
 
-  let backgroundColor = raisedButton.color;
-  let labelColor = raisedButton.textColor;
+  let backgroundColor = raisedButton.color
+  let labelColor = raisedButton.textColor
 
   if (disabled) {
-    backgroundColor = disabledBackgroundColor || raisedButton.disabledColor;
-    labelColor = disabledLabelColor || raisedButton.disabledTextColor;
+    backgroundColor = disabledBackgroundColor || raisedButton.disabledColor
+    labelColor = disabledLabelColor || raisedButton.disabledTextColor
   } else if (primary) {
-    backgroundColor = raisedButton.primaryColor;
-    labelColor = raisedButton.primaryTextColor;
+    backgroundColor = raisedButton.primaryColor
+    labelColor = raisedButton.primaryTextColor
   } else if (secondary) {
-    backgroundColor = raisedButton.secondaryColor;
-    labelColor = raisedButton.secondaryTextColor;
+    backgroundColor = raisedButton.secondaryColor
+    labelColor = raisedButton.secondaryTextColor
   } else {
     if (props.backgroundColor) {
-      backgroundColor = props.backgroundColor;
+      backgroundColor = props.backgroundColor
     }
     if (props.labelColor) {
-      labelColor = props.labelColor;
+      labelColor = props.labelColor
     }
   }
 
-  const buttonHeight = style && style.height || button.height;
+  const buttonHeight = (style && style.height) || (button.height)
 
   return {
     root: {
@@ -107,11 +106,11 @@ function getStyles(props, context, state) {
       color: labelColor,
       opacity: !(primary || secondary) ? 0.1 : 0.16,
     },
-  };
+  }
 }
 
 class RaisedButton extends Component {
-  static muiName = 'RaisedButton';
+  static muiName = 'RaisedButton'
 
   static propTypes = {
     /**
@@ -235,7 +234,7 @@ class RaisedButton extends Component {
      * Override the inline-styles of the root element.
      */
     style: PropTypes.object,
-  };
+  }
 
   static defaultProps = {
     disabled: false,
@@ -243,11 +242,11 @@ class RaisedButton extends Component {
     fullWidth: false,
     primary: false,
     secondary: false,
-  };
+  }
 
   static contextTypes = {
     muiTheme: PropTypes.object.isRequired,
-  };
+  }
 
   state = {
     hovered: false,
@@ -255,28 +254,28 @@ class RaisedButton extends Component {
     touched: false,
     initialZDepth: 0,
     zDepth: 0,
-  };
+  }
 
   componentWillMount() {
-    const zDepth = this.props.disabled ? 0 : 1;
+    const zDepth = this.props.disabled ? 0 : 1
     this.setState({
       zDepth: zDepth,
       initialZDepth: zDepth,
-    });
+    })
   }
 
   componentWillReceiveProps(nextProps) {
-    const zDepth = nextProps.disabled ? 0 : 1;
+    const zDepth = nextProps.disabled ? 0 : 1
     const nextState = {
       zDepth: zDepth,
       initialZDepth: zDepth,
-    };
-
-    if (nextProps.disabled) {
-      nextState.hovered = false;
     }
 
-    this.setState(nextState);
+    if (nextProps.disabled) {
+      nextState.hovered = false
+    }
+
+    this.setState(nextState)
   }
 
   handleMouseDown = (event) => { // Custom changes
@@ -284,77 +283,77 @@ class RaisedButton extends Component {
     if (event.button === 0) {
       this.setState({
         zDepth: this.state.initialZDepth + 2,
-      });
+      })
     }
 
     if (this.props.onMouseDown) {
-      this.props.onMouseDown(event);
+      this.props.onMouseDown(event)
     }
-  };
+  }
 
   handleMouseUp = (event) => { // Custom changes
     this.setState({
       zDepth: this.state.initialZDepth + 1,
-    });
+    })
     if (this.props.onMouseUp) {
-      this.props.onMouseUp(event);
+      this.props.onMouseUp(event)
     }
-  };
+  }
 
   handleMouseLeave = (event) => {
     if (!this.state.keyboardFocused) {
       this.setState({
         zDepth: this.state.initialZDepth,
         hovered: false,
-      });
+      })
     }
     if (this.props.onMouseLeave) {
-      this.props.onMouseLeave(event);
+      this.props.onMouseLeave(event)
     }
-  };
+  }
 
   handleMouseEnter = (event) => {
     if (!this.state.keyboardFocused && !this.state.touched) {
       this.setState({
         hovered: true,
         zDepth: this.state.initialZDepth + 1
-      });
+      })
     }
     if (this.props.onMouseEnter) {
-      this.props.onMouseEnter(event);
+      this.props.onMouseEnter(event)
     }
-  };
+  }
 
   handleTouchStart = (event) => {
     this.setState({
       touched: true,
-      zDepth: this.state.initialZDepth + 1,
-    });
+      zDepth: this.state.initialZDepth + 2,
+    })
 
     if (this.props.onTouchStart) {
-      this.props.onTouchStart(event);
+      this.props.onTouchStart(event)
     }
-  };
+  }
 
   handleTouchEnd = (event) => {
     this.setState({
       touched: true,
       zDepth: this.state.initialZDepth,
-    });
+    })
 
     if (this.props.onTouchEnd) {
-      this.props.onTouchEnd(event);
+      this.props.onTouchEnd(event)
     }
-  };
+  }
 
   handleKeyboardFocus = (event, keyboardFocused) => {
-    const zDepth = (keyboardFocused && !this.props.disabled) ? this.state.initialZDepth + 1 : this.state.initialZDepth;
+    const zDepth = (keyboardFocused && !this.props.disabled) ? this.state.initialZDepth + 1 : this.state.initialZDepth
 
     this.setState({
       zDepth: zDepth,
       keyboardFocused: keyboardFocused,
-    });
-  };
+    })
+  }
 
   render() {
     const {
@@ -377,11 +376,11 @@ class RaisedButton extends Component {
       secondary, // eslint-disable-line no-unused-vars
       style,
       ...other
-    } = this.props;
+    } = this.props
 
-    const {prepareStyles} = this.context.muiTheme;
-    const styles = getStyles(this.props, this.context, this.state);
-    const mergedRippleStyles = Object.assign({}, styles.ripple, rippleStyle);
+    const {prepareStyles} = this.context.muiTheme
+    const styles = getStyles(this.props, this.context, this.state)
+    const mergedRippleStyles = Object.assign({}, styles.ripple, rippleStyle)
 
     const buttonEventHandlers = disabled ? {} : {
       onMouseDown: this.handleMouseDown,
@@ -391,19 +390,19 @@ class RaisedButton extends Component {
       onTouchStart: this.handleTouchStart,
       onTouchEnd: this.handleTouchEnd,
       onKeyboardFocus: this.handleKeyboardFocus,
-    };
+    }
 
     const labelElement = label && (
       <span style={prepareStyles(Object.assign(styles.label, labelStyle))} key="labelElement">
         {label}
       </span>
-    );
+    )
 
     const iconCloned = icon && cloneElement(icon, {
       color: icon.props.color || styles.label.color,
       style: Object.assign(styles.icon, icon.props.style),
       key: 'iconCloned',
-    });
+    })
 
     // Place label before or after children.
     const enhancedButtonChildren = labelPosition === 'before' ?
@@ -415,7 +414,7 @@ class RaisedButton extends Component {
       children,
       iconCloned,
       labelElement,
-    ];
+    ]
 
     return (
       <Paper
@@ -442,8 +441,8 @@ class RaisedButton extends Component {
           </div>
         </EnhancedButton>
       </Paper>
-    );
+    )
   }
 }
 
-export default RaisedButton;
+export default RaisedButton

@@ -15,9 +15,7 @@ class Bitts extends Component {
     super()
 
     this.createBitt = this.createBitt.bind(this)
-
     this.updateBitt = this.updateBitt.bind(this)
-
     this.deleteBitt = this.deleteBitt.bind(this)
   }
 
@@ -46,7 +44,7 @@ class Bitts extends Component {
 
     setTimeout(() => {
       bittsContainer.scrollTop = bittsContainer.scrollHeight - bittsContainer.clientHeight
-    }, 100)
+    }, 10)
   }
 
   updateBitt(id, details) {
