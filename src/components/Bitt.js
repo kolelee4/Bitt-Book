@@ -163,7 +163,7 @@ class Bitt extends Component {
       },
 
       bittTitleInput: {
-        width: '68vw',
+        width: '67vw',
         overflow: 'hidden',
         whiteSpace: 'nowrap',
         margin: '0',
@@ -179,7 +179,7 @@ class Bitt extends Component {
       },
 
       bittBodyPreview: {
-        width: '68vw',
+        width: '67vw',
         overflow: 'hidden',
         whiteSpace: 'nowrap',
         textOverflow: 'ellipsis',

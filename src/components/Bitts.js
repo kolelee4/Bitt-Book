@@ -14,9 +14,56 @@ class Bitts extends Component {
   constructor() {
     super()
 
+    this.updateBittBook = this.updateBittBook.bind(this)
+    this.handleKeyPressUpdateBittBook = this.handleKeyPressUpdateBittBook.bind(this)
+    this.highlightTitleBackground = this.highlightTitleBackground.bind(this)
+    this.unhighlightTitleBackground = this.unhighlightTitleBackground.bind(this)
     this.createBitt = this.createBitt.bind(this)
     this.updateBitt = this.updateBitt.bind(this)
     this.deleteBitt = this.deleteBitt.bind(this)
+
+    this.state = {
+      bttBookTitleBackground: 'transparent'
+    }
+  }
+
+  updateBittBook(e, details) {
+    e.preventDefault()
+
+    const timestamp = Date.now()
+
+    const updatedBittBook = details
+
+    const bittBookTitle = this.title.value
+    bittBookTitle.length === 0 ?
+    updatedBittBook.title = 'Untitled' :
+    updatedBittBook.title = this.title.value.trim()
+
+    updatedBittBook.updatedAt = timestamp
+
+    updatedBittBook.isFirstSubmit = false
+
+    this.props.updateBittBookFromBitts(updatedBittBook)
+  }
+
+  handleKeyPressUpdateBittBook(e, details) {
+    if (e.key === 'Enter') {
+      this.updateBittBook(e, details)
+
+      this.title.blur()
+    }
+  }
+
+  highlightTitleBackground() {
+    this.setState({
+      bttBookTitleBackground: '#f5f5f5'
+    })
+  }
+
+  unhighlightTitleBackground() {
+    this.setState({
+      bttBookTitleBackground: 'transparent'
+    })
   }
 
   createBitt(e) {
@@ -104,10 +151,19 @@ class Bitts extends Component {
         margin: '0 7.6vw -20px 7.6vw'
       },
 
-      bittBookTitle: {
-        margin: '0 0 -20px 0',
-        padding: '0',
-        color: '#146D8F'
+      bittBookTitleInputBitts: {
+        width: '66vw',
+        overflow: 'hidden',
+        whiteSpace: 'nowrap',
+        margin: '20px 0 0 0',
+        outline: 'none',
+        border: 'none',
+        background: this.state.bttBookTitleBackground,
+        fontSize: '24px',
+        fontWeight: 'bold',
+        color: '#146D8F',
+        textOverflow: 'ellipsis',
+        transition: '200ms'
       },
 
       FABContainer: {
@@ -145,9 +201,22 @@ class Bitts extends Component {
               style={styles.bittsHeader}
               title={
                 <div
-                  style={styles.bittBookTitle}
+                  id="bitt-book-title-container-bitts"
                 >
-                  <h2>{details.title}</h2>
+                  <input
+                    id="bitt-book-title-input-bitts"
+                    style={styles.bittBookTitleInputBitts}
+                    placeholder='Bitt Book Title...'
+                    defaultValue={details.title}
+                    autoComplete="off"
+                    ref={(input) => this.title = input}
+                    onMouseEnter={this.highlightTitleBackground}
+                    onMouseLeave={this.unhighlightTitleBackground}
+                    onTouchTap={e => e.stopPropagation()}
+                    onChange={(e) => this.updateBittBook(e, details)}
+                    onKeyPress={(e) => this.handleKeyPressUpdateBittBook(e, details)}
+                    onBlur={(e) => this.updateBittBook(e, details)}
+                  />
                 </div>
               }
               subtitle={
@@ -211,8 +280,9 @@ class Bitts extends Component {
 }
 
 Bitts.propTypes = {
-  details:    PropTypes.object.isRequired,
-  updateBitt: PropTypes.func.isRequired
+  details:                 PropTypes.object.isRequired,
+  updateBittBookFromBitts: PropTypes.func.isRequired,
+  updateBitt:              PropTypes.func.isRequired
 }
 
 export default Bitts

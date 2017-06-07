@@ -27,6 +27,7 @@ class BittBook extends Component {
 
     this.updateBittBook = this.updateBittBook.bind(this)
     this.handleKeyPressUpdateBittBook = this.handleKeyPressUpdateBittBook.bind(this)
+    this.updateBittBookFromBitts = this.updateBittBookFromBitts.bind(this)
     this.showOptions = this.showOptions.bind(this)
     this.hideOptions = this.hideOptions.bind(this)
     this.toggleBitts = this.toggleBitts.bind(this)
@@ -60,6 +61,10 @@ class BittBook extends Component {
 
       this.title.blur()
     }
+  }
+
+  updateBittBookFromBitts(updatedBittBook) {
+    this.props.updateBittBook(updatedBittBook)
   }
 
   showOptions() {
@@ -294,6 +299,7 @@ class BittBook extends Component {
       <Bitts
         ref={instance => this.bitts = instance}
         details={details}
+        updateBittBookFromBitts={(updatedBittBook) => this.updateBittBookFromBitts(updatedBittBook)}
         updateBitt={(updatedBittBook) => this.updateBitt(updatedBittBook)}
       />
     } else {
