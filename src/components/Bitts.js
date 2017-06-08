@@ -6,6 +6,8 @@ import Moment from '../helpers/react-moment'
 
 // Components
 import {Card, CardHeader} from 'material-ui/Card'
+import IconButton from 'material-ui/IconButton'
+import NavigationClose from 'material-ui/svg-icons/navigation/close'
 import FloatingActionButton from './FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 import Bitt from './Bitt'
@@ -160,7 +162,7 @@ class Bitts extends Component {
 
       bittsExitContainer: {
         float: 'right',
-        margin: '0 -8.2vw 0 0',
+        margin: '-12px -9.5vw 0 0',
         fontSize: '16px',
         fontWeight: 'bold',
         color: '#424242'
@@ -228,7 +230,12 @@ class Bitts extends Component {
                     id="bitts-exit-container"
                     style={styles.bittsExitContainer}
                   >
-                    &#10005;
+                    <IconButton>
+                      <NavigationClose
+                        color='#757575'
+                        hoverColor='#424242'
+                      />
+                    </IconButton>
                   </div>
 
                   <input
