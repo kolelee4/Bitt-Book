@@ -19,8 +19,7 @@ class Bitt extends Component {
     this.state = {
       isExpanded:       false,
       isShowingOptions: false,
-      zDepth:           1,
-      titleBackground:  'transparent'
+      zDepth:           1
     }
 
     this.updateBitt = this.updateBitt.bind(this)
@@ -29,8 +28,6 @@ class Bitt extends Component {
     this.showOptions = this.showOptions.bind(this)
     this.hideOptions = this.hideOptions.bind(this)
     this.toggleExpand = this.toggleExpand.bind(this)
-    this.highlightTitleBackground = this.highlightTitleBackground.bind(this)
-    this.unhighlightTitleBackground = this.unhighlightTitleBackground.bind(this)
   }
 
   updateBitt(e, details) {
@@ -128,18 +125,6 @@ class Bitt extends Component {
     }, 10)
   }
 
-  highlightTitleBackground() {
-    this.setState({
-      titleBackground: '#f5f5f5'
-    })
-  }
-
-  unhighlightTitleBackground() {
-    this.setState({
-      titleBackground: 'transparent'
-    })
-  }
-
   render() {
     const styles = {
       bittCard: {
@@ -169,13 +154,13 @@ class Bitt extends Component {
         margin: '0',
         outline: 'none',
         border: 'none',
+        borderRadius: '3px',
         padding: '1px',
-        background: this.state.titleBackground,
+        background: 'transparent',
         fontSize: '16px',
         fontWeight: 'bold',
         color: '#146D8F',
         textOverflow: 'ellipsis',
-        transition: '200ms'
       },
 
       bittBodyPreview: {
@@ -299,8 +284,6 @@ class Bitt extends Component {
               defaultValue={details.title}
               autoComplete="off"
               ref={(input) => this.title = input}
-              onMouseEnter={this.highlightTitleBackground}
-              onMouseLeave={this.unhighlightTitleBackground}
               onTouchTap={e => e.stopPropagation()}
               onChange={(e) => this.updateBitt(e, details)}
               onKeyPress={(e) => this.handleKeyPressUpdateBitt(e, details)}

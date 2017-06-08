@@ -21,8 +21,7 @@ class BittBook extends Component {
       zDepth: 1,
       width: '164px',
       height: '172px',
-      background: 'white',
-      titleBackground: 'transparent'
+      background: 'white'
     }
 
     this.updateBittBook = this.updateBittBook.bind(this)
@@ -32,8 +31,6 @@ class BittBook extends Component {
     this.hideOptions = this.hideOptions.bind(this)
     this.toggleBitts = this.toggleBitts.bind(this)
     this.updateBitt = this.updateBitt.bind(this)
-    this.highlightTitleBackground = this.highlightTitleBackground.bind(this)
-    this.unhighlightTitleBackground = this.unhighlightTitleBackground.bind(this)
   }
 
   updateBittBook(e, details) {
@@ -114,18 +111,6 @@ class BittBook extends Component {
     this.props.updateBittBook(updatedBittBook)
   }
 
-  highlightTitleBackground() {
-    this.setState({
-      titleBackground: '#f5f5f5'
-    })
-  }
-
-  unhighlightTitleBackground() {
-    this.setState({
-      titleBackground: 'transparent'
-    })
-  }
-
   render() {
     const styles = {
       bittBook: {
@@ -151,7 +136,9 @@ class BittBook extends Component {
       bittBookTitleContainer: {
         width: '132px',
         overflow: 'hidden',
-        margin: '20px 0 0 0'
+        margin: '20px 0 0 0',
+        border: 'none',
+        borderRadius: '3px'
       },
 
       bittBookTitleInput: {
@@ -160,12 +147,11 @@ class BittBook extends Component {
         whiteSpace: 'nowrap',
         outline: 'none',
         border: 'none',
-        background: this.state.titleBackground,
+        background: 'transparent',
         fontSize: '16px',
         fontWeight: 'bold',
         color: '#146D8F',
         textOverflow: 'ellipsis',
-        transition: '200ms'
       },
 
       bittBookSubtitleContainer: {
@@ -186,10 +172,6 @@ class BittBook extends Component {
       deleteIconButton: {
         float: 'right',
         margin: '-20px -20px 0 0'
-      },
-
-      bittBookDeleteIcon: {
-        //
       }
     }
 
@@ -232,7 +214,6 @@ class BittBook extends Component {
             onTouchTap={(e) => this.props.deleteBittBook(e, id)}
           >
             <ActionDelete
-              style={styles.bittBookDeleteIcon}
               color='#757575'
               hoverColor='#424242'
             />
@@ -325,8 +306,6 @@ class BittBook extends Component {
                 defaultValue={details.title}
                 autoComplete="off"
                 ref={(input) => this.title = input}
-                onMouseEnter={this.highlightTitleBackground}
-                onMouseLeave={this.unhighlightTitleBackground}
                 onTouchTap={e => e.stopPropagation()}
                 onChange={(e) => this.updateBittBook(e, details)}
                 onKeyPress={(e) => this.handleKeyPressUpdateBittBook(e, details)}

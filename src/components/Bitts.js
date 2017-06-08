@@ -16,14 +16,17 @@ class Bitts extends Component {
 
     this.updateBittBook = this.updateBittBook.bind(this)
     this.handleKeyPressUpdateBittBook = this.handleKeyPressUpdateBittBook.bind(this)
-    this.highlightTitleBackground = this.highlightTitleBackground.bind(this)
-    this.unhighlightTitleBackground = this.unhighlightTitleBackground.bind(this)
     this.createBitt = this.createBitt.bind(this)
     this.updateBitt = this.updateBitt.bind(this)
     this.deleteBitt = this.deleteBitt.bind(this)
+    this.animateClosing = this.animateClosing.bind(this)
 
     this.state = {
-      bttBookTitleBackground: 'transparent'
+      bittsCardHeight: '84.5vh',
+      bittsCardMargins: '20px 7.6vw 20px 7.6vw',
+      bittBookTitleContainerBittsDisplay: 'block',
+      bittsHeaderDisplay: 'block',
+      bittCardContainerDisplay: 'block'
     }
   }
 
@@ -52,18 +55,6 @@ class Bitts extends Component {
 
       this.title.blur()
     }
-  }
-
-  highlightTitleBackground() {
-    this.setState({
-      bttBookTitleBackground: '#f5f5f5'
-    })
-  }
-
-  unhighlightTitleBackground() {
-    this.setState({
-      bttBookTitleBackground: 'transparent'
-    })
   }
 
   createBitt(e) {
@@ -118,6 +109,16 @@ class Bitts extends Component {
     this.props.updateBitt(updatedBittBook)
   }
 
+  animateClosing() {
+    this.setState({
+      bittsCardHeight: '172px',
+      bittsCardMargins: '20px 100vw 0 100vw',
+      bittBookTitleContainerBittsDisplay: 'none',
+      bittsHeaderDisplay: 'none',
+      bittCardContainerDisplay: 'none'
+    })
+  }
+
   render() {
     const styles = {
       bittsOutletCover: {
@@ -141,14 +142,28 @@ class Bitts extends Component {
       },
 
       bittsCard: {
-        minHeight: '84.5vh',
-        margin: '20px 7.6vw 20px 7.6vw',
+        minHeight: this.state.bittsCardHeight,
+        margin: this.state.bittsCardMargins,
         padding: '0 0 20px 0',
-        backgroundColor: '#e0e0e0'
+        backgroundColor: '#e0e0e0',
+        transition: '500ms'
+      },
+
+      bittBookTitleContainerBitts: {
+        display: this.state.bittBookTitleContainerBittsDisplay
       },
 
       bittsHeader: {
+        display: this.state.bittsHeaderDisplay,
         margin: '0 7.6vw -20px 7.6vw'
+      },
+
+      bittsExitContainer: {
+        float: 'right',
+        margin: '0 -8.2vw 0 0',
+        fontSize: '16px',
+        fontWeight: 'bold',
+        color: '#424242'
       },
 
       bittBookTitleInputBitts: {
@@ -158,12 +173,12 @@ class Bitts extends Component {
         margin: '20px 0 0 0',
         outline: 'none',
         border: 'none',
-        background: this.state.bttBookTitleBackground,
+        borderRadius: '3px',
+        background: 'transparent',
         fontSize: '24px',
         fontWeight: 'bold',
         color: '#146D8F',
         textOverflow: 'ellipsis',
-        transition: '200ms'
       },
 
       FABContainer: {
@@ -174,6 +189,10 @@ class Bitts extends Component {
         width: '40px',
         height: '40px',
         margin: '0 9vw 40px 0'
+      },
+
+      bittCardContainer: {
+        display: this.state.bittCardContainerDisplay
       }
     }
 
@@ -196,13 +215,22 @@ class Bitts extends Component {
             id="bitts-card"
             style={styles.bittsCard}
             zDepth={0}
+            onTouchTap={this.animateClosing}
           >
             <CardHeader
               style={styles.bittsHeader}
               title={
                 <div
                   id="bitt-book-title-container-bitts"
+                  style={styles.bittBookTitleContainerBitts}
                 >
+                  <div
+                    id="bitts-exit-container"
+                    style={styles.bittsExitContainer}
+                  >
+                    &#10005;
+                  </div>
+
                   <input
                     id="bitt-book-title-input-bitts"
                     style={styles.bittBookTitleInputBitts}
@@ -210,8 +238,6 @@ class Bitts extends Component {
                     defaultValue={details.title}
                     autoComplete="off"
                     ref={(input) => this.title = input}
-                    onMouseEnter={this.highlightTitleBackground}
-                    onMouseLeave={this.unhighlightTitleBackground}
                     onTouchTap={e => e.stopPropagation()}
                     onChange={(e) => this.updateBittBook(e, details)}
                     onKeyPress={(e) => this.handleKeyPressUpdateBittBook(e, details)}
@@ -258,20 +284,25 @@ class Bitts extends Component {
               </FloatingActionButton>
             </div>
 
-            {
-              Object
-                .keys(bitts)
-                .map(key =>
-                  <Bitt
-                    key={key}
-                    id={key}
-                    details={bitts[key]}
-                    bittAmount={Object.keys(details.bitts).length}
-                    updateBitt={(id) => this.updateBitt(id, details)}
-                    deleteBitt={(id) => this.deleteBitt(id, details)}
-                  />
-                )
-            }
+            <div
+              id="bitt-card-container"
+              style={styles.bittCardContainer}
+            >
+              {
+                Object
+                  .keys(bitts)
+                  .map(key =>
+                    <Bitt
+                      key={key}
+                      id={key}
+                      details={bitts[key]}
+                      bittAmount={Object.keys(details.bitts).length}
+                      updateBitt={(id) => this.updateBitt(id, details)}
+                      deleteBitt={(id) => this.deleteBitt(id, details)}
+                    />
+                  )
+              }
+            </div>
           </Card>
         </div>
       </div>
