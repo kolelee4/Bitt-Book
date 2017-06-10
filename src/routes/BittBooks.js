@@ -7,6 +7,7 @@ import base from '../base'
 // Components
 import FABContainer from '../components/FABContainer'
 import BittBook from '../components/BittBook'
+import Snackbar from 'material-ui/Snackbar'
 
 class BittBooks extends Component {
   constructor() {
@@ -14,13 +15,16 @@ class BittBooks extends Component {
 
     this.state = {
       bittBooks:      {},
-      isShowingBitts: false
+      isShowingBitts: false,
+      snackbarOpen:   false
     }
 
     this.createBittBook = this.createBittBook.bind(this)
     this.updateBittBook = this.updateBittBook.bind(this)
     this.deleteBittBook = this.deleteBittBook.bind(this)
     this.toggleBittsState = this.toggleBittsState.bind(this)
+    this.onActionTouchTapSnackbar = this.onActionTouchTapSnackbar.bind(this)
+    this.snackBarHandleRequestClose = this.snackBarHandleRequestClose.bind(this)
   }
 
   componentWillMount() {
@@ -80,11 +84,28 @@ class BittBooks extends Component {
     this.setState({
       bittBooks
     })
+
+    this.setState({
+      isShowingBitts: false,
+      snackbarOpen: true
+    })
   }
 
   toggleBittsState() {
     this.setState({
       isShowingBitts: !this.state.isShowingBitts
+    })
+  }
+
+  onActionTouchTapSnackbar() {
+    this.setState({
+      snackbarOpen: false
+    })
+  }
+
+  snackBarHandleRequestClose() {
+    this.setState({
+      snackbarOpen: false
     })
   }
 
@@ -103,9 +124,13 @@ class BittBooks extends Component {
       noBittBooksMessage: {
         margin: '0',
         fontWeight: '500'
+      },
+
+      snackbarBittBooks: {
+        textColor: 'white'
       }
     }
-
+    
     const {bittBooks} = this.state
 
     const bittBookAmount = Object.keys(bittBooks).length
@@ -160,6 +185,21 @@ class BittBooks extends Component {
         {bittBooksState}
 
         {floatingActionButtonState}
+
+        <div
+          id="snackbar-container"
+        >
+          <Snackbar
+            id="bitt-books-snackbar"
+            contentStyle={styles.snackbarBittBooks}
+            open={this.state.snackbarOpen}
+            message="Bitt Book Deleted"
+            autoHideDuration={4000}
+            action="Close"
+            onActionTouchTap={this.onActionTouchTapSnackbar}
+            onRequestClose={this.snackBarHandleRequestClose}
+          />
+        </div>
       </div>
     )
   }

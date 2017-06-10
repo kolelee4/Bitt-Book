@@ -40,7 +40,7 @@ const titleLink = (
 const NavBar = () => {
   return (
     <div
-      id="navigation"
+      id="app-bar-container"
     >
       <AppBar
         id="app-bar"

@@ -17,16 +17,15 @@ class BittBook extends Component {
     this.state = {
       isShowingBitts:   false,
       isShowingOptions: false,
-      position: '',
-      zDepth: 1,
-      width: '164px',
-      height: '172px',
-      background: 'white'
+      zDepth:           1,
+      position:         '',
+      width:            '164px',
+      height:           '172px',
+      background:       'white'
     }
 
     this.updateBittBook = this.updateBittBook.bind(this)
     this.handleKeyPressUpdateBittBook = this.handleKeyPressUpdateBittBook.bind(this)
-    this.updateBittBookFromBitts = this.updateBittBookFromBitts.bind(this)
     this.showOptions = this.showOptions.bind(this)
     this.hideOptions = this.hideOptions.bind(this)
     this.toggleBitts = this.toggleBitts.bind(this)
@@ -60,8 +59,14 @@ class BittBook extends Component {
     }
   }
 
-  updateBittBookFromBitts(updatedBittBook) {
-    this.props.updateBittBook(updatedBittBook)
+  deleteBittBook(e, id) {
+    e.stopPropagation()
+
+    this.props.deleteBittBook(e, id)
+
+    this.setState({
+      snackBarOpen: true
+    })
   }
 
   showOptions() {
@@ -81,15 +86,15 @@ class BittBook extends Component {
   toggleBitts() {
     this.state.width === '164px' ?
     this.setState({
-      position: 'absolute',
       zDepth: 0,
+      position: 'absolute',
       width: '85vw',
       height: '85vh',
       background: '#e0e0e0'
     }) :
     this.setState({
-      position: '',
       zDepth: 1,
+      position: '',
       width: '164px',
       height: '172px',
       background: 'white'
@@ -120,13 +125,13 @@ class BittBook extends Component {
       bittBookCard: {
         cursor: 'pointer',
         position: this.state.position,
-        overflow: 'hidden',
         float: 'left',
+        overflow: 'hidden',
         width: this.state.width,
         height: this.state.height,
         margin: '0 20px 40px 0',
         background: this.state.background,
-        transition: '200ms'
+        transition: '100ms'
       },
 
       bittBookHeader: {
@@ -174,7 +179,7 @@ class BittBook extends Component {
         margin: '-20px -20px 0 0'
       }
     }
-
+    
     const {id, details} = this.props
 
     const bittAmount = Object.keys(details.bitts).length
@@ -182,7 +187,9 @@ class BittBook extends Component {
     let subtitleState
     if (this.state.isShowingOptions) {
       subtitleState =
-      <div>
+      <div
+        id="bitt-book-subtitle-state-container"
+      >
         <div
           id="bitt-book-subtitle-container"
           style={styles.bittBookSubtitleContainer}
@@ -211,7 +218,7 @@ class BittBook extends Component {
         >
           <IconButton
             style={styles.deleteIconButton}
-            onTouchTap={(e) => this.props.deleteBittBook(e, id)}
+            onTouchTap={(e) => this.deleteBittBook(e, id)}
           >
             <ActionDelete
               color='#757575'
@@ -253,6 +260,7 @@ class BittBook extends Component {
         style={styles.bittBookCard}
       >
         <CardHeader
+          id="bitt-book-card-header"
           title={
             <div
               id="bitt-book-title-container"
@@ -280,7 +288,8 @@ class BittBook extends Component {
       <Bitts
         ref={instance => this.bitts = instance}
         details={details}
-        updateBittBookFromBitts={(updatedBittBook) => this.updateBittBookFromBitts(updatedBittBook)}
+        updateBittBook={(updatedBittBook) => this.props.updateBittBook(updatedBittBook)}
+        deleteBittBook={(e) => this.props.deleteBittBook(e, id)}
         updateBitt={(updatedBittBook) => this.updateBitt(updatedBittBook)}
       />
     } else {
@@ -293,6 +302,7 @@ class BittBook extends Component {
         zDepth={this.state.zDepth}
       >
         <CardHeader
+          id="bitt-book-card-header"
           style={styles.bittBookHeader}
           title={
             <div

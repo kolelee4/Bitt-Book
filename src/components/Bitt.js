@@ -178,7 +178,7 @@ class Bitt extends Component {
       bittTextarea: {
         resize: 'none',
         width: '95%',
-        minHeight: '40vh',
+        minHeight: '38vh',
         outline: 'none',
         border: 'none',
         margin: '0 0 0 0',
@@ -291,7 +291,9 @@ class Bitt extends Component {
             />
           }
           subtitle={
-            <div>
+            <div
+              id="bitt-subtitle-container"
+            >
               <Moment
                 fromNow
                 style={styles.bittMomentDate}
@@ -323,6 +325,15 @@ class Bitt extends Component {
             onTouchTap={e => e.stopPropagation()}
             onChange={(e) => this.updateBitt(e, details)}
           />
+
+          {/* <div
+            id="bitt-editor-container"
+            onTouchTap={e => e.stopPropagation()}
+          >
+            <BittEditor
+              bittBody={details.body}
+            />
+          </div> */}
 
           <RaisedButton
             id="bitt-done-button"

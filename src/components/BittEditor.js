@@ -17,9 +17,8 @@ class BittEditor extends Component {
   render() {
     return (
       <Editor
+        autoFocus="true"
         editorState={this.state.editorState}
-        autoFocus={true}
-        onTouchTap={e => e.stopPropagation()}
         onChange={this.onChange}
       />
     )
