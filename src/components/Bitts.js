@@ -7,10 +7,10 @@ import Moment from '../helpers/react-moment'
 // Components
 import {Card, CardHeader} from 'material-ui/Card'
 import IconButton from 'material-ui/IconButton'
-import NavigationClose from 'material-ui/svg-icons/navigation/close'
 import ActionDelete from 'material-ui/svg-icons/action/delete'
 import FloatingActionButton from './FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
+import ItemDeletedAlert from './ItemDeletedAlert'
 import Bitt from './Bitt'
 
 class Bitts extends Component {
@@ -23,6 +23,8 @@ class Bitts extends Component {
     this.updateBitt = this.updateBitt.bind(this)
     this.deleteBitt = this.deleteBitt.bind(this)
     this.animateClosing = this.animateClosing.bind(this)
+    this.onActionTouchTapSnackbar = this.onActionTouchTapSnackbar.bind(this)
+    this.snackBarHandleRequestClose = this.snackBarHandleRequestClose.bind(this)
 
     this.state = {
       bittsCardHeight:                    '84.5vh',
@@ -30,7 +32,8 @@ class Bitts extends Component {
       bittsCardBackground:                '#e0e0e0',
       bittBookTitleContainerBittsDisplay: 'block',
       bittsHeaderDisplay:                 'block',
-      bittCardContainerDisplay:           'block'
+      bittCardContainerDisplay:           'block',
+      snackbarOpen:                       false
     }
   }
 
@@ -111,6 +114,10 @@ class Bitts extends Component {
     updatedBittBook.bitts[id] = null
 
     this.props.updateBitt(updatedBittBook)
+
+    this.setState({
+      snackbarOpen: true
+    })
   }
 
   animateClosing() {
@@ -121,6 +128,20 @@ class Bitts extends Component {
       bittBookTitleContainerBittsDisplay: 'none',
       bittsHeaderDisplay: 'none',
       bittCardContainerDisplay: 'none'
+    })
+  }
+
+  onActionTouchTapSnackbar(e) {
+    e.stopPropagation()
+
+    this.setState({
+      snackbarOpen: false
+    })
+  }
+
+  snackBarHandleRequestClose() {
+    this.setState({
+      snackbarOpen: false
     })
   }
 
@@ -142,7 +163,8 @@ class Bitts extends Component {
       bittsContainer: {
         zIndex: '1000',
         height: '90.5vh',
-        overflow: 'auto',
+        overflowX: 'hidden',
+        overflowY: 'auto',
         margin: '64px 0 0 0'
       },
 
@@ -160,12 +182,7 @@ class Bitts extends Component {
 
       bittsHeader: {
         display: this.state.bittsHeaderDisplay,
-        margin: '0 7.6vw -20px 7.6vw'
-      },
-
-      bittsExitContainer: {
-        float: 'right',
-        margin: '20px 7.7vw 0 0',
+        margin: '0 0 -20px 7.6vw'
       },
 
       bittBookTitleInputBitts: {
@@ -180,7 +197,7 @@ class Bitts extends Component {
         fontSize: '24px',
         fontWeight: 'bold',
         color: '#146D8F',
-        textOverflow: 'ellipsis',
+        textOverflow: 'ellipsis'
       },
 
       bittsOptionsContainer: {
@@ -202,7 +219,7 @@ class Bitts extends Component {
         display: this.state.bittCardContainerDisplay
       }
     }
-    
+
     const {details} = this.props
 
     const {bitts} = details
@@ -219,22 +236,10 @@ class Bitts extends Component {
           id="bitts-container"
           style={styles.bittsContainer}
         >
-          <div
-            id="bitts-exit-container"
-            style={styles.bittsExitContainer}
-          >
-            <IconButton>
-              <NavigationClose
-                color='#757575'
-                hoverColor='#424242'
-              />
-            </IconButton>
-          </div>
-
           <Card
             id="bitts-card"
             style={styles.bittsCard}
-            zDepth={0}
+            zDepth={3}
             onTouchTap={this.animateClosing}
           >
             <CardHeader
@@ -331,6 +336,13 @@ class Bitts extends Component {
               }
             </div>
           </Card>
+
+          <ItemDeletedAlert
+            message="Bitt Deleted"
+            isOpen={this.state.snackbarOpen}
+            close={(e) => this.onActionTouchTapSnackbar(e)}
+            requestClose={this.snackBarHandleRequestClose}
+          />
         </div>
       </div>
     )

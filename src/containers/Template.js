@@ -1,7 +1,8 @@
 import React from 'react'
 import {
   Switch,
-  Route
+  Route,
+  // Redirect
 } from 'react-router-dom'
 
 // Containers
@@ -22,11 +23,16 @@ const Template = () => {
         <NavBar/>
 
         <Switch>
+          {/* <Redirect
+            from="/"
+            exact to="/bitt-books"
+          /> */}
+
           <Route
-            exact path="/"
+            exact path="/bitt-books"
             component={BittBooks}
           />
-          
+
           <Route
             exact path="/account"
             component={Account}

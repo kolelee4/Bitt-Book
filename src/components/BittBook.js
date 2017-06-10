@@ -86,7 +86,7 @@ class BittBook extends Component {
   toggleBitts() {
     this.state.width === '164px' ?
     this.setState({
-      zDepth: 0,
+      zDepth: 3,
       position: 'absolute',
       width: '85vw',
       height: '85vh',
@@ -179,7 +179,7 @@ class BittBook extends Component {
         margin: '-20px -20px 0 0'
       }
     }
-    
+
     const {id, details} = this.props
 
     const bittAmount = Object.keys(details.bitts).length

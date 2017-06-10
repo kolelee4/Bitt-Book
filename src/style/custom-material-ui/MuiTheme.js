@@ -6,7 +6,7 @@ const MuiTheme = getMuiTheme({
     primary2Color: '#004261',
     primary3Color: '#529bbf',
     textColor: '#424242',
-    accent1Color: '#d32f2f',
+    accent1Color: 'white', // #d32f2f
     accent2Color: '#9a0007',
     accent3Color: '#ff6659',
   }

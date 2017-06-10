@@ -7,7 +7,7 @@ import base from '../base'
 // Components
 import FABContainer from '../components/FABContainer'
 import BittBook from '../components/BittBook'
-import Snackbar from 'material-ui/Snackbar'
+import ItemDeletedAlert from '../components/ItemDeletedAlert'
 
 class BittBooks extends Component {
   constructor() {
@@ -124,13 +124,9 @@ class BittBooks extends Component {
       noBittBooksMessage: {
         margin: '0',
         fontWeight: '500'
-      },
-
-      snackbarBittBooks: {
-        textColor: 'white'
       }
     }
-    
+
     const {bittBooks} = this.state
 
     const bittBookAmount = Object.keys(bittBooks).length
@@ -186,20 +182,12 @@ class BittBooks extends Component {
 
         {floatingActionButtonState}
 
-        <div
-          id="snackbar-container"
-        >
-          <Snackbar
-            id="bitt-books-snackbar"
-            contentStyle={styles.snackbarBittBooks}
-            open={this.state.snackbarOpen}
-            message="Bitt Book Deleted"
-            autoHideDuration={4000}
-            action="Close"
-            onActionTouchTap={this.onActionTouchTapSnackbar}
-            onRequestClose={this.snackBarHandleRequestClose}
-          />
-        </div>
+        <ItemDeletedAlert
+          message="Bitt Book Deleted"
+          isOpen={this.state.snackbarOpen}
+          close={this.onActionTouchTapSnackbar}
+          requestClose={this.snackBarHandleRequestClose}
+        />
       </div>
     )
   }

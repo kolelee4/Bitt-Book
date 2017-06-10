@@ -50,7 +50,7 @@ class AlertModal extends Component {
           Delete Bitt Book? All Bitts will be deleted...
         </Dialog>
       </div>
-    );
+    )
   }
 }
 
