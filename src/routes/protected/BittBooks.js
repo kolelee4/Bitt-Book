@@ -2,12 +2,12 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 
 // Database
-import base from '../base'
+import {base} from '../../config/base'
 
 // Components
-import FABContainer from '../components/FABContainer'
-import BittBook from '../components/BittBook'
-import ItemDeletedAlert from '../components/ItemDeletedAlert'
+import FABContainer from '../../components/FABContainer'
+import BittBook from '../../components/BittBook'
+import ItemDeletedAlert from '../../components/ItemDeletedAlert'
 
 class BittBooks extends Component {
   constructor() {

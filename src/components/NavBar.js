@@ -28,7 +28,7 @@ const titleLink = (
     to="/bitt-books"
     style={styles.titleLinkStyle}
   >
-    Bitt Books
+    Bitt Book
   </NavLink>
 )
 
