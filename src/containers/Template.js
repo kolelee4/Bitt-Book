@@ -5,11 +5,16 @@ import {
   Redirect
 } from 'react-router-dom'
 
+// Auth
+import {firebaseAuth} from '../config/base'
+
 // Containers
 import RouteContainer from '../containers/RouteContainer'
 import Layout from '../containers/Layout'
 
 // Routes
+import Signup from '../routes/Signup'
+import Login from '../routes/Login'
 import Home from '../routes/Home'
 import BittBooks from '../routes/protected/BittBooks'
 import Account from '../routes/protected/Account'
@@ -17,31 +22,114 @@ import Account from '../routes/protected/Account'
 // Components
 import NavBar from '../components/NavBar'
 
-const Template = () => {
+function PrivateRoute ({component: Component, authed, ...rest}) {
   return (
-    <RouteContainer>
-      <Layout>
-        <NavBar/>
-
-        <Switch>
-          <Route
-            exact path="/"
-            component={Home}
-          />
-
-          <Route
-            exact path="/bitt-books"
-            component={BittBooks}
-          />
-
-          <Route
-            exact path="/account"
-            component={Account}
-          />
-        </Switch>
-      </Layout>
-    </RouteContainer>
+    <Route
+      {...rest}
+      render={
+        (props) => authed === true ?
+        <Component {...props} /> :
+        <Redirect
+          to={{pathname: '/login', state: {from: props.location}}}
+        />
+      }
+    />
   )
+}
+
+function PublicRoute ({component: Component, authed, ...rest}) {
+  return (
+    <Route
+      {...rest}
+      render={
+        (props) => authed === false ?
+        <Component {...props} /> :
+        <Redirect
+          to='/bitt-books'
+        />
+      }
+    />
+  )
+}
+
+class Template extends Component {
+  constructor() {
+    super()
+
+    this.state = {
+      authed: false,
+      loading: true
+    }
+  }
+
+  componentDidMount() {
+    this.removeListener = firebaseAuth().onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({
+          authed: true,
+          loading: false,
+        })
+      } else {
+        this.setState({
+          authed: false,
+          loading: false
+        })
+      }
+    })
+  }
+
+  componentWillUnmount() {
+    this.removeListener()
+  }
+
+  render() {
+    return this.state.loading === true ?
+    <h1>Loading...</h1> :
+    (
+      <RouteContainer>
+        <Layout>
+          <NavBar
+            authed={this.state.authed}
+          />
+
+          <Switch>
+            <Route
+              exact path='/'
+              component={Home}
+            />
+
+            <PublicRoute
+              authed={this.state.authed}
+              exact path='/signup'
+              component={Signup}
+            />
+
+            <PublicRoute
+              authed={this.state.authed}
+              exact path='/login'
+              component={Login}
+            />
+
+            <PrivateRoute
+              authed={this.state.authed}
+              exact path='/bitt-books'
+              component={BittBooks}
+            />
+
+            <PrivateRoute
+              authed={this.state.authed}
+              exact path='/account'
+              component={Account}
+            />
+
+            <Route
+              render={() => <h3>No Match</h3>}
+            />
+          </Switch>
+        </Layout>
+      </RouteContainer>
+    )
+  }
 }
 
 export default Template

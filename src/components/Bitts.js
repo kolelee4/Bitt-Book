@@ -350,9 +350,9 @@ class Bitts extends Component {
 }
 
 Bitts.propTypes = {
-  details:                 PropTypes.object.isRequired,
+  details:        PropTypes.object.isRequired,
   updateBittBook: PropTypes.func.isRequired,
-  updateBitt:              PropTypes.func.isRequired
+  updateBitt:     PropTypes.func.isRequired
 }
 
 export default Bitts

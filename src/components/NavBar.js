@@ -1,12 +1,17 @@
 import React from 'react'
 import {NavLink} from 'react-router-dom'
+import PropTypes from 'prop-types'
+
+// Helpers
+import {logout} from '../helpers/auth'
 
 // Components
 import AppBar from 'material-ui/AppBar'
+import FlatButton from 'material-ui/FlatButton'
+import Avatar from 'material-ui/Avatar'
 import IconButton from 'material-ui/IconButton'
 import IconMenu from 'material-ui/IconMenu'
 import MenuItem from 'material-ui/MenuItem'
-import Avatar from 'material-ui/Avatar'
 
 const styles = {
   titleStyle: {
@@ -15,6 +20,11 @@ const styles = {
 
   titleLinkStyle: {
     textDecoration: 'none',
+    color: 'white'
+  },
+
+  authLink: {
+    margin: '6px 0 0 0',
     color: 'white'
   },
 
@@ -32,7 +42,19 @@ const titleLink = (
   </NavLink>
 )
 
-const NavBar = () => {
+const signupLink = (
+  <NavLink
+    to="/signup"
+  />
+)
+
+const loginLink = (
+  <NavLink
+    to="/login"
+  />
+)
+
+const NavBar = (props) => {
   return (
     <div
       id="app-bar-container"
@@ -44,6 +66,21 @@ const NavBar = () => {
         titleStyle={styles.titleStyle}
         showMenuIconButton={false}
         iconElementRight={
+          props.authed === false ?
+          <div
+            id="auth-links-container"
+          >
+            <FlatButton
+              label="Sign Up"
+              style={styles.authLink}
+              containerElement={signupLink}
+            />
+            <FlatButton
+              label="Log In"
+              style={styles.authLink}
+              containerElement={loginLink}
+            />
+          </div> :
           <IconMenu
             anchorOrigin={{horizontal: 'right', vertical: 'top'}}
             targetOrigin={{horizontal: 'right', vertical: 'top'}}
@@ -53,8 +90,6 @@ const NavBar = () => {
               >
                 <Avatar
                   id="avatar"
-                  // color='#146D8F'
-                  // backgroundColor='#e0e0e0'
                   size={30}
                 >
                   KL
@@ -85,12 +120,17 @@ const NavBar = () => {
             <MenuItem
               value="3"
               primaryText="Logout"
+              onTouchTap={() => {logout()}}
             />
           </IconMenu>
         }
       />
     </div>
   )
+}
+
+NavBar.propTypes = {
+  authed: PropTypes.bool.isRequired
 }
 
 export default NavBar

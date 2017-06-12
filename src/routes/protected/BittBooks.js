@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 
+// Auth
+
 // Database
 import {base} from '../../config/base'
 
@@ -14,6 +16,8 @@ class BittBooks extends Component {
     super()
 
     this.state = {
+      uid: null,
+      owner: null,
       bittBooks:      {},
       isShowingBitts: false,
       snackbarOpen:   false
