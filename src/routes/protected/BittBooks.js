@@ -1,10 +1,11 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 
-// Auth
-
 // Database
 import {base} from '../../config/base'
+
+// Helpers
+import {currentUserId} from '../../helpers/auth'
 
 // Components
 import FABContainer from '../../components/FABContainer'
@@ -16,8 +17,7 @@ class BittBooks extends Component {
     super()
 
     this.state = {
-      uid: null,
-      owner: null,
+      loading:        true,
       bittBooks:      {},
       isShowingBitts: false,
       snackbarOpen:   false
@@ -38,12 +38,19 @@ class BittBooks extends Component {
     })
   }
 
+  componentDidMount() {
+    this.setState({
+      loading: false
+    })
+  }
+
   createBittBook() {
     const bittBooks = {...this.state.bittBooks}
 
     const timestamp = Date.now()
 
     const bittBook = {
+      owner:         currentUserId(),
       title:         'Untitled',
       createdAt:     timestamp,
       updatedAt:     timestamp,
@@ -115,6 +122,10 @@ class BittBooks extends Component {
 
   componentWillUnmount() {
     base.removeBinding(this.ref)
+
+    this.setState({
+      loading: true
+    })
   }
 
   render() {
@@ -177,7 +188,7 @@ class BittBooks extends Component {
       </div>
     }
 
-    return (
+    return this.state.loading ? <h2>Loading...</h2> : (
       <div
         id="bitt-books-route"
         style={styles.bittBooksRoute}

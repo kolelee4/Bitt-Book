@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {login, resetPassword} from '../helpers/auth'
 
-function setErrorMsg(error) {
+const setErrorMsg = (error) => {
   return {
     loginMessage: error
   }
@@ -36,7 +36,9 @@ class Login extends Component {
 
   render() {
     return (
-      <div>
+      <div
+        id="login-container"
+      >
         <h2>Log In</h2>
         <form
           onSubmit={this.userLogin}
@@ -55,13 +57,13 @@ class Login extends Component {
           {
             this.state.loginMessage &&
             <div>
-              <span>Error:</span>
-              &nbsp;{this.state.loginMessage}
+              <span>Error:</span>&nbsp;{this.state.loginMessage}
               <br/>
               <a
                 href="#"
-                onClick={this.resetPassword}               >
-                Forgot Password?
+                onClick={this.resetPassword}
+              >
+                Forgot your password?
               </a>
             </div>
           }

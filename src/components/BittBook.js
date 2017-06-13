@@ -2,17 +2,18 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 
 // Helpers
+import {currentUserId} from '../helpers/auth'
 import Moment from '../helpers/react-moment'
 
-// Components
+// Component
 import {Card, CardHeader} from 'material-ui/Card'
 import IconButton from 'material-ui/IconButton'
 import ActionDelete from 'material-ui/svg-icons/action/delete'
 import Bitts from './Bitts'
 
 class BittBook extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
 
     this.state = {
       isShowingBitts:   false,
@@ -31,6 +32,8 @@ class BittBook extends Component {
     this.toggleBitts = this.toggleBitts.bind(this)
     this.updateBitt = this.updateBitt.bind(this)
   }
+
+  componentDidMount
 
   updateBittBook(e, details) {
     e.preventDefault()
@@ -118,6 +121,11 @@ class BittBook extends Component {
 
   render() {
     const styles = {
+      noBittBooksMessage: {
+        margin: '0',
+        fontWeight: '500'
+      },
+
       bittBook: {
         bittBookCardPosition: this.state.position
       },
@@ -330,7 +338,7 @@ class BittBook extends Component {
       </Card>
     }
 
-    return (
+    return details.owner !== currentUserId() ? null : (
       <div
         id="bitt-book"
         style={styles.bittBook}

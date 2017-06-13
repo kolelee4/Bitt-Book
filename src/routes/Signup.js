@@ -3,7 +3,7 @@ import React, {Component} from 'react'
 // Helpers
 import {auth} from '../helpers/auth'
 
-function setErrorMsg(error) {
+const setErrorMsg = (error) => {
   return {
     signupError: error.message
   }
@@ -29,7 +29,9 @@ class Signup extends Component {
 
   render() {
     return (
-      <div>
+      <div
+        id="signup-container"
+      >
         <h2>Sign Up</h2>
         <form
           onSubmit={this.createUser}

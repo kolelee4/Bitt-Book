@@ -92,7 +92,7 @@ const NavBar = (props) => {
                   id="avatar"
                   size={30}
                 >
-                  KL
+                  JD
                 </Avatar>
               </IconButton>
             }

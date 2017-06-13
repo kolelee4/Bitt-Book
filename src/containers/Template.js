@@ -22,7 +22,7 @@ import Account from '../routes/protected/Account'
 // Components
 import NavBar from '../components/NavBar'
 
-function PrivateRoute ({component: Component, authed, ...rest}) {
+const PrivateRoute  = ({component: Component, authed, ...rest}) => {
   return (
     <Route
       {...rest}
@@ -37,7 +37,7 @@ function PrivateRoute ({component: Component, authed, ...rest}) {
   )
 }
 
-function PublicRoute ({component: Component, authed, ...rest}) {
+const PublicRoute = ({component: Component, authed, ...rest}) => {
   return (
     <Route
       {...rest}
@@ -67,7 +67,7 @@ class Template extends Component {
       if (user) {
         this.setState({
           authed: true,
-          loading: false,
+          loading: false
         })
       } else {
         this.setState({
@@ -84,7 +84,15 @@ class Template extends Component {
 
   render() {
     return this.state.loading === true ?
-    <h1>Loading...</h1> :
+    <RouteContainer>
+      <Layout>
+        <NavBar
+          authed={this.state.authed}
+        />
+
+        <h2>Loading...</h2>
+      </Layout>
+    </RouteContainer> :
     (
       <RouteContainer>
         <Layout>
