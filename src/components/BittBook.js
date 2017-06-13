@@ -338,7 +338,8 @@ class BittBook extends Component {
       </Card>
     }
 
-    return details.owner !== currentUserId() ? null : (
+    return details.owner !== currentUserId() ? null :
+    (
       <div
         id="bitt-book"
         style={styles.bittBook}

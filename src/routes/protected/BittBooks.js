@@ -188,7 +188,8 @@ class BittBooks extends Component {
       </div>
     }
 
-    return this.state.loading ? <h2>Loading...</h2> : (
+    return this.state.loading ? <h2>Loading...</h2> :
+    (
       <div
         id="bitt-books-route"
         style={styles.bittBooksRoute}
