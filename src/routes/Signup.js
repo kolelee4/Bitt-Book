@@ -57,6 +57,7 @@ class Signup extends Component {
           email={this.state.email}
           password={this.state.password}
           passwordHint="Create a password..."
+          signupError={this.state.signupError}
           handleChangeEmail={(event) => this.handleChangeEmail(event)}
           handleChangePassword={(event) => this.handleChangePassword(event)}
           submit={(e) => this.createUser(e)}

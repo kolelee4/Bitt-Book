@@ -173,7 +173,7 @@ class Bitts extends Component {
         margin: this.state.bittsCardMargins,
         padding: '0 0 20px 0',
         backgroundColor: this.state.bittsCardBackground,
-        transition: '200ms'
+        transition: '100ms'
       },
 
       bittBookTitleContainerBitts: {

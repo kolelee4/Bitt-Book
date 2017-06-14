@@ -61,7 +61,7 @@ class Signin extends Component {
         <Form
           title="Sign In"
           buttonLabel="Sign In"
-          noAccountMessage="Don't have an acount?"
+          noAccountMessage="Don't have an account?"
           email={this.state.email}
           password={this.state.password}
           passwordHint="Enter your password..."

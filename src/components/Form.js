@@ -8,6 +8,26 @@ import TextField from 'material-ui/TextField'
 import RaisedButton from './RaisedButton'
 
 class Form extends Component {
+  constructor() {
+    super()
+
+    this.state = {
+      zDepth: 1
+    }
+
+    this.toggleZDepth = this.toggleZDepth.bind(this)
+  }
+
+  toggleZDepth() {
+    this.state.zDepth === 1 ?
+    this.setState({
+      zDepth: 2
+    }) :
+    this.setState({
+      zDepth: 1
+    })
+  }
+
   render() {
     const styles = {
       formContainer: {
@@ -30,9 +50,21 @@ class Form extends Component {
         margin: '0 auto 0 auto'
       },
 
-      formMessage: {
+      formMessageContainer: {
         float: 'left',
         margin: '80px 0 0 3vw'
+      },
+
+      loginMessageContainer: {
+        float: 'left',
+        fontWeight: '500'
+      },
+
+      loginMessageText: {
+        margin: '0',
+        fontSize: '14px',
+        fontWeight: '500',
+        color: '#d32f2f'
       },
 
       signupLink: {
@@ -58,6 +90,7 @@ class Form extends Component {
       handleChangeEmail,
       handleChangePassword,
       noAccountMessage,
+      signupError,
       loginMessage,
       buttonLabel,
       submit
@@ -67,15 +100,28 @@ class Form extends Component {
     if (loginMessage) {
       formMessageState =
       <div
-        id="form-message-link-container"
+        id="form-message"
       >
+        <div
+          style={styles.loginMessageContainer}
+        >
+          <h4
+            style={styles.loginMessageText}
+          >
+            {loginMessage}
+          </h4>
+        </div>
+
+        <br/>
+        <br/>
+
         <a
           id="forgot-password-link"
           style={styles.forgotPasswordLink}
           href="#"
           onClick={resetPassword}
         >
-          Forgot your password?
+          Reset password.
         </a>
 
         <br/>
@@ -83,7 +129,7 @@ class Form extends Component {
 
         <NavLink
           id="signup-link"
-          to="/signup"
+          to="/sign-up"
           style={styles.signupLink}
         >
           {noAccountMessage}
@@ -93,7 +139,7 @@ class Form extends Component {
       formMessageState =
       <NavLink
         id="signup-link"
-        to="/signup"
+        to="/sign-up"
         style={styles.signupLink}
       >
         {noAccountMessage}
@@ -114,6 +160,9 @@ class Form extends Component {
           <Card
             id="material-form"
             style={styles.materialForm}
+            zDepth={this.state.zDepth}
+            onMouseEnter={this.toggleZDepth}
+            onMouseLeave={this.toggleZDepth}
           >
             <CardHeader
               id="form-header"
@@ -132,6 +181,7 @@ class Form extends Component {
               <TextField
                 hintText="Enter your email..."
                 floatingLabelText="Email"
+                errorText={signupError}
                 fullWidth={true}
                 value={email}
                 onChange={handleChangeEmail}
@@ -141,7 +191,6 @@ class Form extends Component {
                 hintText={passwordHint}
                 type="password"
                 floatingLabelText="Password"
-                errorText={loginMessage}
                 fullWidth={true}
                 value={password}
                 onChange={handleChangePassword}
@@ -149,8 +198,8 @@ class Form extends Component {
             </div>
 
             <div
-              id="form-message"
-              style={styles.formMessage}
+              id="form-message-container"
+              style={styles.formMessageContainer}
             >
               {formMessageState}
             </div>
@@ -177,6 +226,7 @@ Form.propTypes = {
   handleChangeEmail:    PropTypes.func.isRequired,
   handleChangePassword: PropTypes.func.isRequired,
   noAccountMessage:     PropTypes.string,
+  signupError:          PropTypes.string,
   loginMessage:         PropTypes.string,
   buttonLabel:          PropTypes.string.isRequired,
   submit:               PropTypes.func.isRequired

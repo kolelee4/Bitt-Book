@@ -35,7 +35,7 @@ const styles = {
 
 const signinLink = (
   <NavLink
-    to="/signin"
+    to="/sign-in"
   />
 )
 

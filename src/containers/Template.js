@@ -30,7 +30,7 @@ const PrivateRoute  = ({component: Component, authenticated, ...rest}) => {
         (props) => authenticated === true ?
         <Component {...props} /> :
         <Redirect
-          to={{pathname: '/signin', state: {from: props.location}}}
+          to={{pathname: '/sign-in', state: {from: props.location}}}
         />
       }
     />
@@ -108,13 +108,13 @@ class Template extends Component {
 
             <PublicRoute
               authenticated={this.state.authenticated}
-              exact path='/signup'
+              exact path='/sign-up'
               component={Signup}
             />
 
             <PublicRoute
               authenticated={this.state.authenticated}
-              exact path='/signin'
+              exact path='/sign-in'
               component={Signin}
             />
 
