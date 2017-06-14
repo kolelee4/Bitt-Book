@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import {base} from '../../config/base'
 
 // Helpers
-import {currentUserId} from '../../helpers/auth'
+import {getCurrentUserId} from '../../helpers/auth'
 
 // Components
 import FABContainer from '../../components/FABContainer'
@@ -50,7 +50,7 @@ class BittBooks extends Component {
     const timestamp = Date.now()
 
     const bittBook = {
-      owner:         currentUserId(),
+      owner:         getCurrentUserId(),
       title:         'Untitled',
       createdAt:     timestamp,
       updatedAt:     timestamp,

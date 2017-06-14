@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 
 // Helpers
-import {currentUserId} from '../helpers/auth'
+import {getCurrentUserId} from '../helpers/auth'
 import Moment from '../helpers/react-moment'
 
 // Component
@@ -16,13 +16,14 @@ class BittBook extends Component {
     super(props)
 
     this.state = {
-      isShowingBitts:   false,
-      isShowingOptions: false,
-      zDepth:           1,
-      position:         '',
-      width:            '164px',
-      height:           '172px',
-      background:       'white'
+      isShowingBitts:                   false,
+      isShowingOptions:                 false,
+      zDepth:                           1,
+      position:                         '',
+      width:                            '164px',
+      height:                           '172px',
+      bittBookTitleContainerVisibility: 'visible',
+      background:                       'white'
     }
 
     this.updateBittBook = this.updateBittBook.bind(this)
@@ -93,6 +94,7 @@ class BittBook extends Component {
       position: 'absolute',
       width: '85vw',
       height: '85vh',
+      bittBookTitleContainerVisibility: 'hidden',
       background: '#e0e0e0'
     }) :
     this.setState({
@@ -100,6 +102,7 @@ class BittBook extends Component {
       position: '',
       width: '164px',
       height: '172px',
+      bittBookTitleContainerVisibility: 'visible',
       background: 'white'
     })
 
@@ -147,11 +150,13 @@ class BittBook extends Component {
       },
 
       bittBookTitleContainer: {
+        visibility: this.state.bittBookTitleContainerVisibility,
         width: '132px',
         overflow: 'hidden',
         margin: '20px 0 0 0',
         border: 'none',
-        borderRadius: '3px'
+        borderRadius: '3px',
+        transition: '100ms'
       },
 
       bittBookTitleInput: {
@@ -338,7 +343,7 @@ class BittBook extends Component {
       </Card>
     }
 
-    return details.owner !== currentUserId() ? null :
+    return details.owner !== getCurrentUserId() ? null :
     (
       <div
         id="bitt-book"

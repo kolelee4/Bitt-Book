@@ -3,8 +3,19 @@ import PropTypes from 'prop-types'
 
 class Account extends Component {
   render() {
+    const styles = {
+      accountContainer: {
+        margin: '0 20px 0 20px'
+      }
+    }
+
     return(
-      <h3>{this.props.title}</h3>
+      <div
+        id="account-container"
+        style={styles.accountContainer}
+      >
+        <h3>{this.props.title}</h3>
+      </div>
     )
   }
 }

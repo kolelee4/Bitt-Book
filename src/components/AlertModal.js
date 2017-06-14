@@ -15,13 +15,13 @@ class AlertModal extends Component {
     this.setState({
       open: true
     })
-  };
+  }
 
   handleClose = () => {
     this.setState({
       open: false
     })
-  };
+  }
 
   render() {
     const actions = [
@@ -36,11 +36,17 @@ class AlertModal extends Component {
         primary={true}
         onTouchTap={this.handleClose}
       />,
-    ];
+    ]
 
     return (
-      <div>
-        <RaisedButton label="Alert" onTouchTap={this.handleOpen} />
+      <div
+        id="raised-button-container-alert-modal"
+      >
+        <RaisedButton
+          label="Delete"
+          onTouchTap={this.handleOpen}
+        />
+
         <Dialog
           actions={actions}
           modal={false}

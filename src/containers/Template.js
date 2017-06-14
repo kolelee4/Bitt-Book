@@ -14,7 +14,7 @@ import Layout from '../containers/Layout'
 
 // Routes
 import Signup from '../routes/Signup'
-import Login from '../routes/Login'
+import Signin from '../routes/Signin'
 import Home from '../routes/Home'
 import BittBooks from '../routes/protected/BittBooks'
 import Account from '../routes/protected/Account'
@@ -22,27 +22,27 @@ import Account from '../routes/protected/Account'
 // Components
 import NavBar from '../components/NavBar'
 
-const PrivateRoute  = ({component: Component, authed, ...rest}) => {
+const PrivateRoute  = ({component: Component, authenticated, ...rest}) => {
   return (
     <Route
       {...rest}
       render={
-        (props) => authed === true ?
+        (props) => authenticated === true ?
         <Component {...props} /> :
         <Redirect
-          to={{pathname: '/login', state: {from: props.location}}}
+          to={{pathname: '/signin', state: {from: props.location}}}
         />
       }
     />
   )
 }
 
-const PublicRoute = ({component: Component, authed, ...rest}) => {
+const PublicRoute = ({component: Component, authenticated, ...rest}) => {
   return (
     <Route
       {...rest}
       render={
-        (props) => authed === false ?
+        (props) => authenticated === false ?
         <Component {...props} /> :
         <Redirect
           to='/bitt-books'
@@ -57,7 +57,7 @@ class Template extends Component {
     super()
 
     this.state = {
-      authed: false,
+      authenticated: false,
       loading: true
     }
   }
@@ -66,12 +66,12 @@ class Template extends Component {
     this.removeListener = firebaseAuth().onAuthStateChanged((user) => {
       if (user) {
         this.setState({
-          authed: true,
+          authenticated: true,
           loading: false
         })
       } else {
         this.setState({
-          authed: false,
+          authenticated: false,
           loading: false
         })
       }
@@ -87,7 +87,7 @@ class Template extends Component {
     <RouteContainer>
       <Layout>
         <NavBar
-          authed={this.state.authed}
+          authenticated={this.state.authenticated}
         />
 
         <h2>Loading...</h2>
@@ -97,7 +97,7 @@ class Template extends Component {
       <RouteContainer>
         <Layout>
           <NavBar
-            authed={this.state.authed}
+            authenticated={this.state.authenticated}
           />
 
           <Switch>
@@ -107,25 +107,25 @@ class Template extends Component {
             />
 
             <PublicRoute
-              authed={this.state.authed}
+              authenticated={this.state.authenticated}
               exact path='/signup'
               component={Signup}
             />
 
             <PublicRoute
-              authed={this.state.authed}
-              exact path='/login'
-              component={Login}
+              authenticated={this.state.authenticated}
+              exact path='/signin'
+              component={Signin}
             />
 
             <PrivateRoute
-              authed={this.state.authed}
+              authenticated={this.state.authenticated}
               exact path='/bitt-books'
               component={BittBooks}
             />
 
             <PrivateRoute
-              authed={this.state.authed}
+              authenticated={this.state.authenticated}
               exact path='/account'
               component={Account}
             />

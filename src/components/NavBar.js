@@ -33,28 +33,22 @@ const styles = {
   }
 }
 
-const titleLink = (
+const signinLink = (
   <NavLink
-    to="/bitt-books"
-    style={styles.titleLinkStyle}
-  >
-    Bitt Book
-  </NavLink>
-)
-
-const signupLink = (
-  <NavLink
-    to="/signup"
-  />
-)
-
-const loginLink = (
-  <NavLink
-    to="/login"
+    to="/signin"
   />
 )
 
 const NavBar = (props) => {
+  const titleLink = (
+    <NavLink
+      to={props.authenticated ? "/bitt-books" : "/"}
+      style={styles.titleLinkStyle}
+    >
+      Bitt Book
+    </NavLink>
+  )
+
   return (
     <div
       id="app-bar-container"
@@ -66,19 +60,14 @@ const NavBar = (props) => {
         titleStyle={styles.titleStyle}
         showMenuIconButton={false}
         iconElementRight={
-          props.authed === false ?
+          props.authenticated === false ?
           <div
             id="auth-links-container"
           >
             <FlatButton
-              label="Sign Up"
+              label="Sign In"
               style={styles.authLink}
-              containerElement={signupLink}
-            />
-            <FlatButton
-              label="Log In"
-              style={styles.authLink}
-              containerElement={loginLink}
+              containerElement={signinLink}
             />
           </div> :
           <IconMenu
@@ -130,7 +119,7 @@ const NavBar = (props) => {
 }
 
 NavBar.propTypes = {
-  authed: PropTypes.bool.isRequired
+  authenticated: PropTypes.bool.isRequired
 }
 
 export default NavBar

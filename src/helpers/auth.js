@@ -15,7 +15,7 @@ export const auth = (email, password) => {
     .then(saveUser)
 }
 
-export const currentUserId = () => {
+export const getCurrentUserId = () => {
   const user = firebase.auth().currentUser
 
   return user.uid

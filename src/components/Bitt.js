@@ -319,7 +319,11 @@ class Bitt extends Component {
             id="bitt-textarea"
             style={styles.bittTextarea}
             placeholder="Write a bitt..."
-            defaultValue={details.body === 'Write a bitt...' || details.body === 'Click here to edit...' ? '' : details.body}
+            defaultValue={
+              details.body === 'Write a bitt...' || details.body === 'Click here to edit...' ?
+              '' :
+              details.body
+            }
             autoFocus="true"
             ref={(input) => this.body = input}
             onTouchTap={e => e.stopPropagation()}
@@ -338,8 +342,8 @@ class Bitt extends Component {
           <RaisedButton
             id="bitt-done-button"
             style={styles.bittDoneButton}
-            label="Done"
             primary={true}
+            label="Done"
           />
         </CardText>
       </Card>
