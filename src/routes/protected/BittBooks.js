@@ -142,28 +142,22 @@ class BittBooks extends Component {
       }
     }
 
-    const {bittBooks} = this.state
-
-    const bittBookAmount = Object.keys(bittBooks).length
+    const bittBookAmount = Object.keys(this.state.bittBooks).length
 
     let bittBooksState
     if (bittBookAmount === 0) {
       bittBooksState =
-      <h4
-        style={styles.noBittBooksMessage}
-      >
-        {this.props.noBittBooks}
-      </h4>
+      null
     } else {
       bittBooksState =
       Object
-        .keys(bittBooks)
+        .keys(this.state.bittBooks)
         .map(key =>
           <BittBook
             key={key}
             id={key}
             ref={instance => this.bittBook = instance}
-            details={bittBooks[key]}
+            details={this.state.bittBooks[key]}
             updateBittBook={this.updateBittBook}
             deleteBittBook={this.deleteBittBook}
             toggleBittsState={this.toggleBittsState}
@@ -214,7 +208,7 @@ BittBooks.defaultProps = {
 }
 
 BittBooks.propTypes = {
-  noBittBooks: PropTypes.string.isRequired
+  noBittBooks: PropTypes.string
 }
 
 export default BittBooks

@@ -11,7 +11,9 @@ class Moment extends Component {
   constructor(props) {
     super(props)
 
-    this.state = { content: '' }
+    this.state = {
+      content: ''
+    }
   }
 
   componentWillMount() {
@@ -51,7 +53,7 @@ class Moment extends Component {
     if (utc) {
       datetime = moment.utc(date, parse, locale)
     } else if (unix) {
-      // moment#unix fails because of a deprecation,
+      // Moment#unix fails because of a deprecation,
       // but since moment#unix(s) is implemented as moment(s * 1000),
       // this works equivalently
       datetime = moment(date * 1000, parse, locale)

@@ -39,7 +39,7 @@ const signinLink = (
   />
 )
 
-const NavBar = (props) => {
+const NavigationBar = (props) => {
   const titleLink = (
     <NavLink
       to={props.authenticated ? "/bitt-books" : "/"}
@@ -118,8 +118,8 @@ const NavBar = (props) => {
   )
 }
 
-NavBar.propTypes = {
+NavigationBar.propTypes = {
   authenticated: PropTypes.bool.isRequired
 }
 
-export default NavBar
+export default NavigationBar

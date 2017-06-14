@@ -12,8 +12,8 @@ import ActionDelete from 'material-ui/svg-icons/action/delete'
 import Bitts from './Bitts'
 
 class BittBook extends Component {
-  constructor(props) {
-    super(props)
+  constructor() {
+    super()
 
     this.state = {
       isShowingBitts:                   false,
@@ -33,8 +33,6 @@ class BittBook extends Component {
     this.toggleBitts = this.toggleBitts.bind(this)
     this.updateBitt = this.updateBitt.bind(this)
   }
-
-  componentDidMount
 
   updateBittBook(e, details) {
     e.preventDefault()
@@ -193,7 +191,10 @@ class BittBook extends Component {
       }
     }
 
-    const {id, details} = this.props
+    const {
+      id,
+      details
+    } = this.props
 
     const bittAmount = Object.keys(details.bitts).length
 

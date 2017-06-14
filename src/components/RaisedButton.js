@@ -35,8 +35,6 @@ function getStyles(props, context, state) {
     style,
   } = props
 
-  // const amount = (primary || secondary) ? 0.4 : 0.08
-
   let backgroundColor = raisedButton.color
   let labelColor = raisedButton.textColor
 
@@ -74,7 +72,6 @@ function getStyles(props, context, state) {
       borderRadius,
       transition: transitions.easeOut(),
       backgroundColor: backgroundColor,
-      // That's the default value for a button but not a link
       textAlign: 'center',
     },
     label: {
@@ -113,86 +110,27 @@ class RaisedButton extends Component {
   static muiName = 'RaisedButton'
 
   static propTypes = {
-    /**
-     * Override the default background color for the button,
-     * but not the default disabled background color
-     * (use `disabledBackgroundColor` for this).
-     */
     backgroundColor: PropTypes.string,
-    /**
-     * Override the inline-styles of the button element.
-     */
     buttonStyle: PropTypes.object,
-    /**
-     * The content of the button.
-     * If a label is provided via the `label` prop, the text within the label
-     * will be displayed in addition to the content provided here.
-     */
     children: PropTypes.node,
-    /**
-     * The CSS class name of the root element.
-     */
     className: PropTypes.string,
-    /**
-      * The element to use as the container for the RaisedButton. Either a string to
-      * use a DOM element or a ReactElement. This is useful for wrapping the
-      * RaisedButton in a custom Link component. If a ReactElement is given, ensure
-      * that it passes all of its given props through to the underlying DOM
-      * element and renders its children prop for proper integration.
-      */
     containerElement: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.element,
     ]),
-    /**
-     * If true, the element's ripple effect will be disabled.
-     */
     disableTouchRipple: PropTypes.bool,
-    /**
-     * If true, the button will be disabled.
-     */
     disabled: PropTypes.bool,
-    /**
-     * Override the default background color for the button
-     * when it is disabled.
-     */
     disabledBackgroundColor: PropTypes.string,
-    /**
-     * The color of the button's label when the button is disabled.
-     */
     disabledLabelColor: PropTypes.string,
-    /**
-     * If true, the button will take up the full width of its container.
-     */
     fullWidth: PropTypes.bool,
-    /**
-     * The URL to link to when the button is clicked.
-     */
     href: PropTypes.string,
-    /**
-     * An icon to be displayed within the button.
-     */
     icon: PropTypes.node,
-    /**
-     * The label to be displayed within the button.
-     * If content is provided via the `children` prop, that content will be
-     * displayed in addition to the label provided here.
-     */
     label: validateLabel,
-    /**
-     * The color of the button's label.
-     */
     labelColor: PropTypes.string,
-    /**
-     * The position of the button's label relative to the button's `children`.
-     */
     labelPosition: PropTypes.oneOf([
       'before',
       'after',
     ]),
-    /**
-     * Override the inline-styles of the button's label element.
-     */
     labelStyle: PropTypes.object,
     /** @ignore */
     onMouseDown: PropTypes.func,
@@ -212,27 +150,10 @@ class RaisedButton extends Component {
      * @param {object} event TouchTap event targeting the button.
      */
     onTouchTap: PropTypes.func,
-    /**
-     * Override the inline style of the button overlay.
-     */
     overlayStyle: PropTypes.object,
-    /**
-     * If true, the button will use the theme's primary color.
-     */
     primary: PropTypes.bool,
-    /**
-     * Override the inline style of the ripple element.
-     */
     rippleStyle: PropTypes.object,
-    /**
-     * If true, the button will use the theme's secondary color.
-     * If both `secondary` and `primary` are true, the button will use
-     * the theme's primary color.
-     */
     secondary: PropTypes.bool,
-    /**
-     * Override the inline-styles of the root element.
-     */
     style: PropTypes.object,
   }
 
@@ -278,8 +199,8 @@ class RaisedButton extends Component {
     this.setState(nextState)
   }
 
-  handleMouseDown = (event) => { // Custom changes
-    // only listen to left clicks
+  // Custom changes
+  handleMouseDown = (event) => {
     if (event.button === 0) {
       this.setState({
         zDepth: this.state.initialZDepth + 2,
@@ -291,7 +212,8 @@ class RaisedButton extends Component {
     }
   }
 
-  handleMouseUp = (event) => { // Custom changes
+  // Custom changes
+  handleMouseUp = (event) => {
     this.setState({
       zDepth: this.state.initialZDepth + 1,
     })
@@ -404,7 +326,6 @@ class RaisedButton extends Component {
       key: 'iconCloned',
     })
 
-    // Place label before or after children.
     const enhancedButtonChildren = labelPosition === 'before' ?
     [
       labelElement,

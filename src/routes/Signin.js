@@ -64,25 +64,13 @@ class Signin extends Component {
           noAccountMessage="Don't have an acount?"
           email={this.state.email}
           password={this.state.password}
+          passwordHint="Enter your password..."
           handleChangeEmail={(event) => this.handleChangeEmail(event)}
           handleChangePassword={(event) => this.handleChangePassword(event)}
           submit={(e) => this.signin(e)}
           loginMessage={this.state.loginMessage}
           resetPassword={this.resetPassword}
         />
-          {/*
-            this.state.loginMessage &&
-            <div>
-              <span>Error:</span>&nbsp;{this.state.loginMessage}
-              <br/>
-              <a
-                href="#"
-                onClick={this.resetPassword}
-              >
-                Forgot your password?
-              </a>
-            </div>
-          */}
       </div>
     )
   }

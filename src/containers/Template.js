@@ -20,7 +20,7 @@ import BittBooks from '../routes/protected/BittBooks'
 import Account from '../routes/protected/Account'
 
 // Components
-import NavBar from '../components/NavBar'
+import NavigationBar from '../components/NavigationBar'
 
 const PrivateRoute  = ({component: Component, authenticated, ...rest}) => {
   return (
@@ -86,7 +86,7 @@ class Template extends Component {
     return this.state.loading === true ?
     <RouteContainer>
       <Layout>
-        <NavBar
+        <NavigationBar
           authenticated={this.state.authenticated}
         />
 
@@ -96,7 +96,7 @@ class Template extends Component {
     (
       <RouteContainer>
         <Layout>
-          <NavBar
+          <NavigationBar
             authenticated={this.state.authenticated}
           />
 

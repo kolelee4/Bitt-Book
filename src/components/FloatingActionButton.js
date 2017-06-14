@@ -68,47 +68,13 @@ function getStyles(props, context) {
 
 class FloatingActionButton extends Component {
   static propTypes = {
-    /**
-     * This value will override the default background color for the button.
-     * However it will not override the default disabled background color.
-     * This has to be set separately using the disabledColor attribute.
-     */
     backgroundColor: PropTypes.string,
-    /**
-     * This is what displayed inside the floating action button; for example, a SVG Icon.
-     */
     children: PropTypes.node,
-    /**
-     * The css class name of the root element.
-     */
     className: PropTypes.string,
-    /**
-     * Disables the button if set to true.
-     */
     disabled: PropTypes.bool,
-    /**
-     * This value will override the default background color for the button when it is disabled.
-     */
     disabledColor: PropTypes.string,
-    /**
-     * The URL to link to when the button is clicked.
-     */
     href: PropTypes.string,
-    /**
-     * The icon within the FloatingActionButton is a FontIcon component.
-     * This property is the classname of the icon to be displayed inside the button.
-     * An alternative to adding an iconClassName would be to manually insert a
-     * FontIcon component or custom SvgIcon component or as a child of FloatingActionButton.
-     */
     iconClassName: PropTypes.string,
-    /**
-     * This is the equivalent to iconClassName except that it is used for
-     * overriding the inline-styles of the FontIcon component.
-     */
-    iconStyle: PropTypes.object,
-    /**
-     * If true, the button will be a small floating action button.
-     */
     mini: PropTypes.bool,
     /** @ignore */
     onMouseDown: PropTypes.func,
@@ -128,17 +94,8 @@ class FloatingActionButton extends Component {
      * @param {object} event TouchTap event targeting the button.
      */
     onTouchTap: PropTypes.func,
-    /**
-     * If true, the button will use the secondary button colors.
-     */
     secondary: PropTypes.bool,
-    /**
-     * Override the inline-styles of the root element.
-     */
     style: PropTypes.object,
-    /**
-     * The zDepth of the underlying `Paper` component.
-     */
     zDepth: propTypes.zDepth
   }
 
@@ -185,15 +142,16 @@ class FloatingActionButton extends Component {
     this.setState(nextState)
   }
 
-  handleMouseDown = (event) => { // Custom changes
-    // only listen to left clicks
+  // Custom changes
+  handleMouseDown = (event) => {
     if (event.button === 0) {
       this.setState({zDepth: this.props.zDepth + 2})
     }
     if (this.props.onMouseDown) this.props.onMouseDown(event)
   }
 
-  handleMouseUp = (event) => { // Custom changes
+  // Custom changes
+  handleMouseUp = (event) => {
     this.setState({zDepth: this.props.zDepth + 1})
     if (this.props.onMouseUp) {
       this.props.onMouseUp(event)
@@ -209,7 +167,8 @@ class FloatingActionButton extends Component {
     }
   }
 
-  handleMouseEnter = (event) => { // Custom changes
+  // Custom changes
+  handleMouseEnter = (event) => {
     if (!this.refs.container.isKeyboardFocused() && !this.state.touch) {
       this.setState({hovered: true, zDepth: this.props.zDepth + 1})
     }

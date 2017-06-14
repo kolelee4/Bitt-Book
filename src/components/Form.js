@@ -5,14 +5,9 @@ import PropTypes from 'prop-types'
 // Components
 import {Card, CardHeader} from 'material-ui/Card'
 import TextField from 'material-ui/TextField'
-import IconButton from 'material-ui/IconButton'
 import RaisedButton from './RaisedButton'
 
 class Form extends Component {
-  constructor() {
-    super()
-  }
-
   render() {
     const styles = {
       formContainer: {
@@ -54,13 +49,67 @@ class Form extends Component {
       }
     }
 
+    const {
+      title,
+      email,
+      password,
+      passwordHint,
+      resetPassword,
+      handleChangeEmail,
+      handleChangePassword,
+      noAccountMessage,
+      loginMessage,
+      buttonLabel,
+      submit
+    } = this.props
+
+    let formMessageState
+    if (loginMessage) {
+      formMessageState =
+      <div
+        id="form-message-link-container"
+      >
+        <a
+          id="forgot-password-link"
+          style={styles.forgotPasswordLink}
+          href="#"
+          onClick={resetPassword}
+        >
+          Forgot your password?
+        </a>
+
+        <br/>
+        <br/>
+
+        <NavLink
+          id="signup-link"
+          to="/signup"
+          style={styles.signupLink}
+        >
+          {noAccountMessage}
+        </NavLink>
+      </div>
+    } else if (noAccountMessage) {
+      formMessageState =
+      <NavLink
+        id="signup-link"
+        to="/signup"
+        style={styles.signupLink}
+      >
+        {noAccountMessage}
+      </NavLink>
+    } else {
+      formMessageState =
+      null
+    }
+
     return (
       <div
         id="form-container"
         style={styles.formContainer}
       >
         <form
-          onSubmit={this.props.submit}
+          onSubmit={submit}
         >
           <Card
             id="material-form"
@@ -71,7 +120,7 @@ class Form extends Component {
               style={styles.formHeader}
               title={
                 <h2>
-                  {this.props.title}
+                  {title}
                 </h2>
               }
             />
@@ -81,21 +130,21 @@ class Form extends Component {
               style={styles.textFieldContainer}
             >
               <TextField
-                // hintText="Enter your email..."
+                hintText="Enter your email..."
                 floatingLabelText="Email"
                 fullWidth={true}
-                value={this.props.email}
-                onChange={this.props.handleChangeEmail}
+                value={email}
+                onChange={handleChangeEmail}
               />
 
               <TextField
-                // hintText="Create a password..."
+                hintText={passwordHint}
                 type="password"
                 floatingLabelText="Password"
-                errorText={this.props.loginMessage}
+                errorText={loginMessage}
                 fullWidth={true}
-                value={this.props.password}
-                onChange={this.props.handleChangePassword}
+                value={password}
+                onChange={handleChangePassword}
               />
             </div>
 
@@ -103,49 +152,16 @@ class Form extends Component {
               id="form-message"
               style={styles.formMessage}
             >
-              {
-                this.props.loginMessage ?
-                <div>
-                  <a
-                    id="forgot-password-link"
-                    style={styles.forgotPasswordLink}
-                    href="#"
-                    onClick={this.props.resetPassword}
-                  >
-                    Forgot your password?
-                  </a>
-
-                  <br/>
-                  <br/>
-
-                  <NavLink
-                    id="signup-link"
-                    to="/signup"
-                    style={styles.signupLink}
-                  >
-                    {this.props.noAccountMessage}
-                  </NavLink>
-                </div> :
-                this.props.noAccountMessage ?
-                <NavLink
-                  id="signup-link"
-                  to="/signup"
-                  style={styles.signupLink}
-                >
-                  {this.props.noAccountMessage}
-                </NavLink> :
-                null
-              }
+              {formMessageState}
             </div>
 
             <RaisedButton
               id="form-submit-button"
               style={styles.formSubmitButton}
               primary={true}
-              label={this.props.buttonLabel}
-              onTouchTap={this.props.submit}
+              label={buttonLabel}
+              onTouchTap={submit}
             />
-
           </Card>
         </form>
       </div>
@@ -154,11 +170,16 @@ class Form extends Component {
 }
 
 Form.propTypes = {
-  loginMessage:     PropTypes.string,
-  title:            PropTypes.string.isRequired,
-  noAccountMessage: PropTypes.string || null,
-  buttonLabel:      PropTypes.string.isRequired,
-  submit:           PropTypes.func.isRequired
+  title:                PropTypes.string.isRequired,
+  email:                PropTypes.string.isRequired,
+  password:             PropTypes.string.isRequired,
+  passwordHint:         PropTypes.string.isRequired,
+  handleChangeEmail:    PropTypes.func.isRequired,
+  handleChangePassword: PropTypes.func.isRequired,
+  noAccountMessage:     PropTypes.string,
+  loginMessage:         PropTypes.string,
+  buttonLabel:          PropTypes.string.isRequired,
+  submit:               PropTypes.func.isRequired
 }
 
 export default Form

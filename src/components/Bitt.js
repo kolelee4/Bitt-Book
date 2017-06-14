@@ -193,7 +193,11 @@ class Bitt extends Component {
       }
     }
 
-    const {id, details, bittAmount} = this.props
+    const {
+      id,
+      details,
+      bittAmount
+    } = this.props
 
     let isShowingOptions
     if (this.state.isShowingOptions) {
