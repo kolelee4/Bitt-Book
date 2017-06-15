@@ -6,6 +6,7 @@ import {getCurrentUserId} from '../helpers/auth'
 import Moment from '../helpers/react-moment'
 
 // Component
+import CircularProgress from 'material-ui/CircularProgress'
 import {Card, CardHeader} from 'material-ui/Card'
 import IconButton from 'material-ui/IconButton'
 import ActionDelete from 'material-ui/svg-icons/action/delete'
@@ -16,6 +17,7 @@ class BittBook extends Component {
     super()
 
     this.state = {
+      loading:                          true,
       isShowingBitts:                   false,
       isShowingOptions:                 false,
       zDepth:                           1,
@@ -32,6 +34,12 @@ class BittBook extends Component {
     this.hideOptions = this.hideOptions.bind(this)
     this.toggleBitts = this.toggleBitts.bind(this)
     this.updateBitt = this.updateBitt.bind(this)
+  }
+
+  componentDidMount() {
+    this.setState({
+      loading: false
+    })
   }
 
   updateBittBook(e, details) {
@@ -122,6 +130,11 @@ class BittBook extends Component {
 
   render() {
     const styles = {
+      circularProgressContainer: {
+        width: '32px',
+        margin: '60px auto'
+      },
+
       noBittBooksMessage: {
         margin: '0',
         fontWeight: '500'
@@ -267,7 +280,23 @@ class BittBook extends Component {
     }
 
     let bittBookState
-    if (details.isFirstSubmit) {
+    if (this.state.loading) {
+      bittBookState =
+      <Card
+        id="bitt-book-card"
+        style={styles.bittBookCard}
+      >
+        <div
+          id="circular-progress-container"
+          style={styles.circularProgressContainer}
+        >
+          <CircularProgress
+            size={30}
+            thickness={5}
+          />
+        </div>
+      </Card>
+    } else if (details.isFirstSubmit) {
       bittBookState =
       <Card
         id="bitt-book-card"

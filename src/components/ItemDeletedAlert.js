@@ -25,9 +25,7 @@ class ItemDeletedAlert extends Component {
           open={this.props.isOpen}
           onActionTouchTap={this.props.close}
           onRequestClose={this.props.requestClose}
-        >
-          Close
-        </Snackbar>
+        />
       </div>
     )
   }

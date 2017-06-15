@@ -122,8 +122,8 @@ class Bitts extends Component {
 
   animateClosing() {
     this.setState({
-      bittsCardHeight: '20px',
-      bittsCardMargins: '20px 100vw 0 100vw',
+      bittsCardHeight: '164px',
+      bittsCardMargins: '20px 90vw 0 90vw',
       bittsCardBackground: 'transparent',
       bittBookTitleContainerBittsDisplay: 'none',
       bittsHeaderDisplay: 'none',

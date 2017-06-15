@@ -21,6 +21,7 @@ import Account from '../routes/protected/Account'
 
 // Components
 import NavigationBar from '../components/NavigationBar'
+import CircularProgress from 'material-ui/CircularProgress'
 
 const PrivateRoute  = ({component: Component, authenticated, ...rest}) => {
   return (
@@ -83,6 +84,13 @@ class Template extends Component {
   }
 
   render() {
+    const styles = {
+      circularProgressContainer: {
+        width: '80px',
+        margin: '200px auto 0 auto'
+      }
+    }
+
     return this.state.loading === true ?
     <RouteContainer>
       <Layout>
@@ -90,7 +98,15 @@ class Template extends Component {
           authenticated={this.state.authenticated}
         />
 
-        <h2>Loading...</h2>
+        <div
+          id="circular-progress-container"
+          style={styles.circularProgressContainer}
+        >
+          <CircularProgress
+            size={80}
+            thickness={6}
+          />
+        </div>
       </Layout>
     </RouteContainer> :
     (

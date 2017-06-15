@@ -81,7 +81,7 @@ const NavigationBar = (props) => {
                   id="avatar"
                   size={30}
                 >
-                  JD
+                  KL
                 </Avatar>
               </IconButton>
             }

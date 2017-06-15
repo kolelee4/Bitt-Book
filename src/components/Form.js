@@ -121,7 +121,7 @@ class Form extends Component {
           href="#"
           onClick={resetPassword}
         >
-          Reset password.
+          Forgot your password?
         </a>
 
         <br/>

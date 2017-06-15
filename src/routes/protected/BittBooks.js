@@ -8,6 +8,7 @@ import {base} from '../../config/base'
 import {getCurrentUserId} from '../../helpers/auth'
 
 // Components
+import CircularProgress from 'material-ui/CircularProgress'
 import FABContainer from '../../components/FABContainer'
 import BittBook from '../../components/BittBook'
 import ItemDeletedAlert from '../../components/ItemDeletedAlert'
@@ -32,7 +33,9 @@ class BittBooks extends Component {
   }
 
   componentWillMount() {
-    this.ref = base.syncState('bitt-books', {
+    const uid = getCurrentUserId()
+
+    this.ref = base.syncState(`users/${uid}/bittBooks`, {
       context: this,
       state:   'bittBooks'
     })
@@ -136,6 +139,11 @@ class BittBooks extends Component {
         padding: '20px 0 0 7.6vw'
       },
 
+      circularProgressContainerBittBooks: {
+        width: '80px',
+        margin: '200px auto 0 auto'
+      },
+
       noBittBooksMessage: {
         margin: '0',
         fontWeight: '500'
@@ -147,7 +155,12 @@ class BittBooks extends Component {
     let bittBooksState
     if (bittBookAmount === 0) {
       bittBooksState =
-      null
+      <h4
+        id="no-bitt-books-message"
+        style={styles.noBittBooksMessage}
+      >
+        {this.props.noBittBooksMessage}
+      </h4>
     } else {
       bittBooksState =
       Object
@@ -182,7 +195,16 @@ class BittBooks extends Component {
       </div>
     }
 
-    return this.state.loading ? <h2>Loading...</h2> :
+    return this.state.loading ?
+    <div
+      id="circular-progress-container-bitt-books"
+      style={styles.circularProgressContainerBittBooks}
+    >
+      <CircularProgress
+        size={80}
+        thickness={6}
+      />
+    </div> :
     (
       <div
         id="bitt-books-route"
@@ -204,11 +226,11 @@ class BittBooks extends Component {
 }
 
 BittBooks.defaultProps = {
-  noBittBooks: `You have 0 Bitt Books...`
+  noBittBooksMessage: `You have 0 Bitt Books...`
 }
 
 BittBooks.propTypes = {
-  noBittBooks: PropTypes.string
+  noBittBooksMessage: PropTypes.string
 }
 
 export default BittBooks
