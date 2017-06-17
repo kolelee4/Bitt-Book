@@ -15,18 +15,20 @@ class Home extends Component {
   render() {
     const styles = {
       homeContainer: {
+        display: 'table',
         with: '100vw',
         height: '90.5vh',
+        textAlign: 'center',
         overflow: 'auto'
       },
 
       sloganContainer: {
-        verticalAlign: 'middle',
-        textAlign: 'center'
+        display: 'table-cell',
+        width: '100vw',
+        verticalAlign: 'middle'
       },
 
       titleHeading: {
-        padding: '25vh 0 0 0',
         fontSize: '60px',
         fontWeight: '600'
       },
@@ -45,12 +47,20 @@ class Home extends Component {
           id="slogan-container"
           style={styles.sloganContainer}
         >
+          <img
+            src="favicon.ico"
+            alt="Bitt Book Logo"
+            height="200"
+            width="200"
+          />
+
           <h1
             id="title-heading"
             style={styles.titleHeading}
           >
             {this.props.title}
           </h1>
+
           <h3
             id="slogan-sub-heading"
             style={styles.sloganSubHeading}

@@ -4,7 +4,7 @@ import {ref, firebaseAuth} from '../config/base'
 export function auth(email, password) {
   return firebaseAuth().createUserWithEmailAndPassword(email, password)
     // eslint-disable-next-line
-    .then(saveUser)
+    .then((saveUser))
 }
 
 export function saveUser(user) {
@@ -16,10 +16,8 @@ export function saveUser(user) {
     .then(() => user)
 }
 
-export function getCurrentUserId() {
-  const user = firebase.auth().currentUser
-
-  return user.uid
+export function getCurrentUser() {
+  return firebase.auth().currentUser
 }
 
 export function logout() {

@@ -52,6 +52,8 @@ class Signup extends Component {
 
     auth(this.state.email, this.state.password)
       .catch(e => this.setState(setErrorMsg(e)))
+
+    localStorage.setItem(`${this.state.email}-username`, this.state.name)
   }
 
   render() {

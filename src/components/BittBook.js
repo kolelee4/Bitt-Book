@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 
 // Helpers
-import {getCurrentUserId} from '../helpers/auth'
+import {getCurrentUser} from '../helpers/auth'
 import Moment from '../helpers/react-moment'
 
 // Component
@@ -383,7 +383,7 @@ class BittBook extends Component {
       )
     }
 
-    return details.owner !== getCurrentUserId() ? null :
+    return details.owner !== getCurrentUser().uid ? null :
     (
       <div
         id="bitt-book"

@@ -51,17 +51,27 @@ class Form extends Component {
     const styles = {
       formContainer: {
         cursor: 'pointer',
-        width: '100vw'
+        display: 'table',
+        width: '100vw',
+        textAlign: 'center'
       },
 
       materialForm: {
+        display: 'table-cell',
+        width: '100vw',
+        height: '90.2vh',
+        verticalAlign: 'middle'
+      },
+
+      materialFormCard: {
         width: '450px',
         height: '500px',
-        margin: '60px auto 0 auto'
+        margin: '0 auto 0 auto'
       },
 
       formHeader: {
-        margin: '0 20px 0 20px'
+        float: 'left',
+        margin: '0 0 0 28px'
       },
 
       textFieldContainer: {
@@ -77,13 +87,11 @@ class Form extends Component {
       loginMessageContainer: {
         float: 'left',
         width: '280px',
-        fontWeight: '500'
       },
 
       loginMessageText: {
         margin: '0',
         fontSize: '14px',
-        fontWeight: '500',
         color: 'red'
       },
 
@@ -96,6 +104,7 @@ class Form extends Component {
       },
 
       formSubmitButton: {
+        cursor: 'pointer',
         float: 'right',
         margin: '80px 40px 0 0'
       }
@@ -128,11 +137,11 @@ class Form extends Component {
             id="login-message-container"
             style={styles.loginMessageContainer}
           >
-            <h4
+            <p
               style={styles.loginMessageText}
             >
               {loginMessage}
-            </h4>
+            </p>
           </div>
 
           <br/>
@@ -179,11 +188,12 @@ class Form extends Component {
         style={styles.formContainer}
       >
         <form
+          style={styles.materialForm}
           onSubmit={submit}
         >
           <Card
             id="material-form"
-            style={styles.materialForm}
+            style={styles.materialFormCard}
             zDepth={this.state.zDepth}
             onMouseEnter={this.raiseForm}
             onMouseLeave={this.lowerForm}

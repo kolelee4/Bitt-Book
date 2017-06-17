@@ -8,6 +8,9 @@ import {
 // Auth
 import {firebaseAuth} from '../config/base'
 
+// Helpers
+import {getCurrentUser} from '../helpers/auth'
+
 // Containers
 import RouteContainer from '../containers/RouteContainer'
 import Layout from '../containers/Layout'
@@ -66,6 +69,17 @@ class Template extends Component {
   componentDidMount() {
     this.removeListener = firebaseAuth().onAuthStateChanged((user) => {
       if (user) {
+        const username = localStorage.getItem(`${user.email}-username`)
+
+        user.updateProfile({
+          displayName: username === (null || undefined || '') ? getCurrentUser().displayName : username
+        })
+        .then(() => {
+          this.setState({
+            authenticated: true,
+            loading: false
+          })
+        })
         this.setState({
           authenticated: true,
           loading: false

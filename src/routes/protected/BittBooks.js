@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import {base} from '../../config/base'
 
 // Helpers
-import {getCurrentUserId} from '../../helpers/auth'
+import {getCurrentUser} from '../../helpers/auth'
 
 // Components
 import CircularProgress from 'material-ui/CircularProgress'
@@ -14,7 +14,7 @@ import BittBook from '../../components/BittBook'
 import ItemDeletedAlert from '../../components/ItemDeletedAlert'
 
 const defaultProps = {
-  noBittBooksMessage: `You have 0 Bitt Books...`
+  noBittBooksMessage: 'You have 0 Bitt Books...'
 }
 
 const propTypes = {
@@ -40,9 +40,9 @@ class BittBooks extends Component {
   }
 
   componentWillMount() {
-    const uid = getCurrentUserId()
+    const user = getCurrentUser()
 
-    this.ref = base.syncState(`users/${uid}/bittBooks`, {
+    this.ref = base.syncState(`users/${user.uid}/bittBooks`, {
       context: this,
       state:   'bittBooks'
     })
@@ -60,7 +60,7 @@ class BittBooks extends Component {
     const timestamp = Date.now()
 
     const bittBook = {
-      owner:         getCurrentUserId(),
+      owner:         getCurrentUser().uid,
       title:         'Untitled',
       createdAt:     timestamp,
       updatedAt:     timestamp,
