@@ -13,6 +13,14 @@ import FABContainer from '../../components/FABContainer'
 import BittBook from '../../components/BittBook'
 import ItemDeletedAlert from '../../components/ItemDeletedAlert'
 
+const defaultProps = {
+  noBittBooksMessage: `You have 0 Bitt Books...`
+}
+
+const propTypes = {
+  noBittBooksMessage: PropTypes.string
+}
+
 class BittBooks extends Component {
   constructor() {
     super()
@@ -28,7 +36,6 @@ class BittBooks extends Component {
     this.updateBittBook = this.updateBittBook.bind(this)
     this.deleteBittBook = this.deleteBittBook.bind(this)
     this.toggleBittsState = this.toggleBittsState.bind(this)
-    this.onActionTouchTapSnackbar = this.onActionTouchTapSnackbar.bind(this)
     this.snackBarHandleRequestClose = this.snackBarHandleRequestClose.bind(this)
   }
 
@@ -111,12 +118,6 @@ class BittBooks extends Component {
     })
   }
 
-  onActionTouchTapSnackbar() {
-    this.setState({
-      snackbarOpen: false
-    })
-  }
-
   snackBarHandleRequestClose() {
     this.setState({
       snackbarOpen: false
@@ -154,58 +155,60 @@ class BittBooks extends Component {
 
     let bittBooksState
     if (bittBookAmount === 0) {
-      bittBooksState =
-      <h4
-        id="no-bitt-books-message"
-        style={styles.noBittBooksMessage}
-      >
-        {this.props.noBittBooksMessage}
-      </h4>
+      bittBooksState = (
+        <h4
+          id="no-bitt-books-message"
+          style={styles.noBittBooksMessage}
+        >
+          {this.props.noBittBooksMessage}
+        </h4>
+      )
     } else {
-      bittBooksState =
-      Object
-        .keys(this.state.bittBooks)
-        .map(key =>
-          <BittBook
-            key={key}
-            id={key}
-            ref={instance => this.bittBook = instance}
-            details={this.state.bittBooks[key]}
-            updateBittBook={this.updateBittBook}
-            deleteBittBook={this.deleteBittBook}
-            toggleBittsState={this.toggleBittsState}
-          />
-        )
+      bittBooksState = (
+        Object
+          .keys(this.state.bittBooks)
+          .map(key =>
+            <BittBook
+              key={key}
+              id={key}
+              ref={instance => this.bittBook = instance}
+              details={this.state.bittBooks[key]}
+              updateBittBook={this.updateBittBook}
+              deleteBittBook={this.deleteBittBook}
+              toggleBittsState={this.toggleBittsState}
+            />
+          )
+      )
     }
 
     let floatingActionButtonState
     if (this.state.isShowingBitts) {
-      floatingActionButtonState =
-      null
+      floatingActionButtonState = null
     } else {
-      floatingActionButtonState =
-      <div
-        className="tooltip"
-        data-tooltip="Add Bitt Book"
-      >
-        <FABContainer
-          id="fab-container-bitt-books"
-          addItem={this.createBittBook}
-        />
-      </div>
+      floatingActionButtonState = (
+        <div
+          className="tooltip"
+          data-tooltip="Add Bitt Book"
+        >
+          <FABContainer
+            id="fab-container-bitt-books"
+            addItem={this.createBittBook}
+          />
+        </div>
+      )
     }
 
-    return this.state.loading ?
-    <div
-      id="circular-progress-container-bitt-books"
-      style={styles.circularProgressContainerBittBooks}
-    >
-      <CircularProgress
-        size={80}
-        thickness={6}
-      />
-    </div> :
-    (
+    return this.state.loading ? (
+      <div
+        id="circular-progress-container-bitt-books"
+        style={styles.circularProgressContainerBittBooks}
+      >
+        <CircularProgress
+          size={80}
+          thickness={6}
+        />
+      </div>
+    ) : (
       <div
         id="bitt-books-route"
         style={styles.bittBooksRoute}
@@ -225,12 +228,8 @@ class BittBooks extends Component {
   }
 }
 
-BittBooks.defaultProps = {
-  noBittBooksMessage: `You have 0 Bitt Books...`
-}
+BittBooks.defaultProps = defaultProps
 
-BittBooks.propTypes = {
-  noBittBooksMessage: PropTypes.string
-}
+BittBooks.propTypes = propTypes
 
 export default BittBooks

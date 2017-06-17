@@ -4,6 +4,12 @@ import PropTypes from 'prop-types'
 // Components
 import Snackbar from 'material-ui/Snackbar'
 
+const propTypes = {
+  message:      PropTypes.string.isRequired,
+  isOpen:       PropTypes.bool,
+  requestClose: PropTypes.func
+}
+
 class ItemDeletedAlert extends Component {
   render() {
     const styles = {
@@ -20,10 +26,8 @@ class ItemDeletedAlert extends Component {
           id="bitt-books-snackbar"
           bodyStyle={styles.snackbarBittBooks}
           message={this.props.message}
-          action="Close"
           autoHideDuration={4000}
           open={this.props.isOpen}
-          onActionTouchTap={this.props.close}
           onRequestClose={this.props.requestClose}
         />
       </div>
@@ -31,11 +35,6 @@ class ItemDeletedAlert extends Component {
   }
 }
 
-Snackbar.propTypes = {
-  message:      PropTypes.string.isRequired,
-  isOpen:       PropTypes.bool,
-  close:        PropTypes.func,
-  requestClose: PropTypes.func
-}
+Snackbar.propTypes = propTypes
 
 export default ItemDeletedAlert

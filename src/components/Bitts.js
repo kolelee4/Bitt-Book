@@ -13,6 +13,12 @@ import ContentAdd from 'material-ui/svg-icons/content/add'
 import ItemDeletedAlert from './ItemDeletedAlert'
 import Bitt from './Bitt'
 
+const propTypes = {
+  details:        PropTypes.object.isRequired,
+  updateBittBook: PropTypes.func.isRequired,
+  updateBitt:     PropTypes.func.isRequired
+}
+
 class Bitts extends Component {
   constructor() {
     super()
@@ -23,7 +29,6 @@ class Bitts extends Component {
     this.updateBitt = this.updateBitt.bind(this)
     this.deleteBitt = this.deleteBitt.bind(this)
     this.animateClosing = this.animateClosing.bind(this)
-    this.onActionTouchTapSnackbar = this.onActionTouchTapSnackbar.bind(this)
     this.snackBarHandleRequestClose = this.snackBarHandleRequestClose.bind(this)
 
     this.state = {
@@ -131,14 +136,6 @@ class Bitts extends Component {
     })
   }
 
-  onActionTouchTapSnackbar(e) {
-    e.stopPropagation()
-
-    this.setState({
-      snackbarOpen: false
-    })
-  }
-
   snackBarHandleRequestClose() {
     this.setState({
       snackbarOpen: false
@@ -173,7 +170,7 @@ class Bitts extends Component {
         margin: this.state.bittsCardMargins,
         padding: '0 0 20px 0',
         backgroundColor: this.state.bittsCardBackground,
-        transition: '100ms'
+        transition: '200ms'
       },
 
       bittBookTitleContainerBitts: {
@@ -239,7 +236,7 @@ class Bitts extends Component {
           <Card
             id="bitts-card"
             style={styles.bittsCard}
-            zDepth={3}
+            zDepth={0}
             onTouchTap={this.animateClosing}
           >
             <CardHeader
@@ -253,7 +250,7 @@ class Bitts extends Component {
                   <input
                     id="bitt-book-title-input-bitts"
                     style={styles.bittBookTitleInputBitts}
-                    placeholder='Bitt Book Title...'
+                    placeholder="Bitt Book Title..."
                     defaultValue={details.title}
                     autoComplete="off"
                     ref={(input) => this.title = input}
@@ -269,8 +266,8 @@ class Bitts extends Component {
                   >
                     <IconButton>
                       <ActionDelete
-                        color='#757575'
-                        hoverColor='#424242'
+                        color="#757575"
+                        hoverColor="#424242"
                         onTouchTap={(e) => this.props.deleteBittBook(e)}
                       />
                     </IconButton>
@@ -292,9 +289,7 @@ class Bitts extends Component {
                   >
                     <div>
                       {
-                        bittAmount === 1 ?
-                        bittAmount + ' Bitt' :
-                        bittAmount + ' Bitts'
+                        bittAmount === 1 ? bittAmount + ' Bitt' : bittAmount + ' Bitts'
                       }
                     </div>
                   </div>
@@ -349,10 +344,6 @@ class Bitts extends Component {
   }
 }
 
-Bitts.propTypes = {
-  details:        PropTypes.object.isRequired,
-  updateBittBook: PropTypes.func.isRequired,
-  updateBitt:     PropTypes.func.isRequired
-}
+Bitts.propTypes = propTypes
 
 export default Bitts

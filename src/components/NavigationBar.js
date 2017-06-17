@@ -13,17 +13,16 @@ import IconButton from 'material-ui/IconButton'
 import IconMenu from 'material-ui/IconMenu'
 import MenuItem from 'material-ui/MenuItem'
 
+const propTypes = {
+  authenticated: PropTypes.bool.isRequired
+}
+
 const styles = {
-  titleStyle: {
-    marginLeft: '-4px'
+  bittBookLogoIconButton: {
+    margin: '-4px 0 0 0'
   },
 
-  titleLinkStyle: {
-    textDecoration: 'none',
-    color: 'white'
-  },
-
-  authLink: {
+  authButton: {
     margin: '6px 0 0 0',
     color: 'white'
   },
@@ -33,22 +32,7 @@ const styles = {
   }
 }
 
-const signinLink = (
-  <NavLink
-    to="/sign-in"
-  />
-)
-
 const NavigationBar = (props) => {
-  const titleLink = (
-    <NavLink
-      to={props.authenticated ? "/bitt-books" : "/"}
-      style={styles.titleLinkStyle}
-    >
-      Bitt Book
-    </NavLink>
-  )
-
   return (
     <div
       id="app-bar-container"
@@ -56,9 +40,24 @@ const NavigationBar = (props) => {
       <AppBar
         id="app-bar"
         zDepth={2}
-        title={titleLink}
-        titleStyle={styles.titleStyle}
-        showMenuIconButton={false}
+        iconElementLeft={
+          <IconButton
+            id="bitt-book-logo"
+            style={styles.bittBookLogoIconButton}
+            containerElement={
+              <NavLink
+                to={props.authenticated ? '/bitt-books' : '/'}
+              />
+            }
+          >
+            <img
+              src="icons/bitt-book.png"
+              alt="bitt-book-logo"
+              height="32"
+              width="32"
+            />
+          </IconButton>
+        }
         iconElementRight={
           props.authenticated === false ?
           <div
@@ -66,8 +65,12 @@ const NavigationBar = (props) => {
           >
             <FlatButton
               label="Sign In"
-              style={styles.authLink}
-              containerElement={signinLink}
+              style={styles.authButton}
+              containerElement={
+                <NavLink
+                  to="/sign-in"
+                />
+              }
             />
           </div> :
           <IconMenu
@@ -81,7 +84,7 @@ const NavigationBar = (props) => {
                   id="avatar"
                   size={30}
                 >
-                  KL
+                  K
                 </Avatar>
               </IconButton>
             }
@@ -108,7 +111,7 @@ const NavigationBar = (props) => {
 
             <MenuItem
               value="3"
-              primaryText="Logout"
+              primaryText="Sign Out"
               onTouchTap={() => {logout()}}
             />
           </IconMenu>
@@ -118,8 +121,6 @@ const NavigationBar = (props) => {
   )
 }
 
-NavigationBar.propTypes = {
-  authenticated: PropTypes.bool.isRequired
-}
+NavigationBar.propTypes = propTypes
 
 export default NavigationBar

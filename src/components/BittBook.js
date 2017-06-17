@@ -12,6 +12,14 @@ import IconButton from 'material-ui/IconButton'
 import ActionDelete from 'material-ui/svg-icons/action/delete'
 import Bitts from './Bitts'
 
+const propTypes = {
+  id:               PropTypes.string.isRequired,
+  details:          PropTypes.object.isRequired,
+  updateBittBook:   PropTypes.func.isRequired,
+  deleteBittBook:   PropTypes.func.isRequired,
+  toggleBittsState: PropTypes.func.isRequired
+}
+
 class BittBook extends Component {
   constructor() {
     super()
@@ -96,7 +104,7 @@ class BittBook extends Component {
   toggleBitts() {
     this.state.width === '164px' ?
     this.setState({
-      zDepth: 3,
+      zDepth: 0,
       position: 'absolute',
       width: '85vw',
       height: '85vh',
@@ -213,10 +221,48 @@ class BittBook extends Component {
 
     let subtitleState
     if (this.state.isShowingOptions) {
-      subtitleState =
-      <div
-        id="bitt-book-subtitle-state-container"
-      >
+      subtitleState = (
+        <div
+          id="bitt-book-subtitle-state-container"
+        >
+          <div
+            id="bitt-book-subtitle-container"
+            style={styles.bittBookSubtitleContainer}
+          >
+            <Moment
+              id="bitt-book-create-at"
+              format="MM/DD/YY"
+            >
+              {details.createdAt}
+            </Moment>
+
+            <div
+              id="bitt-book-count"
+            >
+              {
+                bittAmount === 1 ? bittAmount + ' Bitt' : bittAmount + ' Bitts'
+              }
+            </div>
+          </div>
+
+          <div
+            id="bitt-book-delete-container"
+            style={styles.bittBookDeleteContainer}
+          >
+            <IconButton
+              style={styles.deleteIconButton}
+              onTouchTap={(e) => this.deleteBittBook(e, id)}
+            >
+              <ActionDelete
+                color="#757575"
+                hoverColor="#424242"
+              />
+            </IconButton>
+          </div>
+        </div>
+      )
+    } else {
+      subtitleState = (
         <div
           id="bitt-book-subtitle-container"
           style={styles.bittBookSubtitleContainer}
@@ -229,148 +275,112 @@ class BittBook extends Component {
           </Moment>
 
           <div
-            id="bitt-book-count"
+            id="bitt-count"
           >
             {
-              bittAmount === 1 ?
-              bittAmount + ' Bitt' :
-              bittAmount + ' Bitts'
+              bittAmount === 1 ? bittAmount + ' Bitt' : bittAmount + ' Bitts'
             }
           </div>
         </div>
-
-        <div
-          id="bitt-book-delete-container"
-          style={styles.bittBookDeleteContainer}
-        >
-          <IconButton
-            style={styles.deleteIconButton}
-            onTouchTap={(e) => this.deleteBittBook(e, id)}
-          >
-            <ActionDelete
-              color='#757575'
-              hoverColor='#424242'
-            />
-          </IconButton>
-        </div>
-      </div>
-    } else {
-      subtitleState =
-      <div
-        id="bitt-book-subtitle-container"
-        style={styles.bittBookSubtitleContainer}
-      >
-        <Moment
-          id="bitt-book-create-at"
-          format="MM/DD/YY"
-        >
-          {details.createdAt}
-        </Moment>
-
-        <div
-          id="bitt-count"
-        >
-          {
-            bittAmount === 1 ?
-            bittAmount + ' Bitt' :
-            bittAmount + ' Bitts'
-          }
-        </div>
-      </div>
+      )
     }
 
     let bittBookState
     if (this.state.loading) {
-      bittBookState =
-      <Card
-        id="bitt-book-card"
-        style={styles.bittBookCard}
-      >
-        <div
-          id="circular-progress-container"
-          style={styles.circularProgressContainer}
+      bittBookState = (
+        <Card
+          id="bitt-book-card"
+          style={styles.bittBookCard}
         >
-          <CircularProgress
-            size={30}
-            thickness={5}
-          />
-        </div>
-      </Card>
+          <div
+            id="circular-progress-container"
+            style={styles.circularProgressContainer}
+          >
+            <CircularProgress
+              size={30}
+              thickness={5}
+            />
+          </div>
+        </Card>
+      )
     } else if (details.isFirstSubmit) {
-      bittBookState =
-      <Card
-        id="bitt-book-card"
-        style={styles.bittBookCard}
-      >
-        <CardHeader
-          id="bitt-book-card-header"
-          title={
-            <div
-              id="bitt-book-title-container"
-              style={styles.bittBookTitleContainer}
-            >
-              <form
-                onSubmit={(e) => this.updateBittBook(e, details)}
+      bittBookState = (
+        <Card
+          id="bitt-book-card"
+          style={styles.bittBookCard}
+        >
+          <CardHeader
+            id="bitt-book-card-header"
+            title={
+              <div
+                id="bitt-book-title-container"
+                style={styles.bittBookTitleContainer}
+              >
+                <form
+                  onSubmit={(e) => this.updateBittBook(e, details)}
+                >
+                  <input
+                    id="bitt-book-title-input"
+                    style={styles.bittBookTitleInput}
+                    placeholder="Bitt Book Title..."
+                    autoFocus="true"
+                    autoComplete="off"
+                    ref={(input) => this.title = input}
+                    onBlur={(e) => this.updateBittBook(e, details)}
+                  />
+                </form>
+              </div>
+            }
+          />
+        </Card>
+      )
+    } else if (this.state.isShowingBitts) {
+      bittBookState = (
+        <Bitts
+          ref={instance => this.bitts = instance}
+          details={details}
+          updateBittBook={(updatedBittBook) => this.props.updateBittBook(updatedBittBook)}
+          deleteBittBook={(e) => this.props.deleteBittBook(e, id)}
+          updateBitt={(updatedBittBook) => this.updateBitt(updatedBittBook)}
+        />
+      )
+    } else {
+      bittBookState = (
+        <Card
+          id="bitt-book-card"
+          style={styles.bittBookCard}
+          onMouseEnter={this.showOptions}
+          onMouseLeave={this.hideOptions}
+          zDepth={this.state.zDepth}
+        >
+          <CardHeader
+            id="bitt-book-card-header"
+            style={styles.bittBookHeader}
+            title={
+              <div
+                id="bitt-book-title-container"
+                style={styles.bittBookTitleContainer}
               >
                 <input
                   id="bitt-book-title-input"
                   style={styles.bittBookTitleInput}
-                  placeholder="Bitt Book Title..."
-                  autoFocus="true"
+                  placeholder='Bitt Book Title...'
+                  defaultValue={details.title}
                   autoComplete="off"
                   ref={(input) => this.title = input}
+                  onTouchTap={e => e.stopPropagation()}
+                  onChange={(e) => this.updateBittBook(e, details)}
+                  onKeyPress={(e) => this.handleKeyPressUpdateBittBook(e, details)}
                   onBlur={(e) => this.updateBittBook(e, details)}
                 />
-              </form>
-            </div>
-          }
-        />
-      </Card>
-    } else if (this.state.isShowingBitts) {
-      bittBookState =
-      <Bitts
-        ref={instance => this.bitts = instance}
-        details={details}
-        updateBittBook={(updatedBittBook) => this.props.updateBittBook(updatedBittBook)}
-        deleteBittBook={(e) => this.props.deleteBittBook(e, id)}
-        updateBitt={(updatedBittBook) => this.updateBitt(updatedBittBook)}
-      />
-    } else {
-      bittBookState =
-      <Card
-        id="bitt-book-card"
-        style={styles.bittBookCard}
-        onMouseEnter={this.showOptions}
-        onMouseLeave={this.hideOptions}
-        zDepth={this.state.zDepth}
-      >
-        <CardHeader
-          id="bitt-book-card-header"
-          style={styles.bittBookHeader}
-          title={
-            <div
-              id="bitt-book-title-container"
-              style={styles.bittBookTitleContainer}
-            >
-              <input
-                id="bitt-book-title-input"
-                style={styles.bittBookTitleInput}
-                placeholder='Bitt Book Title...'
-                defaultValue={details.title}
-                autoComplete="off"
-                ref={(input) => this.title = input}
-                onTouchTap={e => e.stopPropagation()}
-                onChange={(e) => this.updateBittBook(e, details)}
-                onKeyPress={(e) => this.handleKeyPressUpdateBittBook(e, details)}
-                onBlur={(e) => this.updateBittBook(e, details)}
-              />
-            </div>
-          }
-          subtitle={
-            subtitleState
-          }
-        />
-      </Card>
+              </div>
+            }
+            subtitle={
+              subtitleState
+            }
+          />
+        </Card>
+      )
     }
 
     return details.owner !== getCurrentUserId() ? null :
@@ -386,12 +396,6 @@ class BittBook extends Component {
   }
 }
 
-BittBook.propTypes = {
-  id:               PropTypes.string.isRequired,
-  details:          PropTypes.object.isRequired,
-  updateBittBook:   PropTypes.func.isRequired,
-  deleteBittBook:   PropTypes.func.isRequired,
-  toggleBittsState: PropTypes.func.isRequired
-}
+BittBook.propTypes = propTypes
 
 export default BittBook

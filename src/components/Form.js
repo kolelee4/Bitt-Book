@@ -7,6 +7,22 @@ import {Card, CardHeader} from 'material-ui/Card'
 import TextField from 'material-ui/TextField'
 import RaisedButton from './RaisedButton'
 
+const propTypes = {
+  title:                PropTypes.string.isRequired,
+  name:                 PropTypes.string,
+  email:                PropTypes.string.isRequired,
+  password:             PropTypes.string.isRequired,
+  passwordHint:         PropTypes.string.isRequired,
+  handleChangeName:     PropTypes.func,
+  handleChangeEmail:    PropTypes.func.isRequired,
+  handleChangePassword: PropTypes.func.isRequired,
+  noAccountMessage:     PropTypes.string,
+  signupError:          PropTypes.string,
+  loginMessage:         PropTypes.string,
+  buttonLabel:          PropTypes.string.isRequired,
+  submit:               PropTypes.func.isRequired
+}
+
 class Form extends Component {
   constructor() {
     super()
@@ -15,14 +31,17 @@ class Form extends Component {
       zDepth: 1
     }
 
-    this.toggleZDepth = this.toggleZDepth.bind(this)
+    this.raiseForm = this.raiseForm.bind(this)
+    this.lowerForm = this.lowerForm.bind(this)
   }
 
-  toggleZDepth() {
-    this.state.zDepth === 1 ?
+  raiseForm() {
     this.setState({
       zDepth: 2
-    }) :
+    })
+  }
+
+  lowerForm() {
     this.setState({
       zDepth: 1
     })
@@ -42,7 +61,7 @@ class Form extends Component {
       },
 
       formHeader: {
-        margin: '0 0 0 20px'
+        margin: '0 20px 0 20px'
       },
 
       textFieldContainer: {
@@ -52,11 +71,12 @@ class Form extends Component {
 
       formMessageContainer: {
         float: 'left',
-        margin: '80px 0 0 3vw'
+        margin: '80px 0 0 40px'
       },
 
       loginMessageContainer: {
         float: 'left',
+        width: '280px',
         fontWeight: '500'
       },
 
@@ -64,7 +84,7 @@ class Form extends Component {
         margin: '0',
         fontSize: '14px',
         fontWeight: '500',
-        color: '#d32f2f'
+        color: 'red'
       },
 
       signupLink: {
@@ -77,16 +97,18 @@ class Form extends Component {
 
       formSubmitButton: {
         float: 'right',
-        margin: '80px 3vw 0 0'
+        margin: '80px 40px 0 0'
       }
     }
 
     const {
       title,
+      name,
       email,
       password,
       passwordHint,
       resetPassword,
+      handleChangeName,
       handleChangeEmail,
       handleChangePassword,
       noAccountMessage,
@@ -98,35 +120,47 @@ class Form extends Component {
 
     let formMessageState
     if (loginMessage) {
-      formMessageState =
-      <div
-        id="form-message"
-      >
+      formMessageState = (
         <div
-          style={styles.loginMessageContainer}
+          id="form-message"
         >
-          <h4
-            style={styles.loginMessageText}
+          <div
+            id="login-message-container"
+            style={styles.loginMessageContainer}
           >
-            {loginMessage}
-          </h4>
+            <h4
+              style={styles.loginMessageText}
+            >
+              {loginMessage}
+            </h4>
+          </div>
+
+          <br/>
+          <br/>
+
+          <a
+            id="forgot-password-link"
+            style={styles.forgotPasswordLink}
+            href="#"
+            onClick={resetPassword}
+          >
+            Forgot your password?
+          </a>
+
+          <br/>
+          <br/>
+
+          <NavLink
+            id="signup-link"
+            to="/sign-up"
+            style={styles.signupLink}
+          >
+            {noAccountMessage}
+          </NavLink>
         </div>
-
-        <br/>
-        <br/>
-
-        <a
-          id="forgot-password-link"
-          style={styles.forgotPasswordLink}
-          href="#"
-          onClick={resetPassword}
-        >
-          Forgot your password?
-        </a>
-
-        <br/>
-        <br/>
-
+      )
+    } else if (noAccountMessage) {
+      formMessageState = (
         <NavLink
           id="signup-link"
           to="/sign-up"
@@ -134,19 +168,9 @@ class Form extends Component {
         >
           {noAccountMessage}
         </NavLink>
-      </div>
-    } else if (noAccountMessage) {
-      formMessageState =
-      <NavLink
-        id="signup-link"
-        to="/sign-up"
-        style={styles.signupLink}
-      >
-        {noAccountMessage}
-      </NavLink>
+      )
     } else {
-      formMessageState =
-      null
+      formMessageState = null
     }
 
     return (
@@ -161,8 +185,8 @@ class Form extends Component {
             id="material-form"
             style={styles.materialForm}
             zDepth={this.state.zDepth}
-            onMouseEnter={this.toggleZDepth}
-            onMouseLeave={this.toggleZDepth}
+            onMouseEnter={this.raiseForm}
+            onMouseLeave={this.lowerForm}
           >
             <CardHeader
               id="form-header"
@@ -178,20 +202,39 @@ class Form extends Component {
               id="text-field-container"
               style={styles.textFieldContainer}
             >
+              {title === 'Sign In' ? null :
+                (
+                  <TextField
+                    fullWidth={true}
+                    hintText="Enter your name..."
+                    floatingLabelText="Name"
+                    value={name}
+                    onChange={handleChangeName}
+                  />
+                )
+              }
+
               <TextField
+                fullWidth={true}
                 hintText="Enter your email..."
                 floatingLabelText="Email"
-                errorText={signupError}
-                fullWidth={true}
+                errorText={
+                  signupError === 'The email address is badly formatted.' ?
+                  signupError : null
+                }
                 value={email}
                 onChange={handleChangeEmail}
               />
 
               <TextField
+                fullWidth={true}
                 hintText={passwordHint}
                 type="password"
                 floatingLabelText="Password"
-                fullWidth={true}
+                errorText={
+                  signupError === 'The password must be 6 characters long or more.' ?
+                  signupError : null
+                }
                 value={password}
                 onChange={handleChangePassword}
               />
@@ -218,18 +261,6 @@ class Form extends Component {
   }
 }
 
-Form.propTypes = {
-  title:                PropTypes.string.isRequired,
-  email:                PropTypes.string.isRequired,
-  password:             PropTypes.string.isRequired,
-  passwordHint:         PropTypes.string.isRequired,
-  handleChangeEmail:    PropTypes.func.isRequired,
-  handleChangePassword: PropTypes.func.isRequired,
-  noAccountMessage:     PropTypes.string,
-  signupError:          PropTypes.string,
-  loginMessage:         PropTypes.string,
-  buttonLabel:          PropTypes.string.isRequired,
-  submit:               PropTypes.func.isRequired
-}
+Form.propTypes = propTypes
 
 export default Form

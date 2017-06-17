@@ -12,6 +12,14 @@ import ActionDelete from 'material-ui/svg-icons/action/delete'
 import RaisedButton from './RaisedButton'
 // import BittEditor from './BittEditor'
 
+const propTypes = {
+  id:         PropTypes.string.isRequired,
+  details:    PropTypes.object.isRequired,
+  bittAmount: PropTypes.number.isRequired,
+  updateBitt: PropTypes.func.isRequired,
+  deleteBitt: PropTypes.func.isRequired
+}
+
 class Bitt extends Component {
   constructor() {
     super()
@@ -178,7 +186,7 @@ class Bitt extends Component {
       bittTextarea: {
         resize: 'none',
         width: '95%',
-        minHeight: '32vh',
+        minHeight: '28vh',
         outline: 'none',
         border: 'none',
         margin: '0 0 0 0',
@@ -201,170 +209,163 @@ class Bitt extends Component {
 
     let isShowingOptions
     if (this.state.isShowingOptions) {
-      isShowingOptions =
-      <IconButton
-        id="bitt-delete-button"
-        style={styles.bittDeleteButton}
-        onTouchTap={(e) => this.deleteBitt(e, id)}
-      >
-        <ActionDelete
-          color='#757575'
-          hoverColor='#424242'
-        />
-      </IconButton>
+      isShowingOptions = (
+        <IconButton
+          id="bitt-delete-button"
+          style={styles.bittDeleteButton}
+          onTouchTap={(e) => this.deleteBitt(e, id)}
+        >
+          <ActionDelete
+            color="#757575"
+            hoverColor="#424242"
+          />
+        </IconButton>
+      )
     } else {
-      isShowingOptions =
-      null
+      isShowingOptions = null
     }
 
     let isShowingBittBody
     if (this.state.isExpanded === false) {
-      isShowingBittBody =
-      <div
-        id="bitt-body-preview"
-        style={styles.bittBodyPreview}
-      >
-        {details.body}
-      </div>
+      isShowingBittBody = (
+        <div
+          id="bitt-body-preview"
+          style={styles.bittBodyPreview}
+        >
+          {details.body}
+        </div>
+      )
     } else {
-      isShowingBittBody =
-      null
+      isShowingBittBody = null
     }
 
     let bittState
     if (details.isFirstSubmit) {
-      bittState =
-      <Card
-        id="bitt-card"
-        style={styles.bittCard}
-        zDepth={this.state.zDepth}
-      >
-        <CardHeader
-          id="bitt-card-header"
-          style={styles.bittHeader}
-          title={
-            <input
-              id="bitt-title-input"
-              style={styles.bittTitleInput}
-              placeholder="Bitt Title..."
-              defaultValue=''
-              autoFocus={true}
-              autoComplete="off"
-              ref={(input) => this.title = input}
-              onTouchTap={e => e.stopPropagation()}
-              onKeyPress={(e) => this.handleKeyPressUpdateBitt(e, details)}
-              onBlur={(e) => this.updateBitt(e, details)}
-            />
-          }
-        />
-      </Card>
-    } else {
-      bittState =
-      <Card
-        id="bitt-card"
-        style={styles.bittCard}
-        zDepth={this.state.zDepth}
-        expanded={this.state.isExpanded}
-        onMouseEnter={this.showOptions}
-        onMouseLeave={this.hideOptions}
-        onTouchTap={(e) => this.toggleExpand(e)}
-      >
-        <div
-          id="bitt-options-container"
-          style={styles.bittOptionsContainer}
+      bittState = (
+        <Card
+          id="bitt-card"
+          style={styles.bittCard}
+          zDepth={this.state.zDepth}
         >
-          {bittAmount > 1 ? isShowingOptions : null}
-        </div>
+          <CardHeader
+            id="bitt-card-header"
+            style={styles.bittHeader}
+            title={
+              <input
+                id="bitt-title-input"
+                style={styles.bittTitleInput}
+                placeholder="Bitt Title..."
+                defaultValue=""
+                autoFocus={true}
+                autoComplete="off"
+                ref={(input) => this.title = input}
+                onTouchTap={e => e.stopPropagation()}
+                onKeyPress={(e) => this.handleKeyPressUpdateBitt(e, details)}
+                onBlur={(e) => this.updateBitt(e, details)}
+              />
+            }
+          />
+        </Card>
+      )
+    } else {
+      bittState = (
+        <Card
+          id="bitt-card"
+          style={styles.bittCard}
+          zDepth={this.state.zDepth}
+          expanded={this.state.isExpanded}
+          onMouseEnter={this.showOptions}
+          onMouseLeave={this.hideOptions}
+          onTouchTap={(e) => this.toggleExpand(e)}
+        >
+          <div
+            id="bitt-options-container"
+            style={styles.bittOptionsContainer}
+          >
+            {bittAmount > 1 ? isShowingOptions : null}
+          </div>
 
-        <CardHeader
-          id="bitt-card-header"
-          style={styles.bittHeader}
-          actAsExpander={true}
-          title={
-            <input
-              id="bitt-title-input"
-              style={styles.bittTitleInput}
-              placeholder="Bitt Title..."
-              defaultValue={details.title}
-              autoComplete="off"
-              ref={(input) => this.title = input}
+          <CardHeader
+            id="bitt-card-header"
+            style={styles.bittHeader}
+            actAsExpander={true}
+            title={
+              <input
+                id="bitt-title-input"
+                style={styles.bittTitleInput}
+                placeholder="Bitt Title..."
+                defaultValue={details.title}
+                autoComplete="off"
+                ref={(input) => this.title = input}
+                onTouchTap={e => e.stopPropagation()}
+                onChange={(e) => this.updateBitt(e, details)}
+                onKeyPress={(e) => this.handleKeyPressUpdateBitt(e, details)}
+                onBlur={(e) => this.updateBitt(e, details)}
+              />
+            }
+            subtitle={
+              <div
+                id="bitt-subtitle-container"
+              >
+                <Moment
+                  fromNow
+                  style={styles.bittMomentDate}
+                >
+                  {details.updatedAt}
+                </Moment>
+                ...
+
+                {isShowingBittBody}
+              </div>
+            }
+          />
+
+          <CardText
+            expandable={true}
+            style={styles.bittCardText}
+          >
+            <Divider
+              style={styles.bittDivider}
+            />
+
+            <textarea
+              id="bitt-textarea"
+              style={styles.bittTextarea}
+              placeholder="Write a bitt..."
+              defaultValue={
+                details.body === 'Write a bitt...' || details.body === 'Click here to edit...' ?
+                '' : details.body
+              }
+              autoFocus="true"
+              ref={(input) => this.body = input}
               onTouchTap={e => e.stopPropagation()}
               onChange={(e) => this.updateBitt(e, details)}
-              onKeyPress={(e) => this.handleKeyPressUpdateBitt(e, details)}
-              onBlur={(e) => this.updateBitt(e, details)}
             />
-          }
-          subtitle={
-            <div
-              id="bitt-subtitle-container"
+
+            {/* <div
+              id="bitt-editor-container"
+              onTouchTap={e => e.stopPropagation()}
             >
-              <Moment
-                fromNow
-                style={styles.bittMomentDate}
-              >
-                {details.updatedAt}
-              </Moment>
-              ...
+              <BittEditor
+                bittBody={details.body}
+              />
+            </div> */}
 
-              {isShowingBittBody}
-            </div>
-          }
-        />
-
-        <CardText
-          expandable={true}
-          style={styles.bittCardText}
-        >
-          <Divider
-            style={styles.bittDivider}
-          />
-
-          <textarea
-            id="bitt-textarea"
-            style={styles.bittTextarea}
-            placeholder="Write a bitt..."
-            defaultValue={
-              details.body === 'Write a bitt...' || details.body === 'Click here to edit...' ?
-              '' :
-              details.body
-            }
-            autoFocus="true"
-            ref={(input) => this.body = input}
-            onTouchTap={e => e.stopPropagation()}
-            onChange={(e) => this.updateBitt(e, details)}
-          />
-
-          {/* <div
-            id="bitt-editor-container"
-            onTouchTap={e => e.stopPropagation()}
-          >
-            <BittEditor
-              bittBody={details.body}
+            <RaisedButton
+              id="bitt-done-button"
+              style={styles.bittDoneButton}
+              primary={true}
+              label="Done"
             />
-          </div> */}
-
-          <RaisedButton
-            id="bitt-done-button"
-            style={styles.bittDoneButton}
-            primary={true}
-            label="Done"
-          />
-        </CardText>
-      </Card>
+          </CardText>
+        </Card>
+      )
     }
 
-    return (
-      bittState
-    )
+    return bittState
   }
 }
 
-Bitt.propTypes = {
-  id:         PropTypes.string.isRequired,
-  details:    PropTypes.object.isRequired,
-  bittAmount: PropTypes.number.isRequired,
-  updateBitt: PropTypes.func.isRequired,
-  deleteBitt: PropTypes.func.isRequired
-}
+Bitt.propTypes = propTypes
 
 export default Bitt

@@ -1,6 +1,14 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 
+const defaultProps = {
+  title: 'Account'
+}
+
+const propTypes = {
+  title: PropTypes.string.isRequired
+}
+
 class Account extends Component {
   render() {
     const styles = {
@@ -20,12 +28,8 @@ class Account extends Component {
   }
 }
 
-Account.defaultProps = {
-  title: 'Account'
-}
+Account.defaultProps = defaultProps
 
-Account.propTypes = {
-  title: PropTypes.string.isRequired
-}
+Account.propTypes = propTypes
 
 export default Account

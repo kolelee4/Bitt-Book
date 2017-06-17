@@ -53,7 +53,7 @@ class AlertModal extends Component {
           open={this.state.open}
           onRequestClose={this.handleClose}
         >
-          Delete Bitt Book? All Bitts will be deleted...
+          Delete Bitt Book? All Bitts will also be deleted...
         </Dialog>
       </div>
     )

@@ -5,6 +5,10 @@ import PropTypes from 'prop-types'
 import FloatingActionButton from './FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 
+const propTypes = {
+  addItem: PropTypes.func.isRequired
+}
+
 const styles = {
   main: {
     zIndex: '999',
@@ -31,8 +35,6 @@ const FABContainer = (props) => {
   )
 }
 
-FABContainer.propTypes = {
-  addItem: PropTypes.func.isRequired
-}
+FABContainer.propTypes = propTypes
 
 export default FABContainer

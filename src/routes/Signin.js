@@ -54,9 +54,18 @@ class Signin extends Component {
   }
 
   render() {
+    const styles = {
+      signinContainer: {
+        width: '100vw',
+        height: '90.2vh',
+        overflow: 'auto'
+      }
+    }
+
     return (
       <div
         id="login-container"
+        style={styles.signinContainer}
       >
         <Form
           title="Sign In"

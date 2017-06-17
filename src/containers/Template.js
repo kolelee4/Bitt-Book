@@ -59,7 +59,7 @@ class Template extends Component {
 
     this.state = {
       authenticated: false,
-      loading: true
+      loading:       true
     }
   }
 
@@ -91,25 +91,25 @@ class Template extends Component {
       }
     }
 
-    return this.state.loading === true ?
-    <RouteContainer>
-      <Layout>
-        <NavigationBar
-          authenticated={this.state.authenticated}
-        />
-
-        <div
-          id="circular-progress-container"
-          style={styles.circularProgressContainer}
-        >
-          <CircularProgress
-            size={80}
-            thickness={6}
+    return this.state.loading === true ? (
+      <RouteContainer>
+        <Layout>
+          <NavigationBar
+            authenticated={this.state.authenticated}
           />
-        </div>
-      </Layout>
-    </RouteContainer> :
-    (
+
+          <div
+            id="circular-progress-container"
+            style={styles.circularProgressContainer}
+          >
+            <CircularProgress
+              size={80}
+              thickness={6}
+            />
+          </div>
+        </Layout>
+      </RouteContainer>
+    ) : (
       <RouteContainer>
         <Layout>
           <NavigationBar
@@ -118,31 +118,31 @@ class Template extends Component {
 
           <Switch>
             <Route
-              exact path='/'
+              exact path="/"
               component={Home}
             />
 
             <PublicRoute
               authenticated={this.state.authenticated}
-              exact path='/sign-up'
+              exact path="/sign-up"
               component={Signup}
             />
 
             <PublicRoute
               authenticated={this.state.authenticated}
-              exact path='/sign-in'
+              exact path="/sign-in"
               component={Signin}
             />
 
             <PrivateRoute
               authenticated={this.state.authenticated}
-              exact path='/bitt-books'
+              exact path="/bitt-books"
               component={BittBooks}
             />
 
             <PrivateRoute
               authenticated={this.state.authenticated}
-              exact path='/account'
+              exact path="/account"
               component={Account}
             />
 
