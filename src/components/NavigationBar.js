@@ -72,6 +72,16 @@ const NavigationBar = (props) => {
                 />
               }
             />
+
+            <FlatButton
+              label="Sign Up"
+              style={styles.authButton}
+              containerElement={
+                <NavLink
+                  to="/sign-up"
+                />
+              }
+            />
           </div> :
           <IconMenu
             anchorOrigin={{horizontal: 'right', vertical: 'top'}}
