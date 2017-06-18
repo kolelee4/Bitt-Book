@@ -18,20 +18,20 @@ class Signup extends Component {
 
     this.state = {
       signupError: null,
-      name:        '',
+      displayName: '',
       email:       '',
       password:    ''
     }
 
-    this.handleChangeName = this.handleChangeName.bind(this)
+    this.handleChangeName = this.handleChangeDisplayName.bind(this)
     this.handleChangeEmail = this.handleChangeEmail.bind(this)
     this.handleChangePassword = this.handleChangePassword.bind(this)
     this.createUser = this.createUser.bind(this)
   }
 
-  handleChangeName(event) {
+  handleChangeDisplayName(event) {
     this.setState({
-      name: event.target.value
+      displayName: event.target.value
     })
   }
 
@@ -53,7 +53,7 @@ class Signup extends Component {
     auth(this.state.email, this.state.password)
       .catch(e => this.setState(setErrorMsg(e)))
 
-    localStorage.setItem(`${this.state.email}-username`, this.state.name)
+    localStorage.setItem(`${this.state.email}-display-name`, this.state.displayName)
   }
 
   render() {
@@ -73,12 +73,12 @@ class Signup extends Component {
         <Form
           title="Sign Up"
           buttonLabel="Create Account"
-          name={this.state.name}
+          name={this.state.displayName}
           email={this.state.email}
           password={this.state.password}
           passwordHint="Create a password..."
           signupError={this.state.signupError}
-          handleChangeName={(event) => this.handleChangeName(event)}
+          handleChangeName={(event) => this.handleChangeDisplayName(event)}
           handleChangeEmail={(event) => this.handleChangeEmail(event)}
           handleChangePassword={(event) => this.handleChangePassword(event)}
           submit={(e) => this.createUser(e)}

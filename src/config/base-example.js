@@ -2,12 +2,12 @@ import firebase from 'firebase'
 import Rebase from 're-base'
 
 const app = firebase.initializeApp({
-  apiKey:            "<apiKey>",
-  authDomain:        "<authDomain>",
-  databaseURL:       "<databaseURL>",
-  projectId:         "<projectId>",
-  storageBucket:     "<storageBucket>",
-  messagingSenderId: "<messagingSenderId>"
+  apiKey:            '<apiKey>',
+  authDomain:        '<authDomain>',
+  databaseURL:       '<databaseURL>',
+  projectId:         '<projectId>',
+  storageBucket:     '<storageBucket>',
+  messagingSenderId: '<messagingSenderId>'
 })
 
 export const firebaseAuth = firebase.auth

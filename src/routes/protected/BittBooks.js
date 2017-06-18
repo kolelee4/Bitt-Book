@@ -160,7 +160,13 @@ class BittBooks extends Component {
           id="no-bitt-books-message"
           style={styles.noBittBooksMessage}
         >
-          {this.props.noBittBooksMessage}
+          {
+            'Hello, ' + (
+              getCurrentUser().displayName === null ?
+              localStorage.getItem(`${getCurrentUser().email}-display-name`) :
+              getCurrentUser().displayName
+            ) + '. ' + this.props.noBittBooksMessage
+          }
         </h4>
       )
     } else {

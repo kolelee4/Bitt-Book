@@ -80,10 +80,6 @@ class Template extends Component {
             loading: false
           })
         })
-        this.setState({
-          authenticated: true,
-          loading: false
-        })
       } else {
         this.setState({
           authenticated: false,

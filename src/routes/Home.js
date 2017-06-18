@@ -34,7 +34,7 @@ class Home extends Component {
       },
 
       sloganSubHeading: {
-        fontWeight: '500'
+        fontWeight: '400'
       }
     }
 

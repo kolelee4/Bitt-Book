@@ -212,7 +212,8 @@ class Form extends Component {
               id="text-field-container"
               style={styles.textFieldContainer}
             >
-              {title === 'Sign In' ? null :
+              {
+                title === 'Sign In' ? null :
                 (
                   <TextField
                     fullWidth={true}
@@ -230,7 +231,10 @@ class Form extends Component {
                 floatingLabelText="Email"
                 errorText={
                   signupError === 'The email address is badly formatted.' ?
-                  signupError : null
+                  signupError :
+                  signupError === 'The email address is already in use by another account.' ?
+                  signupError :
+                  null
                 }
                 value={email}
                 onChange={handleChangeEmail}

@@ -98,8 +98,8 @@ const  NavigationBar = (props) => {
                   >
                     {
                       getCurrentUser().displayName === null ? (
-                        localStorage.getItem(`${getCurrentUser().email}-username`).match(/\b\w/g).shift() +
-                        localStorage.getItem(`${getCurrentUser().email}-username`).match(/\b\w/g).pop().toUpperCase()
+                        localStorage.getItem(`${getCurrentUser().email}-display-name`).match(/\b\w/g).shift() +
+                        localStorage.getItem(`${getCurrentUser().email}-display-name`).match(/\b\w/g).pop().toUpperCase()
                       ) : (
                         getCurrentUser().displayName.match(/\b\w/g).shift() +
                         getCurrentUser().displayName.match(/\b\w/g).pop().toUpperCase()
