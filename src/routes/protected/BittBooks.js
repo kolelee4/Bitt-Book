@@ -6,6 +6,7 @@ import {base} from '../../config/base'
 
 // Helpers
 import {getCurrentUser} from '../../helpers/auth'
+import {getFirstName} from '../../helpers/string-manipulator'
 
 // Components
 import CircularProgress from 'material-ui/CircularProgress'
@@ -22,11 +23,12 @@ const propTypes = {
 }
 
 class BittBooks extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
 
     this.state = {
       loading:        true,
+      userInfo:       {},
       bittBooks:      {},
       isShowingBitts: false,
       snackbarOpen:   false
@@ -45,6 +47,11 @@ class BittBooks extends Component {
     this.ref = base.syncState(`users/${user.uid}/bittBooks`, {
       context: this,
       state:   'bittBooks'
+    })
+
+    this.ref = base.syncState(`users/${user.uid}/info`, {
+      context: this,
+      state:   'userInfo'
     })
   }
 
@@ -126,10 +133,6 @@ class BittBooks extends Component {
 
   componentWillUnmount() {
     base.removeBinding(this.ref)
-
-    this.setState({
-      loading: true
-    })
   }
 
   render() {
@@ -142,7 +145,7 @@ class BittBooks extends Component {
 
       circularProgressContainerBittBooks: {
         width: '80px',
-        margin: '200px auto 0 auto'
+        margin: '42vh auto 0 auto'
       },
 
       noBittBooksMessage: {
@@ -151,7 +154,11 @@ class BittBooks extends Component {
       }
     }
 
+    const {noBittBooksMessage} = this.props
+
     const bittBookAmount = Object.keys(this.state.bittBooks).length
+
+    const displayName = this.state.userInfo.displayName
 
     let bittBooksState
     if (bittBookAmount === 0) {
@@ -161,11 +168,8 @@ class BittBooks extends Component {
           style={styles.noBittBooksMessage}
         >
           {
-            'Hello, ' + (
-              getCurrentUser().displayName === null ?
-              localStorage.getItem(`${getCurrentUser().email}-display-name`) :
-              getCurrentUser().displayName
-            ) + '. ' + this.props.noBittBooksMessage
+            displayName === undefined ? null :
+            'Hello, ' + getFirstName(displayName) + '. ' + noBittBooksMessage
           }
         </h4>
       )

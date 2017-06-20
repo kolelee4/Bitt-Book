@@ -28,13 +28,9 @@ class Home extends Component {
         verticalAlign: 'middle'
       },
 
-      titleHeading: {
+      sloganHeading: {
         fontSize: '60px',
         fontWeight: '600'
-      },
-
-      sloganSubHeading: {
-        fontWeight: '400'
       }
     }
 
@@ -55,18 +51,10 @@ class Home extends Component {
           />
 
           <h1
-            id="title-heading"
-            style={styles.titleHeading}
-          >
-            {this.props.title}
-          </h1>
-
-          <h3
-            id="slogan-sub-heading"
-            style={styles.sloganSubHeading}
+            style={styles.sloganHeading}
           >
             {this.props.slogan}
-          </h3>
+          </h1>
         </div>
       </div>
     )

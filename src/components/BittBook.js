@@ -298,7 +298,7 @@ class BittBook extends Component {
           >
             <CircularProgress
               size={30}
-              thickness={5}
+              thickness={4}
             />
           </div>
         </Card>
@@ -342,6 +342,7 @@ class BittBook extends Component {
           updateBittBook={(updatedBittBook) => this.props.updateBittBook(updatedBittBook)}
           deleteBittBook={(e) => this.props.deleteBittBook(e, id)}
           updateBitt={(updatedBittBook) => this.updateBitt(updatedBittBook)}
+          toggleBitts={this.toggleBitts}
         />
       )
     } else {
@@ -383,8 +384,22 @@ class BittBook extends Component {
       )
     }
 
-    return details.owner !== getCurrentUser().uid ? null :
-    (
+    return details.owner !== getCurrentUser().uid ? (
+      <Card
+        id="bitt-book-card"
+        style={styles.bittBookCard}
+      >
+        <div
+          id="circular-progress-container"
+          style={styles.circularProgressContainer}
+        >
+          <CircularProgress
+            size={30}
+            thickness={4}
+          />
+        </div>
+      </Card>
+    ) : (
       <div
         id="bitt-book"
         style={styles.bittBook}

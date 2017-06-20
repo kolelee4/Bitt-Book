@@ -137,7 +137,7 @@ class Bitt extends Component {
     const styles = {
       bittCard: {
         overflow: 'hidden',
-        margin: '20px 6.9vw 0 6.9vw',
+        margin: '0 4vw 20px 4vw',
         transitionDuration: '200ms'
       },
 
@@ -147,8 +147,7 @@ class Bitt extends Component {
       },
 
       bittDeleteButton: {
-        float: 'right',
-        background: 'white'
+        float: 'right'
       },
 
       bittTitle: {
@@ -159,7 +158,6 @@ class Bitt extends Component {
         width: '67vw',
         overflow: 'hidden',
         whiteSpace: 'nowrap',
-        margin: '0',
         outline: 'none',
         border: 'none',
         borderRadius: '3px',
@@ -186,10 +184,9 @@ class Bitt extends Component {
       bittTextarea: {
         resize: 'none',
         width: '95%',
-        minHeight: '28vh',
+        minHeight: '29vh',
         outline: 'none',
         border: 'none',
-        margin: '0 0 0 0',
         padding: '20px 20px 0 20px',
         fontSize: '13px',
         fontWeight: '500'
@@ -356,6 +353,7 @@ class Bitt extends Component {
               style={styles.bittDoneButton}
               primary={true}
               label="Done"
+              onTouchTap={this.hideOptions}
             />
           </CardText>
         </Card>

@@ -10,8 +10,14 @@ export function auth(email, password) {
 export function saveUser(user) {
   return ref.child(`users/${user.uid}/info`)
     .set({
-      email: user.email,
-      uid: user.uid
+      displayName: localStorage.getItem(`${user.email}-display-name`),
+      email:       user.email,
+      uid:         user.uid
+    })
+    .then(() => {
+      user.updateProfile({
+        displayName: localStorage.getItem(`${user.email}-display-name`)
+      })
     })
     .then(() => user)
 }
@@ -26,6 +32,9 @@ export function logout() {
 
 export function login(email, password) {
   return firebaseAuth().signInWithEmailAndPassword(email, password)
+    .then(() => {
+      localStorage.setItem(`${email}-display-name`, getCurrentUser().displayName)
+    })
 }
 
 export function resetPassword(email) {

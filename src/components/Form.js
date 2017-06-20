@@ -52,8 +52,7 @@ class Form extends Component {
       formContainer: {
         cursor: 'pointer',
         display: 'table',
-        width: '100vw',
-        textAlign: 'center'
+        width: '100vw'
       },
 
       materialForm: {
@@ -86,7 +85,7 @@ class Form extends Component {
 
       loginMessageContainer: {
         float: 'left',
-        width: '280px',
+        width: '280px'
       },
 
       loginMessageText: {
