@@ -17,6 +17,7 @@ class Signup extends Component {
     super()
 
     this.state = {
+      loading:     false,
       signupError: null,
       displayName: '',
       email:       '',
@@ -50,6 +51,10 @@ class Signup extends Component {
   createUser(e) {
     e.preventDefault()
 
+    this.setState({
+      loading: true
+    })
+
     auth(this.state.email, this.state.password)
       .catch(e => this.setState(setErrorMsg(e)))
 
@@ -71,6 +76,7 @@ class Signup extends Component {
         style={styles.signupContainer}
       >
         <Form
+          loading={this.state.loading}
           title="Sign Up"
           buttonLabel="Create Account"
           name={this.state.displayName}

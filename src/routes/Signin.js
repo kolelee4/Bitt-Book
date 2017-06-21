@@ -15,6 +15,7 @@ class Signin extends Component {
     super()
 
     this.state = {
+      loading:      false,
       loginMessage: null,
       email:        '',
       password:     ''
@@ -40,6 +41,10 @@ class Signin extends Component {
 
   signin(e) {
     e.preventDefault()
+
+    this.setState({
+      loading: true
+    })
 
     login(this.state.email, this.state.password)
       .catch((error) => {
@@ -68,6 +73,7 @@ class Signin extends Component {
         style={styles.signinContainer}
       >
         <Form
+          loading={this.state.loading}
           title="Sign In"
           buttonLabel="Sign In"
           noAccountMessage="Don't have an account?"

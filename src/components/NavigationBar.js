@@ -41,6 +41,11 @@ class  NavigationBar extends Component {
 
       accountSettings: {
         margin: '-2px 8px 0 0'
+      },
+
+      avatarTextContainer: {
+        fontWeight: '500',
+        color: '#146D8F'
       }
     }
 
@@ -109,7 +114,8 @@ class  NavigationBar extends Component {
                       backgroundColor="white"
                     >
                       <div
-                        style={{color: '#146D8F'}}
+                        id="avatar-text-container"
+                        style={styles.avatarTextContainer}
                       >
                         {
                           this.state.displayName === (undefined || null) ?

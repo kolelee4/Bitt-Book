@@ -94,6 +94,10 @@ class Template extends Component {
     return this.state.loading === true ? (
       <RouteContainer>
         <Layout>
+          <NavigationBar
+            authenticated={this.state.authenticated}
+          />
+
           <div
             id="circular-progress-container"
             style={styles.circularProgressContainer}

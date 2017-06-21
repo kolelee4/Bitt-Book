@@ -145,7 +145,8 @@ class BittBooks extends Component {
 
       circularProgressContainerBittBooks: {
         width: '80px',
-        margin: '42vh auto 0 auto'
+        margin: '42vh auto 0 auto',
+        padding: '0 7.6vw 0 0'
       },
 
       noBittBooksMessage: {

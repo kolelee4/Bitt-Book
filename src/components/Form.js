@@ -3,11 +3,13 @@ import {NavLink} from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 // Components
+import LinearProgress from 'material-ui/LinearProgress'
 import {Card, CardHeader} from 'material-ui/Card'
 import TextField from 'material-ui/TextField'
 import RaisedButton from './RaisedButton'
 
 const propTypes = {
+  loading:              PropTypes.bool,
   title:                PropTypes.string.isRequired,
   name:                 PropTypes.string,
   email:                PropTypes.string.isRequired,
@@ -106,10 +108,15 @@ class Form extends Component {
         cursor: 'pointer',
         float: 'right',
         margin: '80px 40px 0 0'
+      },
+
+      signupProgress: {
+        margin: '0 0 -8px 0'
       }
     }
 
     const {
+      loading,
       title,
       name,
       email,
@@ -197,6 +204,16 @@ class Form extends Component {
             onMouseEnter={this.raiseForm}
             onMouseLeave={this.lowerForm}
           >
+            {
+              loading ? (
+                <LinearProgress
+                  id="signup-progress"
+                  style={styles.signupProgress}
+                  mode="indeterminate"
+                />
+              ) : null
+            }
+
             <CardHeader
               id="form-header"
               style={styles.formHeader}
