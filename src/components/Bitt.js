@@ -137,8 +137,7 @@ class Bitt extends Component {
     const styles = {
       bittCard: {
         overflow: 'hidden',
-        margin: '0 4vw 20px 4vw',
-        transitionDuration: '200ms'
+        margin: '0 4vw 20px 4vw'
       },
 
       bittOptionsContainer: {
@@ -184,7 +183,7 @@ class Bitt extends Component {
       bittTextarea: {
         resize: 'none',
         width: '95%',
-        minHeight: '29vh',
+        minHeight: '24vh',
         outline: 'none',
         border: 'none',
         padding: '20px 20px 0 20px',

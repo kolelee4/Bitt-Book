@@ -104,10 +104,10 @@ class BittBook extends Component {
   toggleBitts() {
     this.state.width === '164px' ?
     this.setState({
-      zDepth: 0,
+      zDepth: 3,
       position: 'absolute',
       width: '85vw',
-      height: '85vh',
+      height: '84vh',
       bittBookTitleContainerVisibility: 'hidden',
       background: '#e0e0e0'
     }) :
@@ -161,7 +161,7 @@ class BittBook extends Component {
         height: this.state.height,
         margin: '0 20px 40px 0',
         background: this.state.background,
-        transition: '100ms'
+        transition: '200ms'
       },
 
       bittBookHeader: {
@@ -175,7 +175,7 @@ class BittBook extends Component {
         margin: '20px 0 0 0',
         border: 'none',
         borderRadius: '3px',
-        transition: '100ms'
+        transition: '200ms'
       },
 
       bittBookTitleInput: {

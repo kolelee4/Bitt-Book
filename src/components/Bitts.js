@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import Moment from '../helpers/react-moment'
 
 // Components
-import {Card, CardHeader} from 'material-ui/Card'
+import {Card, CardHeader, CardActions} from 'material-ui/Card'
 import IconButton from 'material-ui/IconButton'
 import NavigationClose from 'material-ui/svg-icons/navigation/close'
 import ActionDelete from 'material-ui/svg-icons/action/delete'
@@ -34,13 +34,9 @@ class Bitts extends Component {
     this.snackBarHandleRequestClose = this.snackBarHandleRequestClose.bind(this)
 
     this.state = {
-      bittsCardHeight:                    '85vh',
-      bittsCardMargins:                   '20px 7.6vw 0 7.6vw',
-      bittsCardBackground:                'white',
-      bittBookTitleContainerBittsDisplay: 'block',
-      bittsHeaderDisplay:                 'block',
-      bittCardContainerDisplay:           'block',
-      snackbarOpen:                       false
+      bittCardContainerHeight: '54vh',
+      bittsCardMargins:        '20px 7.6vw 0 7.6vw',
+      snackbarOpen:            false
     }
   }
 
@@ -129,12 +125,8 @@ class Bitts extends Component {
 
   animateClosing() {
     this.setState({
-      bittsCardHeight: '164px',
-      bittsCardMargins: '20px 80vw 0 80vw',
-      bittsCardBackground: 'transparent',
-      bittBookTitleContainerBittsDisplay: 'none',
-      bittsHeaderDisplay: 'none',
-      bittCardContainerDisplay: 'none'
+      bittCardContainerHeight: '164px',
+      bittsCardMargins: '20px 50vw 0 50vw'
     })
 
     this.props.toggleBitts()
@@ -152,6 +144,7 @@ class Bitts extends Component {
         zIndex: '999',
         position: 'absolute',
         maxHeight: '100vh',
+        overflow: 'hidden',
         top: '0',
         right: '0',
         bottom: '0',
@@ -162,21 +155,18 @@ class Bitts extends Component {
 
       bittsContainer: {
         zIndex: '1000',
-        height: '90vh',
         overflow: 'hidden',
-        margin: '64px 0 0 0'
+        margin: '64px 0 0 0',
+        padding: '0 0 20px 0'
       },
 
       bittsCard: {
-        height: this.state.bittsCardHeight,
         margin: this.state.bittsCardMargins,
-        backgroundColor: this.state.bittsCardBackground,
         transition: '300ms'
       },
 
       bittsHeader: {
-        display: this.state.bittsHeaderDisplay,
-        boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.13)',
+        boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)',
         background: 'white'
       },
 
@@ -192,10 +182,6 @@ class Bitts extends Component {
         top: '72px',
         right: '0',
         float: 'right'
-      },
-
-      bittBookTitleContainerBitts: {
-        display: this.state.bittBookTitleContainerBittsDisplay
       },
 
       bittBookTitleInputBitts: {
@@ -214,24 +200,21 @@ class Bitts extends Component {
       },
 
       bittCardContainer: {
-        display: this.state.bittCardContainerDisplay,
-        overflow: 'auto',
-        margin: 'auto',
-        border: '1px solid #e0e0e0',
+        overflowY: 'auto',
+        height: this.state.bittCardContainerHeight,
+        margin: '0 -1px 0 0', // fixes spacing from scrollbar
         padding: '20px 0 0 0',
-        width: '85%',
-        height: '58vh',
-        background: '#e0e0e0'
+        background: '#e0e0e0',
+        transition: '300ms'
+      },
+
+      bittsCardActions: {
+        height: '40px',
+        boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)'
       },
 
       FABContainer: {
-        zIndex: '999',
-        position: 'absolute',
-        right: '0',
-        bottom: '0',
-        width: '40px',
-        height: '40px',
-        margin: '0 9vw 40px 0'
+        float: 'right'
       },
     }
 
@@ -255,7 +238,7 @@ class Bitts extends Component {
           <Card
             id="bitts-card"
             style={styles.bittsCard}
-            zDepth={3}
+            zDepth={0}
             onTouchTap={e => e.stopPropagation()}
           >
             <CardHeader
@@ -264,7 +247,6 @@ class Bitts extends Component {
               title={
                 <div
                   id="bitt-book-title-container-bitts"
-                  style={styles.bittBookTitleContainerBitts}
                 >
                   <input
                     id="bitt-book-title-input-bitts"
@@ -330,20 +312,6 @@ class Bitts extends Component {
             </CardHeader>
 
             <div
-              id="fab-container-bitts"
-              style={styles.FABContainer}
-              className="tooltip-bitt"
-              data-tooltip="Add Bitt"
-            >
-              <FloatingActionButton
-                mini={true}
-                onTouchTap={(e) => this.createBitt(e)}
-              >
-                <ContentAdd/>
-              </FloatingActionButton>
-            </div>
-
-            <div
               id="bitt-card-container"
               style={styles.bittCardContainer}
             >
@@ -362,6 +330,25 @@ class Bitts extends Component {
                   )
               }
             </div>
+
+            <CardActions
+              id="bitts-card-actions"
+              style={styles.bittsCardActions}
+            >
+              <div
+                id="fab-container-bitts"
+                style={styles.FABContainer}
+                className="tooltip-bitt"
+                data-tooltip="Add Bitt"
+              >
+                <FloatingActionButton
+                  mini={true}
+                  onTouchTap={(e) => this.createBitt(e)}
+                >
+                  <ContentAdd/>
+                </FloatingActionButton>
+              </div>
+            </CardActions>
           </Card>
 
           <ItemDeletedAlert

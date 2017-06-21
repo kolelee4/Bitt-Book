@@ -76,7 +76,7 @@ class BittBooks extends Component {
     }
 
     const bitt = {
-      title:     'First Bitt',
+      title:     'Default Bitt',
       createdAt: timestamp,
       updatedAt: timestamp,
       body:      'Click here to edit...'
@@ -168,8 +168,17 @@ class BittBooks extends Component {
           style={styles.noBittBooksMessage}
         >
           {
-            displayName === undefined ? null :
-            'Hello, ' + getFirstName(displayName) + '. ' + noBittBooksMessage
+            displayName === undefined ? (
+              <div
+                id="circular-progress-container-bitt-books"
+                style={styles.circularProgressContainerBittBooks}
+              >
+                <CircularProgress
+                  size={80}
+                  thickness={6}
+                />
+              </div>
+            ) : 'Hello, ' + getFirstName(displayName) + '. ' + noBittBooksMessage
           }
         </h4>
       )
@@ -208,17 +217,7 @@ class BittBooks extends Component {
       )
     }
 
-    return this.state.loading ? (
-      <div
-        id="circular-progress-container-bitt-books"
-        style={styles.circularProgressContainerBittBooks}
-      >
-        <CircularProgress
-          size={80}
-          thickness={6}
-        />
-      </div>
-    ) : (
+    return (
       <div
         id="bitt-books-route"
         style={styles.bittBooksRoute}
