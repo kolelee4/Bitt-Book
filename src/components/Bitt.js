@@ -154,7 +154,7 @@ class Bitt extends Component {
       },
 
       bittTitleInput: {
-        width: '67vw',
+        width: '59vw',
         overflow: 'hidden',
         whiteSpace: 'nowrap',
         outline: 'none',
@@ -165,11 +165,11 @@ class Bitt extends Component {
         fontSize: '16px',
         fontWeight: 'bold',
         color: '#146D8F',
-        textOverflow: 'ellipsis',
+        textOverflow: 'ellipsis'
       },
 
       bittBodyPreview: {
-        width: '67vw',
+        width: '59vw',
         overflow: 'hidden',
         whiteSpace: 'nowrap',
         textOverflow: 'ellipsis',

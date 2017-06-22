@@ -3,8 +3,9 @@ import {NavLink} from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 // Components
+import Radium from 'radium'
 import LinearProgress from 'material-ui/LinearProgress'
-import {Card, CardHeader} from 'material-ui/Card'
+import {Card, CardHeader, CardActions} from 'material-ui/Card'
 import TextField from 'material-ui/TextField'
 import RaisedButton from './RaisedButton'
 
@@ -35,6 +36,7 @@ class Form extends Component {
 
     this.raiseForm = this.raiseForm.bind(this)
     this.lowerForm = this.lowerForm.bind(this)
+    this.submit = this.submit.bind(this)
   }
 
   raiseForm() {
@@ -49,30 +51,35 @@ class Form extends Component {
     })
   }
 
+  submit(e) {
+    this.props.submit(e)
+  }
+
   render() {
     const styles = {
       formContainer: {
-        cursor: 'pointer',
-        display: 'table',
-        width: '100vw'
+        height: '88vh',
+        overflow: 'auto',
+        transition: '100ms'
       },
 
       materialForm: {
-        display: 'table-cell',
-        width: '100vw',
-        height: '90.2vh',
-        verticalAlign: 'middle'
+        width: '450px',
+        height: '500px',
+        margin: '60px auto 0 auto',
+
+        '@media (max-width: 599px)': {
+          width: '100%'
+        }
       },
 
       materialFormCard: {
-        width: '450px',
-        height: '500px',
-        margin: '0 auto 0 auto'
+        cursor: 'pointer',
+        height: '100%'
       },
 
       formHeader: {
-        float: 'left',
-        margin: '0 0 0 28px'
+        margin: '0 0 0 20px'
       },
 
       textFieldContainer: {
@@ -80,14 +87,15 @@ class Form extends Component {
         margin: '0 auto 0 auto'
       },
 
-      formMessageContainer: {
-        float: 'left',
-        margin: '80px 0 0 40px'
+      formActions: {
+        display: 'inline-block',
+        width: '100%',
+        padding: '80px 0 0 0'
       },
 
-      loginMessageContainer: {
+      formMessageContainer: {
         float: 'left',
-        width: '280px'
+        margin: '0 0 0 44px'
       },
 
       loginMessageText: {
@@ -107,11 +115,11 @@ class Form extends Component {
       formSubmitButton: {
         cursor: 'pointer',
         float: 'right',
-        margin: '80px 40px 0 0'
+        margin: '0 42px 0 0'
       },
 
       signupProgress: {
-        margin: '0 0 -8px 0'
+        margin: '0 0 -4px 0'
       }
     }
 
@@ -139,18 +147,12 @@ class Form extends Component {
         <div
           id="form-message"
         >
-          <div
-            id="login-message-container"
-            style={styles.loginMessageContainer}
+          <p
+            style={styles.loginMessageText}
           >
-            <p
-              style={styles.loginMessageText}
-            >
-              {loginMessage}
-            </p>
-          </div>
+            {loginMessage}
+          </p>
 
-          <br/>
           <br/>
 
           <a
@@ -194,11 +196,12 @@ class Form extends Component {
         style={styles.formContainer}
       >
         <form
+          id="material-form"
           style={styles.materialForm}
           onSubmit={submit}
         >
           <Card
-            id="material-form"
+            id="material-form-card"
             style={styles.materialFormCard}
             zDepth={this.state.zDepth}
             onMouseEnter={this.raiseForm}
@@ -270,20 +273,25 @@ class Form extends Component {
               />
             </div>
 
-            <div
-              id="form-message-container"
-              style={styles.formMessageContainer}
+            <CardActions
+              id="form-actions"
+              style={styles.formActions}
             >
-              {formMessageState}
-            </div>
+              <div
+                id="form-message-container"
+                style={styles.formMessageContainer}
+              >
+                {formMessageState}
+              </div>
 
-            <RaisedButton
-              id="form-submit-button"
-              style={styles.formSubmitButton}
-              primary={true}
-              label={buttonLabel}
-              onTouchTap={submit}
-            />
+              <RaisedButton
+                id="form-submit-button"
+                style={styles.formSubmitButton}
+                primary={true}
+                label={buttonLabel}
+                onTouchTap={(e) => this.submit(e)}
+              />
+            </CardActions>
           </Card>
         </form>
       </div>
@@ -293,4 +301,4 @@ class Form extends Component {
 
 Form.propTypes = propTypes
 
-export default Form
+export default Radium(Form)

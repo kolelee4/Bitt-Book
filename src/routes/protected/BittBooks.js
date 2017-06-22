@@ -9,6 +9,7 @@ import {getCurrentUser} from '../../helpers/auth'
 import {getFirstName} from '../../helpers/string-manipulator'
 
 // Components
+import Radium from 'radium'
 import CircularProgress from 'material-ui/CircularProgress'
 import FABContainer from '../../components/FABContainer'
 import BittBook from '../../components/BittBook'
@@ -140,13 +141,17 @@ class BittBooks extends Component {
       bittBooksRoute: {
         height: '90.5vh',
         overflow: 'auto',
-        padding: '20px 0 0 7.6vw'
+        padding: '20px 0 0 15vw',
+
+        '@media (max-width: 599px)': {
+          padding: '20px 0 0 108px'
+        }
       },
 
       circularProgressContainerBittBooks: {
         width: '80px',
         margin: '42vh auto 0 auto',
-        padding: '0 7.6vw 0 0'
+        padding: '0 15vw 0 0'
       },
 
       noBittBooksMessage: {
@@ -242,4 +247,4 @@ BittBooks.defaultProps = defaultProps
 
 BittBooks.propTypes = propTypes
 
-export default BittBooks
+export default Radium(BittBooks)

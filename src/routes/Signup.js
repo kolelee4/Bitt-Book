@@ -51,12 +51,18 @@ class Signup extends Component {
   createUser(e) {
     e.preventDefault()
 
+    auth(this.state.email, this.state.password)
+      .catch((e) => {
+        this.setState(setErrorMsg(e))
+
+        this.setState({
+          loading: false
+        })
+      })
+
     this.setState({
       loading: true
     })
-
-    auth(this.state.email, this.state.password)
-      .catch(e => this.setState(setErrorMsg(e)))
 
     localStorage.setItem(`${this.state.email}-display-name`, this.state.displayName)
   }

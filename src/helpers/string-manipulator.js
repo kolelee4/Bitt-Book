@@ -3,5 +3,13 @@ export const nameToInitials = (displayName) => {
 }
 
 export const getFirstName = (displayName) => {
-  return displayName.split(' ').slice(0, -1).join(' ')
+  const fullName = displayName
+
+  const names = fullName.split(' ')
+
+  if (names.length > 1) {
+    return names.slice(0, -1).join(' ')
+  } else {
+    return fullName
+  }
 }

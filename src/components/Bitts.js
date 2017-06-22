@@ -7,7 +7,7 @@ import Moment from '../helpers/react-moment'
 // Components
 import {Card, CardHeader, CardActions} from 'material-ui/Card'
 import IconButton from 'material-ui/IconButton'
-import NavigationClose from 'material-ui/svg-icons/navigation/close'
+// import NavigationClose from 'material-ui/svg-icons/navigation/close'
 import ActionDelete from 'material-ui/svg-icons/action/delete'
 import FloatingActionButton from './FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
@@ -35,7 +35,7 @@ class Bitts extends Component {
 
     this.state = {
       bittCardContainerHeight: '54vh',
-      bittsCardMargins:        '20px 7.6vw 0 7.6vw',
+      bittsCardMargins:        '20px 15vw 0 15vw',
       snackbarOpen:            false
     }
   }
@@ -125,7 +125,7 @@ class Bitts extends Component {
 
   animateClosing() {
     this.setState({
-      bittCardContainerHeight: '164px',
+      bittCardContainerHeight: '0',
       bittsCardMargins: '20px 50vw 0 50vw'
     })
 
@@ -185,7 +185,7 @@ class Bitts extends Component {
       },
 
       bittBookTitleInputBitts: {
-        width: '80vw',
+        width: '67vw',
         overflow: 'hidden',
         whiteSpace: 'nowrap',
         margin: '20px 0 0 0',
@@ -202,15 +202,16 @@ class Bitts extends Component {
       bittCardContainer: {
         overflowY: 'auto',
         height: this.state.bittCardContainerHeight,
-        margin: '0 -1px 0 0', // fixes spacing from scrollbar
+        boxShadow: '0 9px 0px 0px white, 0 -9px 0px 0px white, 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)',
+        borderBottom: '1px solid #e0e0e0',
         padding: '20px 0 0 0',
         background: '#e0e0e0',
         transition: '300ms'
       },
 
       bittsCardActions: {
-        height: '40px',
-        boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)'
+        height: '44px',
+        boxShadow: '0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)'
       },
 
       FABContainer: {
@@ -233,7 +234,7 @@ class Bitts extends Component {
         <div
           id="bitts-container"
           style={styles.bittsContainer}
-          onTouchTap={e => e.stopPropagation()}
+          onTouchTap={this.animateClosing}
         >
           <Card
             id="bitts-card"
@@ -244,6 +245,7 @@ class Bitts extends Component {
             <CardHeader
               id="bitts-card-header"
               style={styles.bittsHeader}
+              onTouchTap={this.animateClosing}
               title={
                 <div
                   id="bitt-book-title-container-bitts"
@@ -264,7 +266,7 @@ class Bitts extends Component {
               }
               subtitle={
                 <div
-                  id="bitt-book-create-at-bitts"
+                  id="subtitle-container"
                 >
                   <Moment
                     format="MM/DD/YY"
@@ -272,30 +274,26 @@ class Bitts extends Component {
                     {details.createdAt}
                   </Moment>
 
-                  <div
-                    id="bitt-count-bitts"
-                  >
-                    <div>
-                      {
-                        bittAmount === 1 ? bittAmount + ' Bitt' : bittAmount + ' Bitts'
-                      }
-                    </div>
-                  </div>
+                  <br/>
+
+                  {bittAmount === 1 ? bittAmount + ' Bitt' : bittAmount + ' Bitts'}
                 </div>
               }
             >
-              <div
-                id="navigation-close-bitts-container"
-                style={styles.navigationCloseBittsContainer}
-              >
-                <IconButton>
-                  <NavigationClose
-                    color="#757575"
-                    hoverColor="#424242"
-                    onTouchTap={this.animateClosing}
-                  />
-                </IconButton>
-              </div>
+              {/*
+                <div
+                  id="navigation-close-bitts-container"
+                  style={styles.navigationCloseBittsContainer}
+                >
+                  <IconButton>
+                    <NavigationClose
+                      color="#757575"
+                      hoverColor="#424242"
+                      onTouchTap={this.animateClosing}
+                    />
+                  </IconButton>
+                </div>
+              */}
 
               <div
                 id="bitts-options-container"

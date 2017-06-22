@@ -9,6 +9,7 @@
     "moment": "^2.18.1",
     "moment-timezone": "^0.5.13",
     "prop-types": "^15.5.10",
+    "radium": "^0.19.1",
     "re-base": "^3.0.0",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",

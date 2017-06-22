@@ -4,14 +4,12 @@ import {
   Route
 } from 'react-router-dom'
 
-// Material Design Theme
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import MuiTheme from '../style/custom-material-ui/MuiTheme'
-
 // Containers
 import Template from '../containers/Template'
 
 // Components
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import MuiTheme from '../style/custom-material-ui/MuiTheme'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 
 injectTapEventPlugin()

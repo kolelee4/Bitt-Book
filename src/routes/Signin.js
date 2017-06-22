@@ -42,14 +42,18 @@ class Signin extends Component {
   signin(e) {
     e.preventDefault()
 
-    this.setState({
-      loading: true
-    })
-
     login(this.state.email, this.state.password)
       .catch((error) => {
         this.setState(setErrorMsg('Invalid username/password combination.'))
+
+        this.setState({
+          loading: false
+        })
       })
+
+    this.setState({
+      loading: true
+    })
   }
 
   resetPassword() {

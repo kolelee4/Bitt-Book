@@ -148,17 +148,13 @@ class BittBook extends Component {
         fontWeight: '500'
       },
 
-      bittBook: {
-        bittBookCardPosition: this.state.position
-      },
-
       bittBookCard: {
         cursor: 'pointer',
         position: this.state.position,
         float: 'left',
-        overflow: 'hidden',
         width: this.state.width,
         height: this.state.height,
+        overflow: 'hidden',
         margin: '0 20px 40px 0',
         background: this.state.background,
         transition: '200ms'
@@ -188,7 +184,7 @@ class BittBook extends Component {
         fontSize: '16px',
         fontWeight: 'bold',
         color: '#146D8F',
-        textOverflow: 'ellipsis',
+        textOverflow: 'ellipsis'
       },
 
       bittBookSubtitleContainer: {
@@ -236,13 +232,9 @@ class BittBook extends Component {
               {details.createdAt}
             </Moment>
 
-            <div
-              id="bitt-book-count"
-            >
-              {
-                bittAmount === 1 ? bittAmount + ' Bitt' : bittAmount + ' Bitts'
-              }
-            </div>
+            <br/>
+
+            {bittAmount === 1 ? bittAmount + ' Bitt' : bittAmount + ' Bitts'}
           </div>
 
           <div
@@ -402,7 +394,6 @@ class BittBook extends Component {
     ) : (
       <div
         id="bitt-book"
-        style={styles.bittBook}
         onTouchTap={this.toggleBitts}
       >
         {bittBookState}
