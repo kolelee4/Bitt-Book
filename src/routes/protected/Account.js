@@ -1,35 +1,51 @@
 import React, {Component} from 'react'
-import PropTypes from 'prop-types'
 
-const defaultProps = {
-  title: 'Account'
-}
+// Database
+import {base} from '../../config/base'
 
-const propTypes = {
-  title: PropTypes.string.isRequired
-}
+// Helpers
+import {getCurrentUser} from '../../helpers/auth'
+
+// Components
+import AccountCard from '../../components/AccountCard'
 
 class Account extends Component {
+  constructor() {
+    super()
+
+    this.state = {
+      userInfo: {}
+    }
+  }
+
+  componentWillMount() {
+    const user = getCurrentUser()
+
+    this.ref = base.syncState(`users/${user.uid}/info`, {
+      context: this,
+      state:   'userInfo'
+    })
+  }
+
   render() {
     const styles = {
-      accountContainer: {
-        margin: '0 20px 0 20px'
+      accountRoute: {
+        //
       }
     }
 
     return(
       <div
-        id="account-container"
-        style={styles.accountContainer}
+        id="account-route"
+        style={styles.accountRoute}
       >
-        <h3>{this.props.title}</h3>
+        <AccountCard
+          displayName={this.state.userInfo.displayName}
+          email={this.state.userInfo.email}
+        />
       </div>
     )
   }
 }
-
-Account.defaultProps = defaultProps
-
-Account.propTypes = propTypes
 
 export default Account

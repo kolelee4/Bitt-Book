@@ -44,10 +44,10 @@ class Home extends Component {
           style={styles.sloganContainer}
         >
           <img
-            src="favicon.ico"
+            src="icons/bitt-book-home.png"
             alt="Bitt Book Logo"
-            height="200"
-            width="200"
+            height="240"
+            width="240"
           />
 
           <h1

@@ -5,25 +5,25 @@ import PropTypes from 'prop-types'
 // Components
 import Radium from 'radium'
 import LinearProgress from 'material-ui/LinearProgress'
-import {Card, CardHeader, CardActions} from 'material-ui/Card'
+import {Card, CardHeader, CardText, CardActions} from 'material-ui/Card'
 import TextField from 'material-ui/TextField'
 import RaisedButton from './RaisedButton'
 
 const propTypes = {
   loading:              PropTypes.bool,
-  title:                PropTypes.string.isRequired,
+  title:                PropTypes.string,
   name:                 PropTypes.string,
-  email:                PropTypes.string.isRequired,
-  password:             PropTypes.string.isRequired,
-  passwordHint:         PropTypes.string.isRequired,
+  email:                PropTypes.string,
+  password:             PropTypes.string,
+  passwordHint:         PropTypes.string,
   handleChangeName:     PropTypes.func,
-  handleChangeEmail:    PropTypes.func.isRequired,
-  handleChangePassword: PropTypes.func.isRequired,
+  handleChangeEmail:    PropTypes.func,
+  handleChangePassword: PropTypes.func,
   noAccountMessage:     PropTypes.string,
   signupError:          PropTypes.string,
   loginMessage:         PropTypes.string,
-  buttonLabel:          PropTypes.string.isRequired,
-  submit:               PropTypes.func.isRequired
+  buttonLabel:          PropTypes.string,
+  submit:               PropTypes.func
 }
 
 class Form extends Component {
@@ -79,12 +79,11 @@ class Form extends Component {
       },
 
       formHeader: {
-        margin: '0 0 0 20px'
+        margin: '0 20px 0 20px'
       },
 
       textFieldContainer: {
-        width: '80%',
-        margin: '0 auto 0 auto'
+        margin: '0 28px 0 28px'
       },
 
       formActions: {
@@ -227,51 +226,53 @@ class Form extends Component {
               }
             />
 
-            <div
-              id="text-field-container"
-              style={styles.textFieldContainer}
-            >
-              {
-                title === 'Sign In' ? null :
-                (
-                  <TextField
-                    fullWidth={true}
-                    hintText="Enter your name..."
-                    floatingLabelText="Name"
-                    value={name}
-                    onChange={handleChangeName}
-                  />
-                )
-              }
-
-              <TextField
-                fullWidth={true}
-                hintText="Enter your email..."
-                floatingLabelText="Email"
-                errorText={
-                  signupError === 'The email address is badly formatted.' ?
-                  signupError :
-                  signupError === 'The email address is already in use by another account.' ?
-                  signupError :
-                  null
+            <CardText>
+              <div
+                id="text-field-container"
+                style={styles.textFieldContainer}
+              >
+                {
+                  title === 'Sign In' ? null :
+                  (
+                    <TextField
+                      fullWidth={true}
+                      hintText="Enter your name..."
+                      floatingLabelText="Name"
+                      value={name}
+                      onChange={handleChangeName}
+                    />
+                  )
                 }
-                value={email}
-                onChange={handleChangeEmail}
-              />
 
-              <TextField
-                fullWidth={true}
-                hintText={passwordHint}
-                type="password"
-                floatingLabelText="Password"
-                errorText={
-                  signupError === 'The password must be 6 characters long or more.' ?
-                  signupError : null
-                }
-                value={password}
-                onChange={handleChangePassword}
-              />
-            </div>
+                <TextField
+                  fullWidth={true}
+                  hintText="Enter your email..."
+                  floatingLabelText="Email"
+                  errorText={
+                    signupError === 'The email address is badly formatted.' ?
+                    signupError :
+                    signupError === 'The email address is already in use by another account.' ?
+                    signupError :
+                    null
+                  }
+                  value={email}
+                  onChange={handleChangeEmail}
+                />
+
+                <TextField
+                  fullWidth={true}
+                  hintText={passwordHint}
+                  type="password"
+                  floatingLabelText="Password"
+                  errorText={
+                    signupError === 'The password must be 6 characters long or more.' ?
+                    signupError : null
+                  }
+                  value={password}
+                  onChange={handleChangePassword}
+                />
+              </div>
+            </CardText>
 
             <CardActions
               id="form-actions"

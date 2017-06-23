@@ -183,7 +183,7 @@ class Bitt extends Component {
       bittTextarea: {
         resize: 'none',
         width: '95%',
-        minHeight: '24vh',
+        minHeight: '24.5vh',
         outline: 'none',
         border: 'none',
         padding: '20px 20px 0 20px',
