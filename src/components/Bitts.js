@@ -25,6 +25,7 @@ class Bitts extends Component {
   constructor(props) {
     super(props)
 
+    this.resize = this.resize.bind(this)
     this.updateBittBook = this.updateBittBook.bind(this)
     this.handleKeyPressUpdateBittBook = this.handleKeyPressUpdateBittBook.bind(this)
     this.createBitt = this.createBitt.bind(this)
@@ -34,10 +35,23 @@ class Bitts extends Component {
     this.snackBarHandleRequestClose = this.snackBarHandleRequestClose.bind(this)
 
     this.state = {
+      viewport:                {},
       bittCardContainerHeight: '54vh',
       bittsCardMargins:        '20px 15vw 0 15vw',
       snackbarOpen:            false
     }
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', this.resize)
+  }
+
+  resize() {
+    this.setState({
+      viewport: {
+        width: document.documentElement.clientWidth
+      }
+    })
   }
 
   updateBittBook(e, details) {
@@ -138,6 +152,10 @@ class Bitts extends Component {
     })
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.resize)
+  }
+
   render() {
     const styles = {
       bittsOutletCover: {
@@ -162,6 +180,12 @@ class Bitts extends Component {
 
       bittsCard: {
         margin: this.state.bittsCardMargins,
+        transition: '300ms'
+      },
+
+      bittsCardSmall: {
+        width: '100%',
+        margin: '20px 0 0 0',
         transition: '300ms'
       },
 
@@ -238,7 +262,10 @@ class Bitts extends Component {
         >
           <Card
             id="bitts-card"
-            style={styles.bittsCard}
+            style={
+              (this.state.viewport.width <= 599 || window.innerWidth <= 599) ?
+              styles.bittsCardSmall : styles.bittsCard
+            }
             zDepth={0}
             onTouchTap={e => e.stopPropagation()}
           >

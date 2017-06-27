@@ -144,14 +144,18 @@ class BittBooks extends Component {
         padding: '20px 0 0 15vw',
 
         '@media (max-width: 599px)': {
-          padding: '20px 0 0 108px'
+          padding: '20px 20px 0 20px'
         }
       },
 
       circularProgressContainerBittBooks: {
         width: '80px',
         margin: '42vh auto 0 auto',
-        padding: '0 15vw 0 0'
+        padding: '0 15vw 0 0',
+
+        '@media (max-width: 599px)': {
+          padding: '0'
+        }
       },
 
       noBittBooksMessage: {
@@ -184,7 +188,13 @@ class BittBooks extends Component {
                   thickness={6}
                 />
               </div>
-            ) : 'Hello, ' + getFirstName(displayName) + '. ' + noBittBooksMessage
+            ) : (
+              'Hello, ' +
+              getFirstName(
+                (getCurrentUser().displayName === null) ? displayName :
+                getCurrentUser().displayName
+              ) + '. ' + noBittBooksMessage
+            )
           }
         </h4>
       )

@@ -6,12 +6,6 @@ import {auth} from '../helpers/auth'
 // Components
 import Form from '../components/Form'
 
-const setErrorMsg = (error) => {
-  return {
-    signupError: error.message
-  }
-}
-
 class Signup extends Component {
   constructor() {
     super()
@@ -24,7 +18,7 @@ class Signup extends Component {
       password:    ''
     }
 
-    this.handleChangeName = this.handleChangeDisplayName.bind(this)
+    this.handleChangeDisplayName = this.handleChangeDisplayName.bind(this)
     this.handleChangeEmail = this.handleChangeEmail.bind(this)
     this.handleChangePassword = this.handleChangePassword.bind(this)
     this.createUser = this.createUser.bind(this)
@@ -53,7 +47,9 @@ class Signup extends Component {
 
     auth(this.state.email, this.state.password)
       .catch((e) => {
-        this.setState(setErrorMsg(e))
+        this.setState({
+          signupError: e.message
+        })
 
         this.setState({
           loading: false
@@ -85,12 +81,17 @@ class Signup extends Component {
           loading={this.state.loading}
           title="Sign Up"
           buttonLabel="Create Account"
+          nameFloatingLabelText="Name"
+          nameHintText="Enter your name..."
           name={this.state.displayName}
+          emailFloatingLabelText="Email"
+          emailHintText="Enter your email..."
           email={this.state.email}
+          passwordFloatingLabelText="Password"
+          passwordHintText="Create a password..."
           password={this.state.password}
-          passwordHint="Create a password..."
           signupError={this.state.signupError}
-          handleChangeName={(event) => this.handleChangeDisplayName(event)}
+          handleChangeDisplayName={(event) => this.handleChangeDisplayName(event)}
           handleChangeEmail={(event) => this.handleChangeEmail(event)}
           handleChangePassword={(event) => this.handleChangePassword(event)}
           submit={(e) => this.createUser(e)}

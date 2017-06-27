@@ -26,6 +26,7 @@ class BittBook extends Component {
 
     this.state = {
       loading:                          true,
+      viewport:                         {},
       isShowingBitts:                   false,
       isShowingOptions:                 false,
       zDepth:                           1,
@@ -36,6 +37,7 @@ class BittBook extends Component {
       background:                       'white'
     }
 
+    this.resize = this.resize.bind(this)
     this.updateBittBook = this.updateBittBook.bind(this)
     this.handleKeyPressUpdateBittBook = this.handleKeyPressUpdateBittBook.bind(this)
     this.showOptions = this.showOptions.bind(this)
@@ -47,6 +49,16 @@ class BittBook extends Component {
   componentDidMount() {
     this.setState({
       loading: false
+    })
+
+    window.addEventListener('resize', this.resize)
+  }
+
+  resize() {
+    this.setState({
+      viewport: {
+        width: document.documentElement.clientWidth
+      }
     })
   }
 
@@ -136,6 +148,10 @@ class BittBook extends Component {
     this.props.updateBittBook(updatedBittBook)
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.resize)
+  }
+
   render() {
     const styles = {
       circularProgressContainer: {
@@ -156,6 +172,17 @@ class BittBook extends Component {
         height: this.state.height,
         overflow: 'hidden',
         margin: '0 20px 40px 0',
+        background: this.state.background,
+        transition: '200ms'
+      },
+
+      bittBookCardSmall: {
+        cursor: 'pointer',
+        position: 'block',
+        width: this.state.width,
+        height: this.state.height,
+        overflow: 'hidden',
+        margin: '0 auto 20px auto',
         background: this.state.background,
         transition: '200ms'
       },
@@ -282,7 +309,10 @@ class BittBook extends Component {
       bittBookState = (
         <Card
           id="bitt-book-card"
-          style={styles.bittBookCard}
+          style={
+            (this.state.viewport.width <= 599 || window.innerWidth <= 599) ?
+            styles.bittBookCardSmall : styles.bittBookCard
+          }
         >
           <div
             id="circular-progress-container"
@@ -299,7 +329,10 @@ class BittBook extends Component {
       bittBookState = (
         <Card
           id="bitt-book-card"
-          style={styles.bittBookCard}
+          style={
+            (this.state.viewport.width <= 599 || window.innerWidth <= 599) ?
+            styles.bittBookCardSmall : styles.bittBookCard
+          }
         >
           <CardHeader
             id="bitt-book-card-header"
@@ -341,7 +374,10 @@ class BittBook extends Component {
       bittBookState = (
         <Card
           id="bitt-book-card"
-          style={styles.bittBookCard}
+          style={
+            (this.state.viewport.width <= 599 || window.innerWidth <= 599) ?
+            styles.bittBookCardSmall : styles.bittBookCard
+          }
           onMouseEnter={this.showOptions}
           onMouseLeave={this.hideOptions}
           zDepth={this.state.zDepth}

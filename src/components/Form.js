@@ -8,22 +8,29 @@ import LinearProgress from 'material-ui/LinearProgress'
 import {Card, CardHeader, CardText, CardActions} from 'material-ui/Card'
 import TextField from 'material-ui/TextField'
 import RaisedButton from './RaisedButton'
+import FlatButton from 'material-ui/FlatButton'
 
 const propTypes = {
-  loading:              PropTypes.bool,
-  title:                PropTypes.string,
-  name:                 PropTypes.string,
-  email:                PropTypes.string,
-  password:             PropTypes.string,
-  passwordHint:         PropTypes.string,
-  handleChangeName:     PropTypes.func,
-  handleChangeEmail:    PropTypes.func,
-  handleChangePassword: PropTypes.func,
-  noAccountMessage:     PropTypes.string,
-  signupError:          PropTypes.string,
-  loginMessage:         PropTypes.string,
-  buttonLabel:          PropTypes.string,
-  submit:               PropTypes.func
+  loading:                   PropTypes.bool,
+  isAccountCardForm:         PropTypes.bool,
+  title:                     PropTypes.string,
+  nameFloatingLabelText:     PropTypes.string,
+  nameHintText:              PropTypes.string,
+  name:                      PropTypes.string,
+  emailFloatingLabelText:    PropTypes.string,
+  emailHintText:             PropTypes.string,
+  email:                     PropTypes.string,
+  passwordFloatingLabelText: PropTypes.string,
+  passwordHintText:          PropTypes.string,
+  password:                  PropTypes.string,
+  handleChangeDisplayName:   PropTypes.func,
+  handleChangeEmail:         PropTypes.func,
+  handleChangePassword:      PropTypes.func,
+  noAccountMessage:          PropTypes.string,
+  signupError:               PropTypes.string,
+  loginMessage:              PropTypes.string,
+  buttonLabel:               PropTypes.string,
+  submit:                    PropTypes.func
 }
 
 class Form extends Component {
@@ -58,9 +65,8 @@ class Form extends Component {
   render() {
     const styles = {
       formContainer: {
-        height: '88vh',
-        overflow: 'auto',
-        transition: '100ms'
+        height: '90.5vh',
+        overflow: 'auto'
       },
 
       materialForm: {
@@ -117,6 +123,11 @@ class Form extends Component {
         margin: '0 42px 0 0'
       },
 
+      formCancelButton: {
+        cursor: 'pointer',
+        float: 'right'
+      },
+
       signupProgress: {
         margin: '0 0 -4px 0'
       }
@@ -125,18 +136,26 @@ class Form extends Component {
     const {
       loading,
       title,
+      isAccountCardForm,
+      nameFloatingLabelText,
+      nameHintText,
       name,
+      emailFloatingLabelText,
+      emailHintText,
       email,
+      passwordFloatingLabelText,
+      passwordHintText,
       password,
-      passwordHint,
       resetPassword,
-      handleChangeName,
+      handleChangeDisplayName,
       handleChangeEmail,
       handleChangePassword,
       noAccountMessage,
       signupError,
       loginMessage,
+      editInfoError,
       buttonLabel,
+      cancel,
       submit
     } = this.props
 
@@ -236,39 +255,45 @@ class Form extends Component {
                   (
                     <TextField
                       fullWidth={true}
-                      hintText="Enter your name..."
-                      floatingLabelText="Name"
-                      value={name}
-                      onChange={handleChangeName}
+                      floatingLabelText={nameFloatingLabelText}
+                      hintText={nameHintText}
+                      defaultValue={name}
+                      onChange={handleChangeDisplayName}
                     />
                   )
                 }
 
                 <TextField
                   fullWidth={true}
-                  hintText="Enter your email..."
-                  floatingLabelText="Email"
+                  floatingLabelText={emailFloatingLabelText}
+                  hintText={emailHintText}
                   errorText={
                     signupError === 'The email address is badly formatted.' ?
                     signupError :
                     signupError === 'The email address is already in use by another account.' ?
                     signupError :
+                    editInfoError === 'The email address is badly formatted.' ?
+                    editInfoError :
+                    editInfoError === 'The email address is already in use by another account.' ?
+                    editInfoError :
                     null
                   }
-                  value={email}
+                  defaultValue={email}
                   onChange={handleChangeEmail}
                 />
 
                 <TextField
                   fullWidth={true}
-                  hintText={passwordHint}
                   type="password"
-                  floatingLabelText="Password"
+                  floatingLabelText={passwordFloatingLabelText}
+                  hintText={passwordHintText}
                   errorText={
                     signupError === 'The password must be 6 characters long or more.' ?
-                    signupError : null
+                    signupError :
+                    editInfoError === 'Password should be at least 6 characters' ?
+                    editInfoError : null
                   }
-                  value={password}
+                  defaultValue={password}
                   onChange={handleChangePassword}
                 />
               </div>
@@ -292,6 +317,19 @@ class Form extends Component {
                 label={buttonLabel}
                 onTouchTap={(e) => this.submit(e)}
               />
+
+              {
+                isAccountCardForm ? (
+                  <FlatButton
+                    id="form-cancel-button"
+                    style={styles.formCancelButton}
+                    label="Cancel"
+                    onTouchTap={cancel}
+                  />
+                ) : (
+                  null
+                )
+              }
             </CardActions>
           </Card>
         </form>

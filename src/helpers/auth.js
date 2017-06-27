@@ -26,10 +26,6 @@ export function getCurrentUser() {
   return firebase.auth().currentUser
 }
 
-export function logout() {
-  return firebaseAuth().signOut()
-}
-
 export function login(email, password) {
   return firebaseAuth().signInWithEmailAndPassword(email, password)
     .then(() => {
@@ -37,6 +33,47 @@ export function login(email, password) {
     })
 }
 
+export function logout() {
+  return firebaseAuth().signOut()
+}
+
+export function reauthenticate(password) {
+  const user = getCurrentUser()
+
+  const credential = firebaseAuth.EmailAuthProvider.credential(
+    user.email,
+    password
+  )
+
+  return user.reauthenticateWithCredential(credential)
+}
+
+export function saveNewDisplayName(newDisplayNameName) {
+  const user = getCurrentUser()
+
+  return user.updateProfile({
+    displayName: newDisplayNameName
+  })
+}
+
+export function saveNewEmail(newEmail) {
+  const user = getCurrentUser()
+
+  return user.updateEmail(newEmail)
+}
+
 export function resetPassword(email) {
   return firebaseAuth().sendPasswordResetEmail(email)
+}
+
+export function saveNewPassword(newPassword) {
+  const user = getCurrentUser()
+
+  return user.updatePassword(newPassword)
+}
+
+export function deleteAccount() {
+  const user = getCurrentUser()
+
+  return user.delete()
 }

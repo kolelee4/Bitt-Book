@@ -1,39 +1,53 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 
+// Helpers
+import {getCurrentUser} from '../helpers/auth'
+
 // Components
 import Radium from 'radium'
-import {Card, CardHeader, CardText, /* CardActions */} from 'material-ui/Card'
-import Divider from 'material-ui/Divider'
-// import Form from './Form'
-import IconButton from 'material-ui/IconButton'
+import {Card, CardHeader, CardText, CardActions} from 'material-ui/Card'
 import EditorModeEdit from 'material-ui/svg-icons/editor/mode-edit'
+import Divider from 'material-ui/Divider'
+import ReauthenticateDialog from './ReauthenticateDialog'
+import Form from './Form'
+import IconButton from 'material-ui/IconButton'
+import RaisedButton from './RaisedButton'
 
 const defaultProps = {
   title: 'Account'
 }
 
 const propTypes = {
-  title:       PropTypes.string,
-  displayName: PropTypes.string,
-  email:       PropTypes.string
+  title:                   PropTypes.string,
+  isEditing:               PropTypes.bool,
+  toggleIsEditing:         PropTypes.func,
+  handleChangeDisplayName: PropTypes.func,
+  handleChangeEmail:       PropTypes.func,
+  handleChangePassword:    PropTypes.func,
+  deleteAccount:           PropTypes.func
 }
 
 class AccountCard extends Component {
-  constructor(props) {
-    super(props)
+  constructor() {
+    super()
 
     this.state = {
-      zDepth: 1,
-      userInfo: props.userInfo,
-      isEditing: false,
-      newName: '',
-      newEmail: '',
-      newPassword: ''
+      loading:                    false,
+      isAccountCardForm:          true,
+      zDepth:                     1,
+      reauthenticateDialogIsOpen: false,
+      isDeletingAccount:          false
     }
 
     this.raiseAccountCard = this.raiseAccountCard.bind(this)
     this.lowerAccountCard = this.lowerAccountCard.bind(this)
+    this.openReauthenticateDialog = this.openReauthenticateDialog.bind(this)
+    this.closeReauthenticateDialog = this.closeReauthenticateDialog.bind(this)
+    this.toggleIsEditing = this.toggleIsEditing.bind(this)
+    this.submit = this.submit.bind(this)
+    this.requestDeleteAccount = this.requestDeleteAccount.bind(this)
+    this.cancel = this.cancel.bind(this)
   }
 
   raiseAccountCard() {
@@ -48,8 +62,56 @@ class AccountCard extends Component {
     })
   }
 
+  openReauthenticateDialog() {
+    this.setState({
+      reauthenticateDialogIsOpen: true
+    })
+  }
+
+  closeReauthenticateDialog() {
+    this.setState({
+      reauthenticateDialogIsOpen: false,
+      isDeletingAccount: false
+    })
+  }
+
+  toggleIsEditing() {
+    this.props.toggleIsEditing()
+  }
+
+  cancel() {
+    this.props.toggleIsEditing()
+
+    this.setState({
+      isDeletingAccount: false
+    })
+  }
+
+  requestDeleteAccount() {
+    this.openReauthenticateDialog()
+
+    this.setState({
+      isDeletingAccount: true
+    })
+  }
+
+  submit(e) {
+    e.preventDefault()
+
+    this.props.createNewDisplayName()
+
+    this.props.createNewEmail()
+
+    this.props.createNewPassword()
+  }
+
   render() {
     const styles = {
+      accountCardComponentContianer: {
+        height: '90.5vh',
+        overflow: 'auto'
+      },
+
       accountCardContainer: {
         width: '450px',
         height: '500px',
@@ -68,20 +130,27 @@ class AccountCard extends Component {
         margin: '0 20px 0 20px'
       },
 
+      accountModeEdit: {
+        float: 'right',
+        margin: '8px 0 0 0',
+      },
+
       accountCardDivider: {
         color: '#e0e0e0'
       },
 
       userInfoContainer: {
-        margin: '0 20px 0 20px'
+        margin: '24px 24px 0 24px'
       },
 
       accountDisplayNameContainer: {
-        height: '50px'
+        height: '50px',
+        border: '1px solid transparent'
       },
 
       accountEmailContainer: {
-        height: '50px'
+        height: '50px',
+        border: '1px solid transparent'
       },
 
       accountDisplayNameText: {
@@ -96,80 +165,145 @@ class AccountCard extends Component {
         fontSize: '16px'
       },
 
-      accountModeEdit: {
-        float: 'right',
-        margin: '-16px 0 0 0',
-        padding: '0'
+      accountCardDeleteButtonContainer: {
+        margin: '160px 32px 0 32px'
       }
     }
 
-    return(
-      <div
-        id="account-card-container"
-        style={styles.accountCardContainer}
-      >
-        <Card
-          id="account-card"
-          style={styles.accountCard}
-          zDepth={this.state.zDepth}
-          onMouseEnter={this.raiseAccountCard}
-          onMouseLeave={this.lowerAccountCard}
+    const {
+      title,
+      newDisplayName,
+      newEmail,
+      newPassword,
+      isEditing,
+      handleChangeDisplayName,
+      handleChangeEmail,
+      handleChangePassword,
+      editInfoError
+    } = this.props
+
+    let accountCardState
+    if (isEditing) {
+      accountCardState = (
+        <Form
+          loading={this.state.loading}
+          isAccountCardForm={this.state.isAccountCardForm}
+          title="Account"
+          buttonLabel="Submit"
+          nameFloatingLabelText="New Name"
+          nameHintText="Change your display name..."
+          name={newDisplayName}
+          emailFloatingLabelText="New Email"
+          emailHintText="Change your email..."
+          email={newEmail}
+          passwordFloatingLabelText="New Password"
+          passwordHintText="Change your password..."
+          password={newPassword}
+          handleChangeDisplayName={handleChangeDisplayName}
+          handleChangeEmail={handleChangeEmail}
+          handleChangePassword={handleChangePassword}
+          cancel={this.cancel}
+          submit={(e) => this.submit(e)}
+          editInfoError={editInfoError}
+        />
+      )
+    } else {
+      accountCardState = (
+        <div
+          id="account-card-container"
+          style={styles.accountCardContainer}
         >
-          <CardHeader
-            id="account-card-header"
-            style={styles.accountCardHeader}
-            title={
-              <h2>{this.props.title}</h2>
-            }
-          />
-
-          <CardText>
-            <div
-              id="user-info-container"
-              style={styles.userInfoContainer}
+          <Card
+            id="account-card"
+            style={styles.accountCard}
+            zDepth={this.state.zDepth}
+            onMouseEnter={this.raiseAccountCard}
+            onMouseLeave={this.lowerAccountCard}
+          >
+            <CardHeader
+              id="account-card-header"
+              style={styles.accountCardHeader}
+              title={
+                <h2>{title}</h2>
+              }
             >
+              <IconButton
+                style={styles.accountModeEdit}
+                onTouchTap={this.openReauthenticateDialog}
+              >
+                <EditorModeEdit/>
+              </IconButton>
+            </CardHeader>
+
+            <CardText>
               <div
-                id="account-display-name-container"
-                style={styles.accountDisplayNameContainer}
+                id="user-info-container"
+                style={styles.userInfoContainer}
               >
                 <div
-                  id="account-display-name-text"
-                  style={styles.accountDisplayNameText}
+                  id="account-display-name-container"
+                  style={styles.accountDisplayNameContainer}
                 >
-                  {this.props.displayName}
-
-                  <IconButton
-                    style={styles.accountModeEdit}
+                  <div
+                    id="account-display-name-text"
+                    style={styles.accountDisplayNameText}
                   >
-                    <EditorModeEdit/>
-                  </IconButton>
+                    {getCurrentUser().displayName}
+                  </div>
                 </div>
-              </div>
 
-              <Divider
-                style={styles.accountCardDivider}
-              />
+                <Divider
+                  style={styles.accountCardDivider}
+                />
 
-              <div
-                id="account-email-container"
-                style={styles.accountEmailContainer}
-              >
                 <div
-                  id="account-email-text"
-                  style={styles.accountEmailText}
+                  id="account-email-container"
+                  style={styles.accountEmailContainer}
                 >
-                  {this.props.email}
-
-                  <IconButton
-                    style={styles.accountModeEdit}
+                  <div
+                    id="account-email-text"
+                    style={styles.accountEmailText}
                   >
-                    <EditorModeEdit/>
-                  </IconButton>
+                    {getCurrentUser().email}
+                  </div>
                 </div>
               </div>
-            </div>
-          </CardText>
-        </Card>
+            </CardText>
+
+            <CardActions>
+              <div
+                id="account-card-delete-button-container"
+                style={styles.accountCardDeleteButtonContainer}
+              >
+                <RaisedButton
+                  label="Permanently Delete Account"
+                  labelColor="white"
+                  backgroundColor="#d32f2f"
+                  fullWidth={true}
+                  onTouchTap={this.requestDeleteAccount}
+                />
+              </div>
+            </CardActions>
+          </Card>
+        </div>
+      )
+    }
+
+    return (
+      <div
+        id="account-card-component-container"
+        style={styles.accountCardComponentContianer}
+      >
+        {accountCardState}
+
+        <ReauthenticateDialog
+          message="Please retype your password..."
+          isOpen={this.state.reauthenticateDialogIsOpen}
+          closeReauthenticateDialog={this.closeReauthenticateDialog}
+          toggleIsEditing={this.toggleIsEditing}
+          isDeletingAccount={this.state.isDeletingAccount}
+          deleteAccount={(currentPassword) => this.props.deleteAccount(currentPassword)}
+        />
       </div>
     )
   }

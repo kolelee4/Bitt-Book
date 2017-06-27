@@ -43,8 +43,10 @@ class Signin extends Component {
     e.preventDefault()
 
     login(this.state.email, this.state.password)
-      .catch((error) => {
-        this.setState(setErrorMsg('Invalid username/password combination.'))
+      .catch((e) => {
+        this.setState({
+          loginMessage: 'Invalid username/password combination.'
+        })
 
         this.setState({
           loading: false
@@ -81,9 +83,12 @@ class Signin extends Component {
           title="Sign In"
           buttonLabel="Sign In"
           noAccountMessage="Don't have an account?"
+          emailFloatingLabelText="Email"
+          emailHintText="Enter your email..."
           email={this.state.email}
+          passwordFloatingLabelText="Password"
+          passwordHintText="Enter your password..."
           password={this.state.password}
-          passwordHint="Enter your password..."
           handleChangeEmail={(event) => this.handleChangeEmail(event)}
           handleChangePassword={(event) => this.handleChangePassword(event)}
           submit={(e) => this.signin(e)}
