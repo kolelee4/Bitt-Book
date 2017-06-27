@@ -229,6 +229,8 @@ class AccountCard extends Component {
             >
               <IconButton
                 style={styles.accountModeEdit}
+                tooltip="Edit Info"
+                tooltipPosition="bottom-center"
                 onTouchTap={this.openReauthenticateDialog}
               >
                 <EditorModeEdit/>

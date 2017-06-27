@@ -45,11 +45,16 @@ class Bitt extends Component {
 
     const bitt = details
 
-    if (this.state.isExpanded === false) {
+    if (this.state.isExpanded) {
       const bittTitle = this.title.value
       bittTitle.length === 0 ?
       bitt.title = 'Untitled Bitt' :
       bitt.title = this.title.value.trim()
+
+      const bittBody = this.body.value
+      bittBody.length === 0 ?
+      bitt.body = 'Write a bitt...' :
+      bitt.body = this.body.value
 
       bitt.updatedAt = timestamp
 
@@ -61,11 +66,6 @@ class Bitt extends Component {
       bittTitle.length === 0 ?
       bitt.title = 'Untitled Bitt' :
       bitt.title = this.title.value.trim()
-
-      const bittBody = this.body.value
-      bittBody.length === 0 ?
-      bitt.body = 'Write a bitt...' :
-      bitt.body = this.body.value
 
       bitt.updatedAt = timestamp
 
@@ -342,9 +342,7 @@ class Bitt extends Component {
               id="bitt-editor-container"
               onTouchTap={e => e.stopPropagation()}
             >
-              <BittEditor
-                bittBody={details.body}
-              />
+              <BittEditor/>
             </div> */}
 
             <RaisedButton
