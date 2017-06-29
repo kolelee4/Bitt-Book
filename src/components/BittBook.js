@@ -10,6 +10,7 @@ import CircularProgress from 'material-ui/CircularProgress'
 import {Card, CardHeader} from 'material-ui/Card'
 import IconButton from 'material-ui/IconButton'
 import ActionDelete from 'material-ui/svg-icons/action/delete'
+import AlertModal from './AlertModal'
 import Bitts from './Bitts'
 
 const propTypes = {
@@ -34,7 +35,8 @@ class BittBook extends Component {
       width:                            '164px',
       height:                           '172px',
       bittBookTitleContainerVisibility: 'visible',
-      background:                       'white'
+      background:                       'white',
+      alertModalIsOpen:                 false
     }
 
     this.resize = this.resize.bind(this)
@@ -42,6 +44,8 @@ class BittBook extends Component {
     this.handleKeyPressUpdateBittBook = this.handleKeyPressUpdateBittBook.bind(this)
     this.showOptions = this.showOptions.bind(this)
     this.hideOptions = this.hideOptions.bind(this)
+    this.handleOpenAlertModal = this.handleOpenAlertModal.bind(this)
+    this.handleCloseAlertModal = this.handleCloseAlertModal.bind(this)
     this.toggleBitts = this.toggleBitts.bind(this)
     this.updateBitt = this.updateBitt.bind(this)
   }
@@ -110,6 +114,20 @@ class BittBook extends Component {
     this.setState({
       isShowingOptions: false,
       zDepth: 1
+    })
+  }
+
+  handleOpenAlertModal(e) {
+    e.stopPropagation()
+
+    this.setState({
+      alertModalIsOpen: true
+    })
+  }
+
+  handleCloseAlertModal() {
+    this.setState({
+      alertModalIsOpen: false
     })
   }
 
@@ -270,7 +288,8 @@ class BittBook extends Component {
           >
             <IconButton
               style={styles.deleteIconButton}
-              onTouchTap={(e) => this.deleteBittBook(e, id)}
+              // onTouchTap={(e) => this.deleteBittBook(e, id)}
+              onTouchTap={(e) => this.handleOpenAlertModal(e)}
             >
               <ActionDelete
                 color="#757575"
@@ -433,6 +452,14 @@ class BittBook extends Component {
         onTouchTap={this.toggleBitts}
       >
         {bittBookState}
+
+        <AlertModal
+          isOpen={this.state.alertModalIsOpen}
+          message={`Delete ${details.title}? All Bitts will also be deleted...`}
+          handleOpen={this.handleOpenAlertModal}
+          handleClose={this.handleCloseAlertModal}
+          action={(e) => this.deleteBittBook(e, id)}
+        />
       </div>
     )
   }

@@ -6,35 +6,33 @@ import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
 
+const propTypes = {
+  isOpen:      PropTypes.string.isRequired,
+  message:     PropTypes.string.isRequired,
+  handleClose: PropTypes.func.isRequired,
+  action:      PropTypes.func.isRequired
+}
+
 class AlertModal extends Component {
-  state = {
-    open: false,
-  }
-
-  handleOpen = () => {
-    this.setState({
-      open: true
-    })
-  }
-
-  handleClose = () => {
-    this.setState({
-      open: false
-    })
-  }
-
   render() {
+    const {
+      isOpen,
+      message,
+      handleClose,
+      action
+    } = this.props
+    
     const actions = [
       <FlatButton
         label="Cancel"
         primary={true}
-        onTouchTap={this.handleClose}
+        onTouchTap={handleClose}
       />,
 
       <FlatButton
         label="Delete"
         primary={true}
-        onTouchTap={this.handleClose}
+        onTouchTap={action}
       />,
     ]
 
@@ -42,22 +40,19 @@ class AlertModal extends Component {
       <div
         id="raised-button-container-alert-modal"
       >
-        <RaisedButton
-          label="Delete"
-          onTouchTap={this.handleOpen}
-        />
-
         <Dialog
           actions={actions}
           modal={false}
-          open={this.state.open}
-          onRequestClose={this.handleClose}
+          open={isOpen}
+          onRequestClose={handleClose}
         >
-          Delete Bitt Book? All Bitts will also be deleted...
+          {message}
         </Dialog>
       </div>
     )
   }
 }
+
+AlertModal.propTypes = propTypes
 
 export default AlertModal
