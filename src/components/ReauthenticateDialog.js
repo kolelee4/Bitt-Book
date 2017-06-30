@@ -8,6 +8,7 @@ import {reauthenticate} from '../helpers/auth'
 import Dialog from 'material-ui/Dialog'
 import TextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton'
+import RaisedButton from './RaisedButton'
 
 const propTypes = {
   message:                   PropTypes.string.isRequired,
@@ -80,6 +81,11 @@ class ReauthenticateDialog extends Component {
   }
 
   render() {
+    const styles = {
+      cancelFlatButton: {
+        margin: '0 8px 0 0'
+      }
+    }
     const {
       message,
       isOpen,
@@ -88,9 +94,14 @@ class ReauthenticateDialog extends Component {
 
     const actions = [
       <FlatButton
+        label="Cancel"
+        style={styles.cancelFlatButton}
+        onTouchTap={this.closeReauthenticateDialog}
+      />,
+
+      <RaisedButton
         label={isDeletingAccount ? 'Delete Account' : 'Submit'}
         primary={true}
-        keyboardFocused={true}
         onTouchTap={isDeletingAccount ? this.deleteAccount : this.submit}
       />
     ]

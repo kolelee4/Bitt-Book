@@ -39,9 +39,7 @@ class Signin extends Component {
     })
   }
 
-  signin(e) {
-    e.preventDefault()
-
+  signin() {
     login(this.state.email, this.state.password)
       .catch((e) => {
         this.setState({

@@ -103,8 +103,7 @@ class Account extends Component {
 
   deleteAccount(currentPassword) {
     reauthenticate(currentPassword)
-
-    deleteAccount(currentPassword)
+      .then(() => deleteAccount())
   }
 
   render() {

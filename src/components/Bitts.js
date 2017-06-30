@@ -5,9 +5,10 @@ import PropTypes from 'prop-types'
 import Moment from '../helpers/react-moment'
 
 // Components
+import Radium from 'radium'
 import {Card, CardHeader, CardActions} from 'material-ui/Card'
 import IconButton from 'material-ui/IconButton'
-// import NavigationClose from 'material-ui/svg-icons/navigation/close'
+import NavigationClose from 'material-ui/svg-icons/navigation/close'
 import ActionDelete from 'material-ui/svg-icons/action/delete'
 import FloatingActionButton from './FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
@@ -38,6 +39,7 @@ class Bitts extends Component {
       viewport:                {},
       bittCardContainerHeight: '54vh',
       bittsCardMargins:        '20px 15vw 0 15vw',
+      bittsHeaderDisplay:      '',
       snackbarOpen:            false
     }
   }
@@ -137,10 +139,13 @@ class Bitts extends Component {
     })
   }
 
-  animateClosing() {
+  animateClosing(e) {
+    e.stopPropagation()
+
     this.setState({
       bittCardContainerHeight: '0',
-      bittsCardMargins: '20px 50vw 0 50vw'
+      bittsCardMargins: '20px 50vw 0 50vw',
+      bittsHeaderDisplay: 'none'
     })
 
     this.props.toggleBitts()
@@ -180,6 +185,7 @@ class Bitts extends Component {
 
       bittsCard: {
         margin: this.state.bittsCardMargins,
+        background: '#e0e0e0',
         transition: '300ms'
       },
 
@@ -190,7 +196,8 @@ class Bitts extends Component {
       },
 
       bittsHeader: {
-        boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)',
+        display: this.state.bittsHeaderDisplay,
+        boxShadow: '0 10px 6px -6px rgba(0,0,0,0.26)',
         background: 'white'
       },
 
@@ -226,16 +233,20 @@ class Bitts extends Component {
       bittCardContainer: {
         overflowY: 'auto',
         height: this.state.bittCardContainerHeight,
-        boxShadow: '0 9px 0px 0px white, 0 -9px 0px 0px white, 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)',
+        margin: '0 auto 0 auto',
         borderBottom: '1px solid #e0e0e0',
         padding: '20px 0 0 0',
         background: '#e0e0e0',
-        transition: '300ms'
+        transition: '300ms',
+
+        '@media (max-width: 599px)': {
+          width: '100%'
+        }
       },
 
       bittsCardActions: {
         height: '44px',
-        boxShadow: '0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)'
+        background: 'white'
       },
 
       FABContainer: {
@@ -266,7 +277,7 @@ class Bitts extends Component {
               (this.state.viewport.width <= 599 || window.innerWidth <= 599) ?
               styles.bittsCardSmall : styles.bittsCard
             }
-            zDepth={0}
+            zDepth={3}
             onTouchTap={e => e.stopPropagation()}
           >
             <CardHeader
@@ -307,20 +318,18 @@ class Bitts extends Component {
                 </div>
               }
             >
-              {/*
-                <div
-                  id="navigation-close-bitts-container"
-                  style={styles.navigationCloseBittsContainer}
-                >
-                  <IconButton>
-                    <NavigationClose
-                      color="#757575"
-                      hoverColor="#424242"
-                      onTouchTap={this.animateClosing}
-                    />
-                  </IconButton>
-                </div>
-              */}
+              <div
+                id="navigation-close-bitts-container"
+                style={styles.navigationCloseBittsContainer}
+              >
+                <IconButton>
+                  <NavigationClose
+                    color="#757575"
+                    hoverColor="#424242"
+                    onTouchTap={(e) => this.animateClosing(e)}
+                  />
+                </IconButton>
+              </div>
 
               <div
                 id="bitts-options-container"
@@ -390,4 +399,4 @@ class Bitts extends Component {
 
 Bitts.propTypes = propTypes
 
-export default Bitts
+export default Radium(Bitts)

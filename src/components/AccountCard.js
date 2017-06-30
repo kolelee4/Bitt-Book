@@ -95,9 +95,7 @@ class AccountCard extends Component {
     })
   }
 
-  submit(e) {
-    e.preventDefault()
-
+  submit() {
     this.props.createNewDisplayName()
 
     this.props.createNewEmail()
@@ -188,7 +186,7 @@ class AccountCard extends Component {
         <Form
           loading={this.state.loading}
           isAccountCardForm={this.state.isAccountCardForm}
-          title="Account"
+          title="Edit Account Info"
           buttonLabel="Submit"
           nameFloatingLabelText="New Name"
           nameHintText="Change your display name..."
@@ -203,7 +201,7 @@ class AccountCard extends Component {
           handleChangeEmail={handleChangeEmail}
           handleChangePassword={handleChangePassword}
           cancel={this.cancel}
-          submit={(e) => this.submit(e)}
+          submit={this.submit}
           editInfoError={editInfoError}
         />
       )

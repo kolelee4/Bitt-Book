@@ -34,34 +34,6 @@ const propTypes = {
 }
 
 class Form extends Component {
-  constructor() {
-    super()
-
-    this.state = {
-      zDepth: 1
-    }
-
-    this.raiseForm = this.raiseForm.bind(this)
-    this.lowerForm = this.lowerForm.bind(this)
-    this.submit = this.submit.bind(this)
-  }
-
-  raiseForm() {
-    this.setState({
-      zDepth: 2
-    })
-  }
-
-  lowerForm() {
-    this.setState({
-      zDepth: 1
-    })
-  }
-
-  submit(e) {
-    this.props.submit(e)
-  }
-
   render() {
     const styles = {
       formContainer: {
@@ -216,14 +188,11 @@ class Form extends Component {
         <form
           id="material-form"
           style={styles.materialForm}
-          onSubmit={submit}
         >
           <Card
             id="material-form-card"
             style={styles.materialFormCard}
-            zDepth={this.state.zDepth}
-            onMouseEnter={this.raiseForm}
-            onMouseLeave={this.lowerForm}
+            zDepth={1}
           >
             {
               loading ? (
@@ -315,7 +284,7 @@ class Form extends Component {
                 style={styles.formSubmitButton}
                 primary={true}
                 label={buttonLabel}
-                onTouchTap={(e) => this.submit(e)}
+                onTouchTap={submit}
               />
 
               {

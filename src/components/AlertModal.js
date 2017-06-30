@@ -4,10 +4,10 @@ import PropTypes from 'prop-types'
 // Components
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
-import RaisedButton from 'material-ui/RaisedButton'
+import RaisedButton from './RaisedButton'
 
 const propTypes = {
-  isOpen:      PropTypes.string.isRequired,
+  isOpen:      PropTypes.bool.isRequired,
   message:     PropTypes.string.isRequired,
   handleClose: PropTypes.func.isRequired,
   action:      PropTypes.func.isRequired
@@ -15,21 +15,27 @@ const propTypes = {
 
 class AlertModal extends Component {
   render() {
+    const styles = {
+      cancelFlatButton: {
+        margin: '0 8px 0 0'
+      }
+    }
+
     const {
       isOpen,
       message,
       handleClose,
       action
     } = this.props
-    
+
     const actions = [
       <FlatButton
         label="Cancel"
-        primary={true}
+        style={styles.cancelFlatButton}
         onTouchTap={handleClose}
       />,
 
-      <FlatButton
+      <RaisedButton
         label="Delete"
         primary={true}
         onTouchTap={action}

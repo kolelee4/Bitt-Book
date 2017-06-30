@@ -90,21 +90,16 @@ class Bitt extends Component {
   }
 
   showOptions() {
-    this.state.isExpanded === false ?
     this.setState({
       isShowingOptions: true,
-      zDepth: 2
-    }) :
-    this.setState({
-      isShowingOptions: true,
-      zDepth: 3
+      zDepth: this.state.isExpanded ? 3 : 2
     })
   }
 
   hideOptions() {
     this.setState({
       isShowingOptions: false,
-      zDepth: 1
+      zDepth: this.state.isExpanded? 3 : 1
     })
   }
 
@@ -112,15 +107,8 @@ class Bitt extends Component {
     e.stopPropagation()
 
     this.setState({
-      isExpanded: !this.state.isExpanded
-    })
-
-    this.state.zDepth === 2 && this.state.isExpanded === false ?
-    this.setState({
-      zDepth: 3
-    }) :
-    this.setState({
-      zDepth: 1
+      isExpanded: !this.state.isExpanded,
+      zDepth: this.state.isExpanded ? 1 : 3
     })
 
     setTimeout(() => {

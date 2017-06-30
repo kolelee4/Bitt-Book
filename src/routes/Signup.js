@@ -42,18 +42,16 @@ class Signup extends Component {
     })
   }
 
-  createUser(e) {
-    e.preventDefault()
-
+  createUser() {
     auth(this.state.email, this.state.password)
       .catch((e) => {
         this.setState({
+          loading: false,
           signupError: e.message
         })
-
-        this.setState({
-          loading: false
-        })
+      })
+      .then((user) => {
+        user.sendEmailVerification()
       })
 
     this.setState({
@@ -82,7 +80,7 @@ class Signup extends Component {
           title="Sign Up"
           buttonLabel="Create Account"
           nameFloatingLabelText="Name"
-          nameHintText="Enter your name..."
+          nameHintText="Enter your full name..."
           name={this.state.displayName}
           emailFloatingLabelText="Email"
           emailHintText="Enter your email..."
