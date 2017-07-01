@@ -10,6 +10,7 @@ import {getFirstName} from '../../helpers/string-manipulator'
 
 // Components
 import Radium from 'radium'
+import EmailNotVerified from '../../components/EmailNotVerified'
 import CircularProgress from 'material-ui/CircularProgress'
 import FABContainer from '../../components/FABContainer'
 import BittBook from '../../components/BittBook'
@@ -28,13 +29,15 @@ class BittBooks extends Component {
     super(props)
 
     this.state = {
-      loading:        true,
-      userInfo:       {},
-      bittBooks:      {},
-      isShowingBitts: false,
-      snackbarOpen:   false
+      isEmailVerified: getCurrentUser().emailVerified ? true : false,
+      loading:         true,
+      userInfo:        {},
+      bittBooks:       {},
+      isShowingBitts:  false,
+      snackbarOpen:    false
     }
 
+    this.reloadPage = this.reloadPage.bind(this)
     this.createBittBook = this.createBittBook.bind(this)
     this.updateBittBook = this.updateBittBook.bind(this)
     this.deleteBittBook = this.deleteBittBook.bind(this)
@@ -45,21 +48,27 @@ class BittBooks extends Component {
   componentWillMount() {
     const user = getCurrentUser()
 
-    this.ref = base.syncState(`users/${user.uid}/bittBooks`, {
-      context: this,
-      state:   'bittBooks'
-    })
+    this.refs = (
+      base.syncState(`users/${user.uid}/bittBooks`, {
+        context: this,
+        state:   'bittBooks'
+      }),
 
-    this.ref = base.syncState(`users/${user.uid}/info`, {
-      context: this,
-      state:   'userInfo'
-    })
+      base.syncState(`users/${user.uid}/info`, {
+        context: this,
+        state:   'userInfo'
+      })
+    )
   }
 
   componentDidMount() {
     this.setState({
       loading: false
     })
+  }
+
+  reloadPage() {
+    location.reload()
   }
 
   createBittBook() {
@@ -133,7 +142,7 @@ class BittBooks extends Component {
   }
 
   componentWillUnmount() {
-    base.removeBinding(this.ref)
+    base.removeBinding(this.refs)
   }
 
   render() {
@@ -191,7 +200,7 @@ class BittBooks extends Component {
             ) : (
               'Hello, ' +
               getFirstName(
-                (getCurrentUser().displayName === null) ? displayName :
+                getCurrentUser().displayName === null ? displayName :
                 getCurrentUser().displayName
               ) + '. ' + noBittBooksMessage
             )
@@ -233,7 +242,7 @@ class BittBooks extends Component {
       )
     }
 
-    return (
+    return this.state.isEmailVerified ? (
       <div
         id="bitt-books-route"
         style={styles.bittBooksRoute}
@@ -249,6 +258,8 @@ class BittBooks extends Component {
           requestClose={this.snackBarHandleRequestClose}
         />
       </div>
+    ) : (
+      <EmailNotVerified/>
     )
   }
 }

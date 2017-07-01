@@ -167,7 +167,7 @@ class Bitts extends Component {
         zIndex: '999',
         position: 'absolute',
         maxHeight: '100vh',
-        overflow: 'hidden',
+        overflow: 'auto',
         top: '0',
         right: '0',
         bottom: '0',
@@ -178,7 +178,7 @@ class Bitts extends Component {
 
       bittsContainer: {
         zIndex: '1000',
-        overflow: 'hidden',
+        overflow: 'auto',
         margin: '64px 0 0 0',
         padding: '0 0 20px 0'
       },
@@ -192,7 +192,7 @@ class Bitts extends Component {
       bittsCardSmall: {
         width: '100%',
         margin: '20px 0 0 0',
-        transition: '300ms'
+        transition: '100ms'
       },
 
       bittsHeader: {

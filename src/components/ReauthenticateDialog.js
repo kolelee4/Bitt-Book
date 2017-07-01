@@ -101,7 +101,9 @@ class ReauthenticateDialog extends Component {
 
       <RaisedButton
         label={isDeletingAccount ? 'Delete Account' : 'Submit'}
-        primary={true}
+        labelColor={isDeletingAccount ? 'white' : null}
+        primary={isDeletingAccount ? false : true}
+        backgroundColor={isDeletingAccount ? '#d32f2f' : null}
         onTouchTap={isDeletingAccount ? this.deleteAccount : this.submit}
       />
     ]

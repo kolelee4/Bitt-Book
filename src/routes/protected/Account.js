@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 
 // Helpers
 import {
+  getCurrentUser,
   saveNewDisplayName,
   saveNewEmail,
   saveNewPassword,
@@ -10,6 +11,7 @@ import {
 } from '../../helpers/auth'
 
 // Components
+import EmailNotVerified from '../../components/EmailNotVerified'
 import AccountCard from '../../components/AccountCard'
 
 class Account extends Component {
@@ -17,6 +19,7 @@ class Account extends Component {
     super()
 
     this.state = {
+      isEmailVerified: getCurrentUser().emailVerified ? true : false,
       isEditing:       false,
       currentPassword: '',
       newDisplayName:  '',
@@ -25,6 +28,7 @@ class Account extends Component {
       editInfoError:   '',
     }
 
+    this.reloadPage = this.reloadPage.bind(this)
     this.toggleIsEditing = this.toggleIsEditing.bind(this)
     this.handleChangeDisplayName = this.handleChangeDisplayName.bind(this)
     this.handleChangeEmail = this.handleChangeEmail.bind(this)
@@ -33,6 +37,10 @@ class Account extends Component {
     this.createNewEmail = this.createNewEmail.bind(this)
     this.createNewPassword = this.createNewPassword.bind(this)
     this.deleteAccount = this.deleteAccount.bind(this)
+  }
+
+  reloadPage() {
+    location.reload()
   }
 
   toggleIsEditing() {
@@ -66,6 +74,8 @@ class Account extends Component {
       this.setState({
         isEditing: false
       })
+    } else {
+      return null
     }
   }
 
@@ -82,6 +92,8 @@ class Account extends Component {
             editInfoError: e.message
           })
         })
+    } else {
+      return null
     }
   }
 
@@ -98,6 +110,8 @@ class Account extends Component {
             editInfoError: e.message
           })
         })
+    } else {
+      return null
     }
   }
 
@@ -107,7 +121,7 @@ class Account extends Component {
   }
 
   render() {
-    return(
+    return this.state.isEmailVerified ? (
       <div
         id="account-route"
       >
@@ -124,6 +138,8 @@ class Account extends Component {
           deleteAccount={(currentPassword) => this.deleteAccount(currentPassword)}
         />
       </div>
+    ) : (
+      <EmailNotVerified/>
     )
   }
 }

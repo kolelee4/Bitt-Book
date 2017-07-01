@@ -36,7 +36,8 @@ class BittBook extends Component {
       height:                           '172px',
       bittBookTitleContainerVisibility: 'visible',
       background:                       'white',
-      alertModalIsOpen:                 false
+      alertModalIsOpen:                 false,
+      isDeletingBittBook:               false
     }
 
     this.resize = this.resize.bind(this)
@@ -121,13 +122,15 @@ class BittBook extends Component {
     e.stopPropagation()
 
     this.setState({
-      alertModalIsOpen: true
+      alertModalIsOpen: true,
+      isDeletingBittBook: true
     })
   }
 
   handleCloseAlertModal() {
     this.setState({
-      alertModalIsOpen: false
+      alertModalIsOpen: false,
+      isDeletingBittBook: false
     })
   }
 
@@ -136,8 +139,8 @@ class BittBook extends Component {
     this.setState({
       zDepth: 3,
       position: 'absolute',
-      width: '85vw',
-      height: '84vh',
+      width: '70vw',
+      height: '83.5vh',
       bittBookTitleContainerVisibility: 'hidden',
       background: '#e0e0e0'
     }) :
@@ -191,7 +194,7 @@ class BittBook extends Component {
         overflow: 'hidden',
         margin: '0 20px 40px 0',
         background: this.state.background,
-        transition: '200ms'
+        transition: '100ms'
       },
 
       bittBookCardSmall: {
@@ -202,7 +205,7 @@ class BittBook extends Component {
         overflow: 'hidden',
         margin: '0 auto 20px auto',
         background: this.state.background,
-        transition: '200ms'
+        transition: '100ms'
       },
 
       bittBookHeader: {
@@ -216,7 +219,7 @@ class BittBook extends Component {
         margin: '20px 0 0 0',
         border: 'none',
         borderRadius: '3px',
-        transition: '200ms'
+        transition: '100ms'
       },
 
       bittBookTitleInput: {
@@ -288,7 +291,6 @@ class BittBook extends Component {
           >
             <IconButton
               style={styles.deleteIconButton}
-              // onTouchTap={(e) => this.deleteBittBook(e, id)}
               onTouchTap={(e) => this.handleOpenAlertModal(e)}
             >
               <ActionDelete
@@ -315,9 +317,7 @@ class BittBook extends Component {
           <div
             id="bitt-count"
           >
-            {
-              bittAmount === 1 ? bittAmount + ' Bitt' : bittAmount + ' Bitts'
-            }
+            {bittAmount === 1 ? bittAmount + ' Bitt' : bittAmount + ' Bitts'}
           </div>
         </div>
       )
@@ -455,6 +455,7 @@ class BittBook extends Component {
 
         <AlertModal
           isOpen={this.state.alertModalIsOpen}
+          isDeletingBittBook={this.state.isDeletingBittBook}
           message={`Delete ${details.title}? All Bitts will also be deleted...`}
           handleOpen={this.handleOpenAlertModal}
           handleClose={this.handleCloseAlertModal}

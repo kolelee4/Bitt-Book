@@ -18,6 +18,8 @@ export function saveUser(user) {
       user.updateProfile({
         displayName: localStorage.getItem(`${user.email}-display-name`)
       })
+
+      user.sendEmailVerification()
     })
     .then(() => user)
 }
@@ -48,11 +50,11 @@ export function reauthenticate(password) {
   return user.reauthenticateWithCredential(credential)
 }
 
-export function saveNewDisplayName(newDisplayNameName) {
+export function saveNewDisplayName(newDisplayName) {
   const user = getCurrentUser()
 
   return user.updateProfile({
-    displayName: newDisplayNameName
+    displayName: newDisplayName
   })
 }
 

@@ -23,6 +23,7 @@ class AlertModal extends Component {
 
     const {
       isOpen,
+      isDeletingBittBook,
       message,
       handleClose,
       action
@@ -36,8 +37,10 @@ class AlertModal extends Component {
       />,
 
       <RaisedButton
-        label="Delete"
-        primary={true}
+        label={isDeletingBittBook ? 'Delete' : 'Confirm'}
+        labelColor={isDeletingBittBook ? 'white' : null}
+        primary={isDeletingBittBook ? false : true}
+        backgroundColor={isDeletingBittBook ? '#d32f2f' : null}
         onTouchTap={action}
       />,
     ]

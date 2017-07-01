@@ -43,22 +43,25 @@ class Signup extends Component {
   }
 
   createUser() {
-    auth(this.state.email, this.state.password)
-      .catch((e) => {
-        this.setState({
-          loading: false,
-          signupError: e.message
+    if (this.state.displayName && this.state.email && this.state.password !== '') {
+      auth(this.state.email, this.state.password)
+        .catch((e) => {
+          this.setState({
+            loading: false,
+            signupError: e.message
+          })
         })
-      })
-      .then((user) => {
-        user.sendEmailVerification()
+
+      this.setState({
+        loading: true
       })
 
-    this.setState({
-      loading: true
-    })
-
-    localStorage.setItem(`${this.state.email}-display-name`, this.state.displayName)
+      localStorage.setItem(`${this.state.email}-display-name`, this.state.displayName)
+    } else {
+      this.setState({
+        signupError: 'Please enter in all your information.'
+      })
+    }
   }
 
   render() {
@@ -79,6 +82,7 @@ class Signup extends Component {
           loading={this.state.loading}
           title="Sign Up"
           buttonLabel="Create Account"
+          accountStateMessage="Already have an account?"
           nameFloatingLabelText="Name"
           nameHintText="Enter your full name..."
           name={this.state.displayName}

@@ -60,7 +60,7 @@ class Template extends Component {
   }
 
   componentDidMount() {
-    this.removeListener = firebaseAuth().onAuthStateChanged((user) => {
+    this.authListener = firebaseAuth().onAuthStateChanged((user) => {
       if (user) {
         this.setState({
           authenticated: true,
@@ -76,7 +76,7 @@ class Template extends Component {
   }
 
   componentWillUnmount() {
-    this.removeListener()
+    this.authListener()
   }
 
   render() {

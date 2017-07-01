@@ -35,31 +35,16 @@ class AccountCard extends Component {
     this.state = {
       loading:                    false,
       isAccountCardForm:          true,
-      zDepth:                     1,
       reauthenticateDialogIsOpen: false,
       isDeletingAccount:          false
     }
 
-    this.raiseAccountCard = this.raiseAccountCard.bind(this)
-    this.lowerAccountCard = this.lowerAccountCard.bind(this)
     this.openReauthenticateDialog = this.openReauthenticateDialog.bind(this)
     this.closeReauthenticateDialog = this.closeReauthenticateDialog.bind(this)
     this.toggleIsEditing = this.toggleIsEditing.bind(this)
     this.submit = this.submit.bind(this)
     this.requestDeleteAccount = this.requestDeleteAccount.bind(this)
     this.cancel = this.cancel.bind(this)
-  }
-
-  raiseAccountCard() {
-    this.setState({
-      zDepth: 2
-    })
-  }
-
-  lowerAccountCard() {
-    this.setState({
-      zDepth: 1
-    })
   }
 
   openReauthenticateDialog() {
@@ -214,9 +199,7 @@ class AccountCard extends Component {
           <Card
             id="account-card"
             style={styles.accountCard}
-            zDepth={this.state.zDepth}
-            onMouseEnter={this.raiseAccountCard}
-            onMouseLeave={this.lowerAccountCard}
+            zDepth={1}
           >
             <CardHeader
               id="account-card-header"

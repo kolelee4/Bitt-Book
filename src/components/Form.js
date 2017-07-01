@@ -26,7 +26,7 @@ const propTypes = {
   handleChangeDisplayName:   PropTypes.func,
   handleChangeEmail:         PropTypes.func,
   handleChangePassword:      PropTypes.func,
-  noAccountMessage:          PropTypes.string,
+  accountStateMessage:       PropTypes.string,
   signupError:               PropTypes.string,
   loginMessage:              PropTypes.string,
   buttonLabel:               PropTypes.string,
@@ -72,7 +72,9 @@ class Form extends Component {
 
       formMessageContainer: {
         float: 'left',
-        margin: '0 0 0 44px'
+        margin: this.props.signupError === 'Please enter in all your information.' ?
+        '-72px 0 0 44px' :
+        '0 0 0 44px'
       },
 
       loginMessageText: {
@@ -81,7 +83,7 @@ class Form extends Component {
         color: 'red'
       },
 
-      signupLink: {
+      accountLink: {
         color: '#146D8F'
       },
 
@@ -122,7 +124,7 @@ class Form extends Component {
       handleChangeDisplayName,
       handleChangeEmail,
       handleChangePassword,
-      noAccountMessage,
+      accountStateMessage,
       signupError,
       loginMessage,
       editInfoError,
@@ -140,7 +142,7 @@ class Form extends Component {
           <p
             style={styles.loginMessageText}
           >
-            {loginMessage}
+            {signupError === 'Please enter in all your information.' ? signupError : loginMessage}
           </p>
 
           <br/>
@@ -162,18 +164,40 @@ class Form extends Component {
             to="/sign-up"
             style={styles.signupLink}
           >
-            {noAccountMessage}
+            {accountStateMessage}
           </NavLink>
         </div>
       )
-    } else if (noAccountMessage) {
+    } else if (signupError) {
+      formMessageState = (
+        <div
+          id="form-message"
+        >
+          <p
+            style={styles.loginMessageText}
+          >
+            {signupError === 'Please enter in all your information.' ? signupError : loginMessage}
+          </p>
+
+          <br/>
+
+          <NavLink
+            id="signup-link"
+            to="/sign-in"
+            style={styles.signupLink}
+          >
+            {accountStateMessage}
+          </NavLink>
+        </div>
+      )
+    } else if (accountStateMessage) {
       formMessageState = (
         <NavLink
-          id="signup-link"
-          to="/sign-up"
-          style={styles.signupLink}
+          id="account-link"
+          to={accountStateMessage === `Don't have an account?` ? '/sign-up' : '/sign-in'}
+          style={styles.accountLink}
         >
-          {noAccountMessage}
+          {accountStateMessage}
         </NavLink>
       )
     } else {
@@ -257,10 +281,15 @@ class Form extends Component {
                   floatingLabelText={passwordFloatingLabelText}
                   hintText={passwordHintText}
                   errorText={
-                    signupError === 'The password must be 6 characters long or more.' ?
+                    signupError === 'Please enter in all your information.' ?
+                    null :
+                    signupError === 'The password must be 6 characters long or more.' ||
+                    'Password should be at least 6 characters' ?
                     signupError :
-                    editInfoError === 'Password should be at least 6 characters' ?
-                    editInfoError : null
+                    editInfoError === 'The password must be 6 characters long or more.' ||
+                    'Password should be at least 6 characters' ?
+                    editInfoError :
+                    null
                   }
                   defaultValue={password}
                   onChange={handleChangePassword}
@@ -295,9 +324,7 @@ class Form extends Component {
                     label="Cancel"
                     onTouchTap={cancel}
                   />
-                ) : (
-                  null
-                )
+                ) : null
               }
             </CardActions>
           </Card>

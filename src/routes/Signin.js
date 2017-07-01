@@ -80,7 +80,7 @@ class Signin extends Component {
           loading={this.state.loading}
           title="Sign In"
           buttonLabel="Sign In"
-          noAccountMessage="Don't have an account?"
+          accountStateMessage="Don't have an account?"
           emailFloatingLabelText="Email"
           emailHintText="Enter your email..."
           email={this.state.email}
