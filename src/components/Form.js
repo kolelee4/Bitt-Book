@@ -72,13 +72,13 @@ class Form extends Component {
 
       formMessageContainer: {
         float: 'left',
-        margin: this.props.signupError === 'Please enter in all your information.' ?
-        '-72px 0 0 44px' :
-        '0 0 0 44px'
+        margin: '0 0 0 44px'
       },
 
       loginMessageText: {
-        margin: '0',
+        margin: this.props.signupError === 'Please enter in all your information.' ?
+        '-56px 0 0 0' :
+        '0',
         fontSize: '14px',
         color: 'red'
       },
@@ -162,7 +162,7 @@ class Form extends Component {
           <NavLink
             id="signup-link"
             to="/sign-up"
-            style={styles.signupLink}
+            style={styles.accountLink}
           >
             {accountStateMessage}
           </NavLink>
@@ -184,7 +184,7 @@ class Form extends Component {
           <NavLink
             id="signup-link"
             to="/sign-in"
-            style={styles.signupLink}
+            style={styles.accountLink}
           >
             {accountStateMessage}
           </NavLink>

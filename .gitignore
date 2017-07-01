@@ -2,6 +2,7 @@
 
 # Security
 /src/config/base.js
+.firebaserc
 
 # Dependencies
 /node_modules

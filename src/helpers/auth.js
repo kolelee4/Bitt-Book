@@ -78,8 +78,7 @@ export function deleteAccount() {
   const user = getCurrentUser()
   const uid = getCurrentUser().uid
 
+  ref.child('users').child(uid).remove()
+
   return user.delete()
-    .then((error) => {
-      !error ? ref.child('users').child(uid).remove() : console.log('An error occured.')
-    })
 }
