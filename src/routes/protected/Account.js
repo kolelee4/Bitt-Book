@@ -86,6 +86,8 @@ class Account extends Component {
           this.setState({
             isEditing: false
           })
+
+          getCurrentUser().sendEmailVerification()
         })
         .catch((e) => {
           this.setState({
