@@ -36,11 +36,13 @@ class Bitts extends Component {
     this.snackBarHandleRequestClose = this.snackBarHandleRequestClose.bind(this)
 
     this.state = {
-      viewport:                {},
-      bittCardContainerHeight: '54.5vh',
-      bittsCardMargins:        '20px 15vw 0 15vw',
-      bittsHeaderDisplay:      '',
-      snackbarOpen:            false
+      viewport:                     {},
+      bittCardContainerHeight:      '54.5vh',
+      bittCardContainerSmallHeight: '48vh',
+      bittsCardMargins:             '20px 15vw 0 15vw',
+      bittsCardSmallWidth:          '100%',
+      bittsHeaderDisplay:           '',
+      snackbarOpen:                 false
     }
   }
 
@@ -144,7 +146,9 @@ class Bitts extends Component {
 
     this.setState({
       bittCardContainerHeight: '0',
+      bittCardContainerSmallHeight: '0',
       bittsCardMargins: '20px 50vw 0 50vw',
+      bittsCardSmallWidth: '164px',
       bittsHeaderDisplay: 'none'
     })
 
@@ -170,21 +174,27 @@ class Bitts extends Component {
         maxWidth: '100%',
         height: '100vh',
         maxHeight: '100%',
-        overflow: 'hidden',
+        overflow: 'auto',
         top: '0',
         right: '0',
         bottom: '0',
         left: '0',
         backgroundColor: '#f5f5f5',
-        cursor: 'pointer'
+        cursor: 'pointer',
+
+        WebkitTouchCallout: 'none',
+        WebkitUserSelect: 'none',
+        KhtmlUserSelect: 'none',
+        MozUserSelect: 'none',
+        MsUserSelect: 'none',
+        UserSelect: 'none'
       },
 
       bittsContainer: {
         zIndex: '1000',
-        height: '88vh',
+        height: '90.5vh',
         overflow: 'auto',
-        margin: '64px 0 0 0',
-        padding: '0 0 20px 0'
+        margin: '64px 0 0 0'
       },
 
       bittsCard: {
@@ -194,8 +204,8 @@ class Bitts extends Component {
       },
 
       bittsCardSmall: {
-        width: '100%',
-        margin: '20px 0 0 0',
+        width: this.state.bittsCardSmallWidth,
+        margin: '20px auto 0 auto',
         transition: '100ms'
       },
 
@@ -244,7 +254,8 @@ class Bitts extends Component {
         transition: '300ms',
 
         '@media (max-width: 599px)': {
-          width: '100%'
+          width: '100%',
+          height: this.state.bittCardContainerSmallHeight
         }
       },
 

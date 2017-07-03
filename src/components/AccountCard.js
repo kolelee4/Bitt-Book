@@ -90,17 +90,23 @@ class AccountCard extends Component {
   render() {
     const styles = {
       accountCardComponentContianer: {
-        height: '88vh',
+        height: '90.5vh',
         overflow: 'auto'
       },
 
       accountCardContainer: {
         width: '450px',
         height: '500px',
-        margin: '60px auto 0 auto',
+        margin: '10vh auto 0 auto',
 
         '@media (max-width: 599px)': {
-          width: '100%'
+          width: '100%',
+          height: '100%'
+        },
+
+        '@media (max-width: 999px)': {
+          width: '100%',
+          margin: '0'
         }
       },
 
@@ -148,7 +154,11 @@ class AccountCard extends Component {
       },
 
       accountCardDeleteButtonContainer: {
-        margin: '160px 32px 0 32px'
+        margin: '160px 32px 0 32px',
+
+        '@media (max-width: 599px)': {
+          margin: '120px 32px 0 32px',
+        }
       }
     }
 

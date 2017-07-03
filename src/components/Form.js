@@ -37,68 +37,65 @@ class Form extends Component {
   render() {
     const styles = {
       formContainer: {
-        height: '100%',
-        overflow: 'auto'
-      },
-
-      materialForm: {
         width: '450px',
         height: '500px',
-        margin: '60px auto 100px auto',
+        margin: '10vh auto 0 auto',
 
         '@media (max-width: 599px)': {
-          width: '100%'
+          width: '100%',
+          height: '100%',
+          margin: '0'
+        },
+
+        '@media (max-width: 999px)': {
+          width: '100%',
+          margin: '0'
         }
       },
 
       materialFormCard: {
         cursor: 'pointer',
-        height: '100%'
-      },
-
-      formHeader: {
-        margin: '0 20px 0 20px'
-      },
-
-      textFieldContainer: {
-        margin: '0 28px 0 28px'
+        height: '100%',
+        padding: '24px'
       },
 
       formActions: {
         display: 'inline-block',
-        width: '100%',
-        padding: '80px 0 0 0'
+        width: '92%',
+        overflow: 'hidden',
+        margin: '0 16px 0 16px',
+        padding: '0'
       },
 
-      formMessageContainer: {
+      formMessage: {
         float: 'left',
-        margin: '0 0 0 44px',
+        width: '200px',
+        margin: '0',
+        padding: '0',
 
         '@media (max-width: 599px)': {
-          width: '100px'
+          width: '150px'
         }
       },
 
       loginMessageText: {
-        margin: this.props.signupError === 'Please enter in all your information.' ?
-        '-56px 0 0 0' :
-        '0',
-        fontSize: '14px',
         color: 'red'
       },
 
       accountLink: {
+        textDecoration: 'none',
         color: '#146D8F'
       },
 
       forgotPasswordLink: {
+        textDecoration: 'none',
         color: '#146D8F'
       },
 
       formSubmitButton: {
         cursor: 'pointer',
         float: 'right',
-        margin: '0 42px 0 0'
+        margin: '0'
       },
 
       formCancelButton: {
@@ -107,7 +104,7 @@ class Form extends Component {
       },
 
       signupProgress: {
-        margin: '0 0 -4px 0'
+        margin: '0'
       }
     }
 
@@ -142,6 +139,7 @@ class Form extends Component {
       formMessageState = (
         <div
           id="form-message"
+          style={styles.formMessage}
         >
           <p
             style={styles.loginMessageText}
@@ -176,6 +174,7 @@ class Form extends Component {
       formMessageState = (
         <div
           id="form-message"
+          style={styles.formMessage}
         >
           <p
             style={styles.loginMessageText}
@@ -196,144 +195,142 @@ class Form extends Component {
       )
     } else if (accountStateMessage) {
       formMessageState = (
-        <NavLink
-          id="account-link"
-          to={accountStateMessage === `Don't have an account?` ? '/sign-up' : '/sign-in'}
-          style={styles.accountLink}
+        <div
+          id="form-message"
+          style={styles.formMessage}
         >
-          {accountStateMessage}
-        </NavLink>
+          <NavLink
+            id="account-link"
+            to={accountStateMessage === `Don't have an account?` ? '/sign-up' : '/sign-in'}
+            style={styles.accountLink}
+          >
+            {accountStateMessage}
+          </NavLink>
+        </div>
       )
     } else {
       formMessageState = null
     }
 
     return (
-      <div
+      <form
         id="form-container"
         style={styles.formContainer}
       >
-        <form
-          id="material-form"
-          style={styles.materialForm}
+        {
+          loading ? (
+            <LinearProgress
+              id="signup-progress"
+              style={styles.signupProgress}
+              mode="indeterminate"
+            />
+          ) : null
+        }
+
+        <Card
+          id="material-form-card"
+          style={styles.materialFormCard}
+          zDepth={1}
         >
-          <Card
-            id="material-form-card"
-            style={styles.materialFormCard}
-            zDepth={1}
+          <CardHeader
+            id="form-header"
+            title={
+              <h2>
+                {title}
+              </h2>
+            }
+          />
+
+          <CardText>
+            <div
+              id="text-field-container"
+            >
+              {
+                title === 'Sign In' ? null :
+                (
+                  <TextField
+                    fullWidth={true}
+                    floatingLabelText={nameFloatingLabelText}
+                    hintText={nameHintText}
+                    defaultValue={name}
+                    onChange={handleChangeDisplayName}
+                  />
+                )
+              }
+
+              <TextField
+                fullWidth={true}
+                floatingLabelText={emailFloatingLabelText}
+                hintText={emailHintText}
+                errorText={
+                  signupError === 'The email address is badly formatted.' ?
+                  signupError :
+                  signupError === 'The email address is already in use by another account.' ?
+                  signupError :
+                  editInfoError === 'The email address is badly formatted.' ?
+                  editInfoError :
+                  editInfoError === 'The email address is already in use by another account.' ?
+                  editInfoError :
+                  null
+                }
+                defaultValue={email}
+                onChange={handleChangeEmail}
+              />
+
+              <TextField
+                fullWidth={true}
+                type="password"
+                floatingLabelText={passwordFloatingLabelText}
+                hintText={passwordHintText}
+                errorText={
+                  signupError === 'Please enter in all your information.' || 'The email address is badly formatted.' ?
+                  null :
+                  signupError === 'The password must be 6 characters long or more.' ||
+                  'Password should be at least 6 characters' ?
+                  signupError :
+                  editInfoError === 'The password must be 6 characters long or more.' ||
+                  'Password should be at least 6 characters' ?
+                  editInfoError :
+                  null
+                }
+                defaultValue={password}
+                onChange={handleChangePassword}
+              />
+            </div>
+          </CardText>
+
+          <CardActions
+            id="form-actions"
+            style={styles.formActions}
           >
+            <div
+              id="form-message-container"
+              style={styles.formMessageContainer}
+            >
+              {formMessageState}
+            </div>
+
+            <RaisedButton
+              id="form-submit-button"
+              style={styles.formSubmitButton}
+              primary={true}
+              label={buttonLabel}
+              onTouchTap={submit}
+            />
+
             {
-              loading ? (
-                <LinearProgress
-                  id="signup-progress"
-                  style={styles.signupProgress}
-                  mode="indeterminate"
+              isAccountCardForm ? (
+                <FlatButton
+                  id="form-cancel-button"
+                  style={styles.formCancelButton}
+                  label="Cancel"
+                  onTouchTap={cancel}
                 />
               ) : null
             }
-
-            <CardHeader
-              id="form-header"
-              style={styles.formHeader}
-              title={
-                <h2>
-                  {title}
-                </h2>
-              }
-            />
-
-            <CardText>
-              <div
-                id="text-field-container"
-                style={styles.textFieldContainer}
-              >
-                {
-                  title === 'Sign In' ? null :
-                  (
-                    <TextField
-                      fullWidth={true}
-                      floatingLabelText={nameFloatingLabelText}
-                      hintText={nameHintText}
-                      defaultValue={name}
-                      onChange={handleChangeDisplayName}
-                    />
-                  )
-                }
-
-                <TextField
-                  fullWidth={true}
-                  floatingLabelText={emailFloatingLabelText}
-                  hintText={emailHintText}
-                  errorText={
-                    signupError === 'The email address is badly formatted.' ?
-                    signupError :
-                    signupError === 'The email address is already in use by another account.' ?
-                    signupError :
-                    editInfoError === 'The email address is badly formatted.' ?
-                    editInfoError :
-                    editInfoError === 'The email address is already in use by another account.' ?
-                    editInfoError :
-                    null
-                  }
-                  defaultValue={email}
-                  onChange={handleChangeEmail}
-                />
-
-                <TextField
-                  fullWidth={true}
-                  type="password"
-                  floatingLabelText={passwordFloatingLabelText}
-                  hintText={passwordHintText}
-                  errorText={
-                    signupError === 'Please enter in all your information.' ?
-                    null :
-                    signupError === 'The password must be 6 characters long or more.' ||
-                    'Password should be at least 6 characters' ?
-                    signupError :
-                    editInfoError === 'The password must be 6 characters long or more.' ||
-                    'Password should be at least 6 characters' ?
-                    editInfoError :
-                    null
-                  }
-                  defaultValue={password}
-                  onChange={handleChangePassword}
-                />
-              </div>
-            </CardText>
-
-            <CardActions
-              id="form-actions"
-              style={styles.formActions}
-            >
-              <div
-                id="form-message-container"
-                style={styles.formMessageContainer}
-              >
-                {formMessageState}
-              </div>
-
-              <RaisedButton
-                id="form-submit-button"
-                style={styles.formSubmitButton}
-                primary={true}
-                label={buttonLabel}
-                onTouchTap={submit}
-              />
-
-              {
-                isAccountCardForm ? (
-                  <FlatButton
-                    id="form-cancel-button"
-                    style={styles.formCancelButton}
-                    label="Cancel"
-                    onTouchTap={cancel}
-                  />
-                ) : null
-              }
-            </CardActions>
-          </Card>
-        </form>
-      </div>
+          </CardActions>
+        </Card>
+      </form>
     )
   }
 }

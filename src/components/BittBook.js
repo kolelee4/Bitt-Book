@@ -192,7 +192,7 @@ class BittBook extends Component {
         width: this.state.width,
         height: this.state.height,
         overflow: 'hidden',
-        margin: '0 20px 40px 0',
+        margin: '0 20px 20px 0',
         background: this.state.background,
         transition: '100ms'
       },

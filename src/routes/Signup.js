@@ -67,7 +67,7 @@ class Signup extends Component {
   render() {
     const styles = {
       signupContainer: {
-        height: '100vh',
+        height: '90.5vh',
         overflow: 'auto'
       }
     }
