@@ -37,14 +37,14 @@ class Form extends Component {
   render() {
     const styles = {
       formContainer: {
-        height: '90.5vh',
+        height: '100%',
         overflow: 'auto'
       },
 
       materialForm: {
         width: '450px',
         height: '500px',
-        margin: '60px auto 0 auto',
+        margin: '60px auto 100px auto',
 
         '@media (max-width: 599px)': {
           width: '100%'
@@ -72,7 +72,11 @@ class Form extends Component {
 
       formMessageContainer: {
         float: 'left',
-        margin: '0 0 0 44px'
+        margin: '0 0 0 44px',
+
+        '@media (max-width: 599px)': {
+          width: '100px'
+        }
       },
 
       loginMessageText: {

@@ -111,14 +111,14 @@ class Bitt extends Component {
       zDepth: this.state.isExpanded ? 1 : 3
     })
 
-    setTimeout(() => {
+    /* setTimeout(() => {
       const bittCardHeader = document.getElementById('bitt-card-header')
       const bittCardHeaderRect = bittCardHeader.getBoundingClientRect()
       const absolutebittCardHeaderTop = bittCardHeaderRect.top + window.pageYOffset
       const middle = absolutebittCardHeaderTop - (window.innerHeight / 2)
 
       window.scrollTo(0, middle)
-    }, 10)
+    }, 10) */
   }
 
   render() {
@@ -171,7 +171,7 @@ class Bitt extends Component {
       bittTextarea: {
         resize: 'none',
         width: '95%',
-        minHeight: '24.5vh',
+        minHeight: '25.5vh',
         outline: 'none',
         border: 'none',
         padding: '20px 20px 0 20px',

@@ -5,7 +5,6 @@ import {Route, Switch, Redirect} from 'react-router-dom'
 import {firebaseAuth} from '../config/base'
 
 // Containers
-import RouteContainer from '../containers/RouteContainer'
 import Layout from '../containers/Layout'
 
 // Routes
@@ -88,66 +87,62 @@ class Template extends Component {
     }
 
     return this.state.loading === true ? (
-      <RouteContainer>
-        <Layout>
-          <NavigationBar
-            authenticated={this.state.authenticated}
-          />
+      <Layout>
+        <NavigationBar
+          authenticated={this.state.authenticated}
+        />
 
-          <div
-            id="circular-progress-container"
-            style={styles.circularProgressContainer}
-          >
-            <CircularProgress
-              size={80}
-              thickness={6}
-            />
-          </div>
-        </Layout>
-      </RouteContainer>
+        <div
+          id="circular-progress-container"
+          style={styles.circularProgressContainer}
+        >
+          <CircularProgress
+            size={80}
+            thickness={6}
+          />
+        </div>
+      </Layout>
     ) : (
-      <RouteContainer>
-        <Layout>
-          <NavigationBar
-            authenticated={this.state.authenticated}
+      <Layout>
+        <NavigationBar
+          authenticated={this.state.authenticated}
+        />
+
+        <Switch>
+          <Route
+            exact path="/"
+            component={Home}
           />
 
-          <Switch>
-            <Route
-              exact path="/"
-              component={Home}
-            />
+          <PublicRoute
+            authenticated={this.state.authenticated}
+            exact path="/sign-up"
+            component={Signup}
+          />
 
-            <PublicRoute
-              authenticated={this.state.authenticated}
-              exact path="/sign-up"
-              component={Signup}
-            />
+          <PublicRoute
+            authenticated={this.state.authenticated}
+            exact path="/sign-in"
+            component={Signin}
+          />
 
-            <PublicRoute
-              authenticated={this.state.authenticated}
-              exact path="/sign-in"
-              component={Signin}
-            />
+          <PrivateRoute
+            authenticated={this.state.authenticated}
+            exact path="/bitt-books"
+            component={BittBooks}
+          />
 
-            <PrivateRoute
-              authenticated={this.state.authenticated}
-              exact path="/bitt-books"
-              component={BittBooks}
-            />
+          <PrivateRoute
+            authenticated={this.state.authenticated}
+            exact path="/account"
+            component={Account}
+          />
 
-            <PrivateRoute
-              authenticated={this.state.authenticated}
-              exact path="/account"
-              component={Account}
-            />
-
-            <Route
-              render={() => <h3>No Match</h3>}
-            />
-          </Switch>
-        </Layout>
-      </RouteContainer>
+          <Route
+            render={() => <h3>No Match</h3>}
+          />
+        </Switch>
+      </Layout>
     )
   }
 }

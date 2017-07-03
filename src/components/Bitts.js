@@ -37,7 +37,7 @@ class Bitts extends Component {
 
     this.state = {
       viewport:                {},
-      bittCardContainerHeight: '54vh',
+      bittCardContainerHeight: '54.5vh',
       bittsCardMargins:        '20px 15vw 0 15vw',
       bittsHeaderDisplay:      '',
       snackbarOpen:            false
@@ -166,8 +166,11 @@ class Bitts extends Component {
       bittsOutletCover: {
         zIndex: '999',
         position: 'absolute',
-        maxHeight: '100vh',
-        overflow: 'auto',
+        width: '100vw',
+        maxWidth: '100%',
+        height: '100vh',
+        maxHeight: '100%',
+        overflow: 'hidden',
         top: '0',
         right: '0',
         bottom: '0',
@@ -178,6 +181,7 @@ class Bitts extends Component {
 
       bittsContainer: {
         zIndex: '1000',
+        height: '88vh',
         overflow: 'auto',
         margin: '64px 0 0 0',
         padding: '0 0 20px 0'

@@ -148,11 +148,12 @@ class BittBooks extends Component {
   render() {
     const styles = {
       bittBooksRoute: {
-        height: '90.5vh',
+        height: '88vh',
         overflow: 'auto',
         padding: '20px 0 0 15vw',
 
         '@media (max-width: 599px)': {
+          height: '88vh',
           padding: '20px 20px 0 20px'
         }
       },

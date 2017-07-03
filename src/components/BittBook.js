@@ -140,7 +140,7 @@ class BittBook extends Component {
       zDepth: 3,
       position: 'absolute',
       width: '70vw',
-      height: '83.5vh',
+      height: '84.5vh',
       bittBookTitleContainerVisibility: 'hidden',
       background: '#e0e0e0'
     }) :

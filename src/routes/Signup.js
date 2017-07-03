@@ -43,7 +43,9 @@ class Signup extends Component {
   }
 
   createUser() {
-    if (this.state.displayName && this.state.email && this.state.password !== '') {
+    localStorage.setItem(`${this.state.email}-display-name`, this.state.displayName)
+
+    if (this.state.displayName && this.state.email && this.state.password !== ('' || null)) {
       auth(this.state.email, this.state.password)
         .catch((e) => {
           this.setState({
@@ -55,8 +57,6 @@ class Signup extends Component {
       this.setState({
         loading: true
       })
-
-      localStorage.setItem(`${this.state.email}-display-name`, this.state.displayName)
     } else {
       this.setState({
         signupError: 'Please enter in all your information.'
@@ -67,8 +67,7 @@ class Signup extends Component {
   render() {
     const styles = {
       signupContainer: {
-        width: '100vw',
-        height: '90.2vh',
+        height: '100vh',
         overflow: 'auto'
       }
     }

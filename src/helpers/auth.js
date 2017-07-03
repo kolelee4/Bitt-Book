@@ -21,7 +21,6 @@ export function saveUser(user) {
 
       user.sendEmailVerification()
     })
-    .then(() => user)
 }
 
 export function getCurrentUser() {

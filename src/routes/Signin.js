@@ -65,8 +65,7 @@ class Signin extends Component {
   render() {
     const styles = {
       signinContainer: {
-        width: '100vw',
-        height: '90.2vh',
+        height: '100vh',
         overflow: 'auto'
       }
     }

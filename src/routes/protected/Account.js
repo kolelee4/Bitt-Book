@@ -19,13 +19,14 @@ class Account extends Component {
     super()
 
     this.state = {
-      isEmailVerified: getCurrentUser().emailVerified ? true : false,
-      isEditing:       false,
-      currentPassword: '',
-      newDisplayName:  '',
-      newEmail:        '',
-      newPassword:     '',
-      editInfoError:   '',
+      isEmailVerified:    getCurrentUser().emailVerified ? true : false,
+      isEditing:          false,
+      accountFormLoading: false,
+      currentPassword:    '',
+      newDisplayName:     '',
+      newEmail:           '',
+      newPassword:        '',
+      editInfoError:      ''
     }
 
     this.reloadPage = this.reloadPage.bind(this)
@@ -68,22 +69,33 @@ class Account extends Component {
   }
 
   createNewDisplayName() {
+    this.setState({
+      accountFormLoading: true
+    })
+
     if (this.state.newDisplayName !== '') {
       saveNewDisplayName(this.state.newDisplayName)
-
-      this.setState({
-        isEditing: false
-      })
+        .then(() => {
+          this.setState({
+            accountFormLoading: false,
+            isEditing: false
+          })
+        })
     } else {
       return null
     }
   }
 
   createNewEmail() {
+    this.setState({
+      accountFormLoading: true
+    })
+
     if (this.state.newEmail !== '') {
       saveNewEmail(this.state.newEmail)
         .then(() => {
           this.setState({
+            accountFormLoading: false,
             isEditing: false
           })
 
@@ -100,10 +112,15 @@ class Account extends Component {
   }
 
   createNewPassword() {
+    this.setState({
+      accountFormLoading: true
+    })
+
     if (this.state.newPassword !== '') {
       saveNewPassword(this.state.newPassword)
         .then(() => {
           this.setState({
+            accountFormLoading: false,
             isEditing: false
           })
         })
@@ -131,6 +148,7 @@ class Account extends Component {
           editInfoError={this.state.editInfoError}
           isEditing={this.state.isEditing}
           toggleIsEditing={this.toggleIsEditing}
+          accountFormLoading={this.state.accountFormLoading}
           handleChangeDisplayName={(event) => this.handleChangeDisplayName(event)}
           handleChangeEmail={(event) => this.handleChangeEmail(event)}
           handleChangePassword={(event) => this.handleChangePassword(event)}

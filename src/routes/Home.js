@@ -14,7 +14,6 @@ const propTypes = {
 const styles = {
   homeContainer: {
     display: 'table',
-    with: '100vw',
     height: '90.5vh',
     textAlign: 'center',
     overflow: 'auto'

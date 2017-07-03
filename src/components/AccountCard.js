@@ -33,7 +33,6 @@ class AccountCard extends Component {
     super()
 
     this.state = {
-      loading:                    false,
       isAccountCardForm:          true,
       reauthenticateDialogIsOpen: false,
       isDeletingAccount:          false
@@ -91,7 +90,7 @@ class AccountCard extends Component {
   render() {
     const styles = {
       accountCardComponentContianer: {
-        height: '90.5vh',
+        height: '88vh',
         overflow: 'auto'
       },
 
@@ -158,6 +157,7 @@ class AccountCard extends Component {
       newDisplayName,
       newEmail,
       newPassword,
+      accountFormLoading,
       isEditing,
       handleChangeDisplayName,
       handleChangeEmail,
@@ -169,7 +169,7 @@ class AccountCard extends Component {
     if (isEditing) {
       accountCardState = (
         <Form
-          loading={this.state.loading}
+          loading={accountFormLoading}
           isAccountCardForm={this.state.isAccountCardForm}
           title="Edit Account Info"
           buttonLabel="Submit"

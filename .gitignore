@@ -2,6 +2,8 @@
 
 # Security
 /src/config/base.js
+database.rules.json
+firebase.json
 .firebaserc
 
 # Dependencies
