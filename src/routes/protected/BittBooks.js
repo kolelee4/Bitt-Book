@@ -152,7 +152,7 @@ class BittBooks extends Component {
         overflow: 'auto',
         padding: '20px 0 0 15vw',
 
-        '@media (max-width: 599px)': {
+        '@media (max-width: 999px)': {
           height: '90.5vh',
           padding: '20px'
         }
@@ -163,7 +163,7 @@ class BittBooks extends Component {
         margin: '42vh auto 0 auto',
         padding: '0 15vw 0 0',
 
-        '@media (max-width: 599px)': {
+        '@media (max-width: 999px)': {
           padding: '0'
         }
       },

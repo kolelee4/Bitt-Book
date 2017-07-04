@@ -226,8 +226,10 @@ class BittBook extends Component {
         width: '132px',
         overflow: 'hidden',
         whiteSpace: 'nowrap',
+        margin: '0',
         outline: 'none',
         border: 'none',
+        padding: '0',
         background: 'transparent',
         fontSize: '16px',
         fontWeight: 'bold',
@@ -329,7 +331,7 @@ class BittBook extends Component {
         <Card
           id="bitt-book-card"
           style={
-            (this.state.viewport.width <= 599 || window.innerWidth <= 599) ?
+            (this.state.viewport.width <= 999 || window.innerWidth <= 999) ?
             styles.bittBookCardSmall : styles.bittBookCard
           }
         >
@@ -349,7 +351,7 @@ class BittBook extends Component {
         <Card
           id="bitt-book-card"
           style={
-            (this.state.viewport.width <= 599 || window.innerWidth <= 599) ?
+            (this.state.viewport.width <= 999 || window.innerWidth <= 999) ?
             styles.bittBookCardSmall : styles.bittBookCard
           }
         >
@@ -394,7 +396,7 @@ class BittBook extends Component {
         <Card
           id="bitt-book-card"
           style={
-            (this.state.viewport.width <= 599 || window.innerWidth <= 599) ?
+            (this.state.viewport.width <= 999 || window.innerWidth <= 999) ?
             styles.bittBookCardSmall : styles.bittBookCard
           }
           onMouseEnter={this.showOptions}

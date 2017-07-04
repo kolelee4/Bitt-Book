@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import Moment from '../helpers/react-moment'
 
 // Component
+import Radium from 'radium'
 import {Card, CardHeader, CardText} from 'material-ui/Card'
 import Divider from 'material-ui/Divider'
 import IconButton from 'material-ui/IconButton'
@@ -111,14 +112,14 @@ class Bitt extends Component {
       zDepth: this.state.isExpanded ? 1 : 3
     })
 
-    /* setTimeout(() => {
+    setTimeout(() => {
       const bittCardHeader = document.getElementById('bitt-card-header')
       const bittCardHeaderRect = bittCardHeader.getBoundingClientRect()
       const absolutebittCardHeaderTop = bittCardHeaderRect.top + window.pageYOffset
       const middle = absolutebittCardHeaderTop - (window.innerHeight / 2)
 
       window.scrollTo(0, middle)
-    }, 10) */
+    }, 10)
   }
 
   render() {
@@ -145,10 +146,11 @@ class Bitt extends Component {
         width: '59vw',
         overflow: 'hidden',
         whiteSpace: 'nowrap',
+        margin: '0',
         outline: 'none',
         border: 'none',
         borderRadius: '3px',
-        padding: '1px',
+        padding: '0',
         background: 'transparent',
         fontSize: '16px',
         fontWeight: 'bold',
@@ -176,7 +178,12 @@ class Bitt extends Component {
         border: 'none',
         padding: '20px 20px 0 20px',
         fontSize: '13px',
-        fontWeight: '500'
+        fontWeight: '500',
+
+        '@media (max-width: 999px)': {
+          minHeight: '16vh',
+          fontSize: '16px'
+        }
       },
 
       bittDoneButton: {
@@ -320,7 +327,10 @@ class Bitt extends Component {
                 details.body === 'Write a bitt...' || details.body === 'Click here to edit...' ?
                 '' : details.body
               }
-              autoFocus="true"
+              autoFocus={
+                (document.documentElement.clientWidth <= 999 || window.innerWidth <= 999) ?
+                false : true
+              }
               ref={(input) => this.body = input}
               onTouchTap={e => e.stopPropagation()}
               onChange={(e) => this.updateBitt(e, details)}
@@ -351,4 +361,4 @@ class Bitt extends Component {
 
 Bitt.propTypes = propTypes
 
-export default Bitt
+export default Radium(Bitt)

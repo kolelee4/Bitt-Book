@@ -99,13 +99,9 @@ class AccountCard extends Component {
         height: '500px',
         margin: '10vh auto 0 auto',
 
-        '@media (max-width: 599px)': {
-          width: '100%',
-          height: '100%'
-        },
-
         '@media (max-width: 999px)': {
           width: '100%',
+          height: '100%',
           margin: '0'
         }
       },
@@ -156,7 +152,7 @@ class AccountCard extends Component {
       accountCardDeleteButtonContainer: {
         margin: '160px 32px 0 32px',
 
-        '@media (max-width: 599px)': {
+        '@media (max-width: 999px)': {
           margin: '120px 32px 0 32px',
         }
       }
