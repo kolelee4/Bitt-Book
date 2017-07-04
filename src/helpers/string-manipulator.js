@@ -1,4 +1,4 @@
-export const nameToInitials = (displayName) => {
+export function nameToInitials(displayName) {
   return displayName.match(/\b\w/g).shift() + displayName.match(/\b\w/g).pop().toUpperCase()
 }
 

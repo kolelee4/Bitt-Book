@@ -40,11 +40,13 @@ class Form extends Component {
         width: '450px',
         height: '500px',
         margin: '10vh auto 0 auto',
+        padding: '0 0 60px 0',
 
-        '@media (max-width: 999px)': {
+        '@media (max-width: 599px)': {
           width: '100%',
           height: '100%',
-          margin: '0'
+          margin: '0',
+          padding: '0'
         }
       },
 

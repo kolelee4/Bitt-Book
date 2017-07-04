@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 
 // Helpers
 import {auth} from '../helpers/auth'
+import {setCookie} from '../helpers/cookies'
 
 // Components
 import Form from '../components/Form'
@@ -44,6 +45,8 @@ class Signup extends Component {
 
   createUser() {
     localStorage.setItem(`${this.state.email}-display-name`, this.state.displayName)
+
+    setCookie(`${this.state.email}-display-name`, this.state.displayName, 365)
 
     if (this.state.displayName && this.state.email && this.state.password !== ('' || null)) {
       auth(this.state.email, this.state.password)

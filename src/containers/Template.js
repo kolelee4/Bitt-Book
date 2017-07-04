@@ -15,7 +15,7 @@ import BittBooks from '../routes/protected/BittBooks'
 import Account from '../routes/protected/Account'
 
 // Components
-import NavigationBar from '../components/NavigationBar'
+import ApplicationBar from '../components/ApplicationBar'
 import CircularProgress from 'material-ui/CircularProgress'
 
 const PrivateRoute  = ({component: Component, authenticated, ...rest}) => {
@@ -88,7 +88,7 @@ class Template extends Component {
 
     return this.state.loading === true ? (
       <Layout>
-        <NavigationBar
+        <ApplicationBar
           authenticated={this.state.authenticated}
         />
 
@@ -104,7 +104,7 @@ class Template extends Component {
       </Layout>
     ) : (
       <Layout>
-        <NavigationBar
+        <ApplicationBar
           authenticated={this.state.authenticated}
         />
 

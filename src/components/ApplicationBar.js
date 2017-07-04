@@ -3,7 +3,7 @@ import {NavLink} from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 // Helpers
-import {logout, getCurrentUser} from '../helpers/auth'
+import {logout, getCurrentUser, getCookie} from '../helpers/auth'
 import {nameToInitials} from '../helpers/string-manipulator'
 
 // Components
@@ -39,7 +39,7 @@ const styles = {
   }
 }
 
-const NavigationBar = (props) => {
+const ApplicationBar = (props) => {
   return (
     <AppBar
       id="app-bar"
@@ -107,7 +107,8 @@ const NavigationBar = (props) => {
                   >
                     {
                       getCurrentUser().displayName === null ?
-                      nameToInitials(localStorage.getItem(`${getCurrentUser().email}-display-name`)) :
+                      nameToInitials(localStorage.getItem(`${getCurrentUser().email}-display-name`)) ||
+                      getCookie(`${getCurrentUser().email}-display-name`) :
                       nameToInitials(getCurrentUser().displayName)
                     }
                   </div>
@@ -147,6 +148,6 @@ const NavigationBar = (props) => {
   )
 }
 
-NavigationBar.propTypes = propTypes
+ApplicationBar.propTypes = propTypes
 
-export default NavigationBar
+export default ApplicationBar

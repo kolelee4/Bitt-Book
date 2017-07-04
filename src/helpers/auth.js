@@ -1,5 +1,6 @@
 import firebase from 'firebase'
 import {ref, firebaseAuth} from '../config/base'
+import {getCookie} from './cookies'
 
 export function auth(email, password) {
   return firebaseAuth().createUserWithEmailAndPassword(email, password)
@@ -10,7 +11,7 @@ export function auth(email, password) {
 export function saveUser(user) {
   return ref.child(`users/${user.uid}/info`)
     .set({
-      displayName: localStorage.getItem(`${user.email}-display-name`),
+      displayName: localStorage.getItem(`${user.email}-display-name`) || getCookie(`${user.email}-display-name`),
       email:       user.email,
       uid:         user.uid
     })
