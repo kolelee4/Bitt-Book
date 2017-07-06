@@ -50,6 +50,10 @@ class Form extends Component {
         }
       },
 
+      signupProgress: {
+        margin: '-4px 0 0 0'
+      },
+
       materialFormCard: {
         cursor: 'pointer',
         height: '100%',
@@ -98,10 +102,6 @@ class Form extends Component {
       formCancelButton: {
         cursor: 'pointer',
         float: 'right'
-      },
-
-      signupProgress: {
-        margin: '0'
       }
     }
 

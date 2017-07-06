@@ -38,7 +38,6 @@ class Bitts extends Component {
     this.state = {
       viewport:                      {},
       bittCardContainerHeight:       '54.5vh',
-      bittCardContainerMediumHeight: '54vh',
       bittCardContainerSmallHeight:  '52vh',
       bittsCardMargins:              '20px 15vw 20px 15vw',
       bittsCardSmallWidth:           '100vw',
@@ -147,7 +146,6 @@ class Bitts extends Component {
 
     this.setState({
       bittCardContainerHeight: '0',
-      bittCardContainerMediumHeight: '0',
       bittCardContainerSmallHeight: '0',
       bittsCardMargins: '20px 50vw 0 50vw',
       bittsCardSmallWidth: '164px',
@@ -200,7 +198,6 @@ class Bitts extends Component {
 
       bittsCard: {
         margin: this.state.bittsCardMargins,
-        background: '#e0e0e0',
         transition: '300ms'
       },
 
@@ -258,11 +255,6 @@ class Bitts extends Component {
         transition: '300ms',
 
         '@media (max-width: 999px)': {
-          width: '100%',
-          height: this.state.bittCardContainerMediumHeight
-        },
-
-        '@media (max-width: 599px)': {
           width: '100%',
           height: this.state.bittCardContainerSmallHeight
         }
