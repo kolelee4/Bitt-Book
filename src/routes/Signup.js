@@ -5,7 +5,7 @@ import {auth} from '../helpers/auth'
 import {setCookie} from '../helpers/cookies'
 
 // Components
-import Form from '../components/Form'
+import Form from '../components/forms/Form'
 
 class Signup extends Component {
   constructor() {

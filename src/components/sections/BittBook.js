@@ -2,15 +2,15 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 
 // Helpers
-import {getCurrentUser} from '../helpers/auth'
-import Moment from '../helpers/react-moment'
+import {getCurrentUser} from '../../helpers/auth'
+import Moment from '../../helpers/react-moment'
 
 // Component
 import CircularProgress from 'material-ui/CircularProgress'
 import {Card, CardHeader} from 'material-ui/Card'
 import IconButton from 'material-ui/IconButton'
 import ActionDelete from 'material-ui/svg-icons/action/delete'
-import AlertModal from './AlertModal'
+import AlertModal from '../dialogs/AlertModal'
 import Bitts from './Bitts'
 
 const propTypes = {

@@ -2,13 +2,13 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 
 // Helpers
-import {reauthenticate} from '../helpers/auth'
+import {reauthenticate} from '../../helpers/auth'
 
 // Components
 import Dialog from 'material-ui/Dialog'
 import TextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton'
-import RaisedButton from './RaisedButton'
+import RaisedButton from '../ui/RaisedButton'
 
 const propTypes = {
   message:                   PropTypes.string.isRequired,

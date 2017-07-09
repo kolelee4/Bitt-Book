@@ -7,7 +7,7 @@ import Radium from 'radium'
 import LinearProgress from 'material-ui/LinearProgress'
 import {Card, CardHeader, CardText, CardActions} from 'material-ui/Card'
 import TextField from 'material-ui/TextField'
-import RaisedButton from './RaisedButton'
+import RaisedButton from '../ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
 
 const propTypes = {

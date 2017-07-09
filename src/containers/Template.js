@@ -15,7 +15,7 @@ import BittBooks from '../routes/protected/BittBooks'
 import Account from '../routes/protected/Account'
 
 // Components
-import ApplicationBar from '../components/ApplicationBar'
+import ApplicationBar from '../components/navigation/ApplicationBar'
 import CircularProgress from 'material-ui/CircularProgress'
 
 const PrivateRoute  = ({component: Component, authenticated, ...rest}) => {

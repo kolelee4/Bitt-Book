@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 // Components
-import FloatingActionButton from './FloatingActionButton'
+import FloatingActionButton from '../ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 
 const propTypes = {

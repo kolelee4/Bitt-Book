@@ -3,8 +3,8 @@ import {NavLink} from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 // Helpers
-import {logout, getCurrentUser, getCookie} from '../helpers/auth'
-import {nameToInitials} from '../helpers/string-manipulator'
+import {logout, getCurrentUser, getCookie} from '../../helpers/auth'
+import {nameToInitials} from '../../helpers/string-manipulator'
 
 // Components
 import AppBar from 'material-ui/AppBar'

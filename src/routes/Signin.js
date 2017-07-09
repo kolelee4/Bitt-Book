@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {login, resetPassword} from '../helpers/auth'
 
 // Components
-import Form from '../components/Form'
+import Form from '../components/forms/Form'
 
 const setErrorMsg = (error) => {
   return {

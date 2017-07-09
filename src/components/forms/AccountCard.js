@@ -2,17 +2,17 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 
 // Helpers
-import {getCurrentUser} from '../helpers/auth'
+import {getCurrentUser} from '../../helpers/auth'
 
 // Components
 import Radium from 'radium'
 import {Card, CardHeader, CardText, CardActions} from 'material-ui/Card'
 import EditorModeEdit from 'material-ui/svg-icons/editor/mode-edit'
 import Divider from 'material-ui/Divider'
-import ReauthenticateDialog from './ReauthenticateDialog'
+import ReauthenticateDialog from '../dialogs/ReauthenticateDialog'
 import Form from './Form'
 import IconButton from 'material-ui/IconButton'
-import RaisedButton from './RaisedButton'
+import RaisedButton from '../ui/RaisedButton'
 
 const defaultProps = {
   title: 'Account'

@@ -10,11 +10,11 @@ import {getFirstName} from '../../helpers/string-manipulator'
 
 // Components
 import Radium from 'radium'
-import EmailNotVerified from '../../components/EmailNotVerified'
+import EmailNotVerified from '../../components/dialogs/EmailNotVerified'
 import CircularProgress from 'material-ui/CircularProgress'
-import FABContainer from '../../components/FABContainer'
-import BittBook from '../../components/BittBook'
-import ItemDeletedAlert from '../../components/ItemDeletedAlert'
+import FABContainer from '../../components/containers/FABContainer'
+import BittBook from '../../components/sections/BittBook'
+import ItemDeletedAlert from '../../components/dialogs/ItemDeletedAlert'
 
 const defaultProps = {
   noBittBooksMessage: 'You have 0 Bitt Books...'

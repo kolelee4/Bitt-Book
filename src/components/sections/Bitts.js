@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 
 // Helpers
-import Moment from '../helpers/react-moment'
+import Moment from '../../helpers/react-moment'
 
 // Components
 import Radium from 'radium'
@@ -10,9 +10,9 @@ import {Card, CardHeader, CardActions} from 'material-ui/Card'
 import IconButton from 'material-ui/IconButton'
 import NavigationClose from 'material-ui/svg-icons/navigation/close'
 import ActionDelete from 'material-ui/svg-icons/action/delete'
-import FloatingActionButton from './FloatingActionButton'
+import FloatingActionButton from '../ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
-import ItemDeletedAlert from './ItemDeletedAlert'
+import ItemDeletedAlert from '../dialogs/ItemDeletedAlert'
 import Bitt from './Bitt'
 
 const propTypes = {

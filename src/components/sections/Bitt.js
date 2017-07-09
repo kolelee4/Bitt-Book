@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 
 // Helpers
-import Moment from '../helpers/react-moment'
+import Moment from '../../helpers/react-moment'
 
 // Component
 import Radium from 'radium'
@@ -10,7 +10,7 @@ import {Card, CardHeader, CardText} from 'material-ui/Card'
 import Divider from 'material-ui/Divider'
 import IconButton from 'material-ui/IconButton'
 import ActionDelete from 'material-ui/svg-icons/action/delete'
-import RaisedButton from './RaisedButton'
+import RaisedButton from '../ui/RaisedButton'
 // import BittEditor from './BittEditor'
 
 const propTypes = {

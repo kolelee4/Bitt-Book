@@ -11,8 +11,8 @@ import {
 } from '../../helpers/auth'
 
 // Components
-import EmailNotVerified from '../../components/EmailNotVerified'
-import AccountCard from '../../components/AccountCard'
+import EmailNotVerified from '../../components/dialogs/EmailNotVerified'
+import AccountCard from '../../components/forms/AccountCard'
 
 class Account extends Component {
   constructor() {

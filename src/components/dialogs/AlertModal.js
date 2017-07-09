@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 // Components
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
-import RaisedButton from './RaisedButton'
+import RaisedButton from '../ui/RaisedButton'
 
 const propTypes = {
   isOpen:      PropTypes.bool.isRequired,
