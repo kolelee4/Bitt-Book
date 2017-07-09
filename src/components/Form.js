@@ -63,7 +63,7 @@ class Form extends Component {
       formActions: {
         display: 'inline-block',
         width: '92%',
-        overflow: 'hidden',
+        overflow: 'visible',
         margin: '0 16px 0 16px',
         padding: '0'
       },
@@ -307,14 +307,6 @@ class Form extends Component {
               {formMessageState}
             </div>
 
-            <RaisedButton
-              id="form-submit-button"
-              style={styles.formSubmitButton}
-              primary={true}
-              label={buttonLabel}
-              onTouchTap={submit}
-            />
-
             {
               isAccountCardForm ? (
                 <FlatButton
@@ -325,6 +317,14 @@ class Form extends Component {
                 />
               ) : null
             }
+
+            <RaisedButton
+              id="form-submit-button"
+              style={styles.formSubmitButton}
+              primary={true}
+              label={buttonLabel}
+              onTouchTap={submit}
+            />
           </CardActions>
         </Card>
       </form>
