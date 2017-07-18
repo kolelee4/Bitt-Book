@@ -93,15 +93,15 @@ class Form extends Component {
         color: '#146D8F'
       },
 
+      formCancelButton: {
+        cursor: 'pointer',
+        float: 'right'
+      },
+
       formSubmitButton: {
         cursor: 'pointer',
         float: 'right',
         margin: '0'
-      },
-
-      formCancelButton: {
-        cursor: 'pointer',
-        float: 'right'
       }
     }
 
@@ -307,6 +307,14 @@ class Form extends Component {
               {formMessageState}
             </div>
 
+            <RaisedButton
+              id="form-submit-button"
+              style={styles.formSubmitButton}
+              primary={true}
+              label={buttonLabel}
+              onTouchTap={submit}
+            />
+
             {
               isAccountCardForm ? (
                 <FlatButton
@@ -317,14 +325,6 @@ class Form extends Component {
                 />
               ) : null
             }
-
-            <RaisedButton
-              id="form-submit-button"
-              style={styles.formSubmitButton}
-              primary={true}
-              label={buttonLabel}
-              onTouchTap={submit}
-            />
           </CardActions>
         </Card>
       </form>
