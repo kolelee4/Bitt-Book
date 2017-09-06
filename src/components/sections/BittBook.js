@@ -233,7 +233,7 @@ class BittBook extends Component {
         background: 'transparent',
         fontSize: '16px',
         fontWeight: 'bold',
-        color: '#146D8F',
+        color: '#424242', //146D8F
         textOverflow: 'ellipsis'
       },
 

@@ -241,7 +241,7 @@ class Bitts extends Component {
         background: 'transparent',
         fontSize: '32px',
         fontWeight: 'bold',
-        color: '#146D8F',
+        color: '#424242',
         textOverflow: 'ellipsis'
       },
 

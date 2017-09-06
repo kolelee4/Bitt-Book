@@ -139,7 +139,7 @@ class Bitt extends Component {
       },
 
       bittTitle: {
-        color: '#146D8F'
+        color: '#424242'
       },
 
       bittTitleInput: {
@@ -154,7 +154,7 @@ class Bitt extends Component {
         background: 'transparent',
         fontSize: '16px',
         fontWeight: 'bold',
-        color: '#146D8F',
+        color: '#424242',
         textOverflow: 'ellipsis'
       },
 
